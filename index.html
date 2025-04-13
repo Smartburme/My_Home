@@ -1,20 +1,39 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Smart Burme </title>
+    <title>Smart Burme - Welcome</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #4CAF50; /* Graduation color */
+            color: white;
+            font-family: Arial, sans-serif;
+            animation: fadeIn 2s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h1 {
+            font-size: 3em;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Smartb Burme</h1>
-        <form id="registration-form">
-            <input type="text" placeholder="နာမည်" required>
-            <input type="email" placeholder="အီးမေးလ်" required>
-            <button type="submit">မှတ်ပုံတင်မည်</button>
-        </form>
-    </div>
-    <script src="script.js"></script>
+    <h1>Welcome to Smart Burme</h1>
+    <script>
+        // Redirect to home.html after 3 seconds
+        setTimeout(function() {
+            window.location.href = 'home.html';
+        }, 3000);
+    </script>
 </body>
 </html>
