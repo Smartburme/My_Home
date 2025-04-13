@@ -1,5 +1,3 @@
 #Smart Burme Website 
-
-##wellcome to mypage
-
-[smart Burme ](burmese-website-ai.github.io/smartburme/home.html)
+---
+[Smart Burme ](burmese-website-ai.github.io/smartburme/home.html)
