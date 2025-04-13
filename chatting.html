@@ -1,1 +1,24 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/styles.css">
+    <title>Smart Burme - Chatting</title>
+</head>
+<body>
+    <div class="chat-menu">
+        <button onclick="openPrivateChat()">Private Chat</button>
+        <button onclick="openGroupChat()">Group Chat</button>
+        <button onclick="openMyGroup()">My Group</button>
+    </div>
+    <div class="chat-area">
+        <!-- Chat messages will be displayed here -->
+    </div>
+    <div class="upload-area">
+        <input type="file" id="fileUpload" />
+        <button onclick="uploadFile()">Upload</button>
+    </div>
+    <script src="scripts/scripts.js"></script>
+</body>
+</html>
