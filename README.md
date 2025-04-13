@@ -6,11 +6,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Smartburme Registration</title>
+    <title>Smart Burme</title>
 </head>
 <body>
     <div class="container">
-        <h1>Smartburme Registration</h1>
+        <h1>Smart Burme</h1>
         <form id="registration-form">
             <input type="text" placeholder="နာမည်" required>
             <input type="email" placeholder="အီးမေးလ်" required>
