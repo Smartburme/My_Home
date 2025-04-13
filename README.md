@@ -1,2 +1,2 @@
 # smartburme
-https://rommy.ns.cloudflare.com
+https://smartburme.com
