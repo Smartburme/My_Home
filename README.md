@@ -1,6 +1,5 @@
 # smartburme
 
-```
 <!DOCTYPE html>
 <html lang="my">
 <head>
