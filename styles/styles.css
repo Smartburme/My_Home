@@ -1,8 +1,17 @@
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
 }
 
+h1 {
+    text-align: center;
+    color: #4CAF50; /* Graduation color */
+}
+
+/* Menu Styles */
 .menu, .chat-menu {
     display: flex;
     justify-content: space-around;
@@ -17,15 +26,63 @@ body {
     border: none;
     background: none;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
+.menu a:hover, .chat-menu button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 300px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Chat Area Styles */
 .chat-area {
     border: 1px solid #ccc;
     height: 400px;
     overflow-y: scroll;
     margin: 20px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
 }
 
+/* Upload Area Styles */
 .upload-area {
     margin: 20px;
+}
+
+/* Message Styles */
+#message {
+    text-align: center;
+    margin-top: 10px;
 }
