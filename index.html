@@ -1,39 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Burme - Welcome</title>
-    <link rel="stylesheet" href="styles/styles.css">
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #4CAF50; /* Graduation color */
-            color: white;
-            font-family: Arial, sans-serif;
-            animation: fadeIn 2s;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Burme - Welcome</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: radial-gradient(circle, #000000, #0f0f0f);
+            color: #00ff88;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            margin: 0;
+        }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        h1 {
+            font-size: 3em;
+            letter-spacing: 3px;
+            text-shadow: 0 0 5px #00ff88,
+                        0 0 10px #00ff88,
+                        0 0 20px #00ff88,
+                        0 0 40px #00ff88;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
 
-        h1 {
-            font-size: 3em;
-        }
-    </style>
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #00ff88,
+                            0 0 10px #00ff88,
+                            0 0 20px #00ff88,
+                            0 0 40px #00ff88;
+            }
+            to {
+                text-shadow: 0 0 10px #00ff88,
+                            0 0 20px #00ff88,
+                            0 0 30px #00ff88,
+                            0 0 60px #00ff88;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to Smart Burme</h1>
-    <script>
-        // Redirect to home.html after 3 seconds
-        setTimeout(function() {
-            window.location.href = 'home.html';
-        }, 3000);
-    </script>
+    <h1>Smart Burme</h1>
+    <script>
+        // Redirect to home.html after 3 seconds
+        setTimeout(function () {
+            window.location.href = 'home.html';
+        }, 3000);
+    </script>
 </body>
 </html>
