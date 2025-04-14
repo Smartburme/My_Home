@@ -1,50 +1,23 @@
-// Redirect to Chatting Page after Login
-function redirectToChat(event) {
-    event.preventDefault();
-    // Normally validate login here
-    window.location.href = 'chatting.html';
+// Snowflake effect JS
+function generateSnowflakes() {
+    const snowflakeCount = 50;
+    const snowflakesContainer = document.createElement('div');
+    snowflakesContainer.classList.add('snowflakes');
+    document.body.appendChild(snowflakesContainer);
+
+    for (let i = 0; i < snowflakeCount; i++) {
+        const snowflake = document.createElement('div');
+        const size = Math.random() * 5 + 2;  // Size between 2px and 7px
+        const leftPosition = Math.random() * 100 + "%";  // Random X position
+
+        snowflake.style.width = size + 'px';
+        snowflake.style.height = size + 'px';
+        snowflake.style.left = leftPosition;
+        snowflake.style.animationDelay = Math.random() * 5 + "s"; // Random delay
+        snowflake.style.animationDuration = Math.random() * 5 + 10 + "s"; // Random falling speed
+
+        snowflakesContainer.appendChild(snowflake);
+    }
 }
 
-// Handle Forgot Password
-function handleForgotPassword(event) {
-    event.preventDefault();
-    const form = event.target;
-    const emailInput = form.querySelector('input[type="email"]');
-    const messageElement = document.getElementById('message');
-
-    const email = emailInput ? emailInput.value.trim() : '';
-
-    if (email) {
-        // Simulate server-side reset request
-        messageElement.textContent = `A password reset link has been sent to ${email}`;
-        messageElement.style.color = 'limegreen';
-    } else {
-        messageElement.textContent = 'Please enter a valid email address.';
-        messageElement.style.color = 'crimson';
-    }
-}
-
-// File upload function (chatting.html)
-function uploadFile() {
-    const fileInput = document.getElementById('fileUpload');
-    const file = fileInput?.files[0];
-
-    if (file) {
-        alert(`File uploaded: ${file.name}`);
-    } else {
-        alert('Please select a file to upload.');
-    }
-}
-
-// Chat View Navigation Functions
-function openPrivateChat() {
-    alert('Opening Private Chat...');
-}
-
-function openGroupChat() {
-    alert('Opening Group Chat...');
-}
-
-function openMyGroup() {
-    alert('Opening My Groups...');
-}
+document.addEventListener('DOMContentLoaded', generateSnowflakes);
