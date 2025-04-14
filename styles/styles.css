@@ -1,134 +1,77 @@
-/* General Styles */
+/* Floating Style for Navigation */
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 128, 0, 0.7); /* Semi-transparent green */
+    text-align: center;
+    padding: 10px 0;
+    z-index: 100;
+}
+
+.menu a {
+    color: white;
+    padding: 14px 20px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.menu a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+/* Green Animation Background */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #000;
-    margin: 0;
-    padding: 0;
-    color: #0f0;
+    background: linear-gradient(180deg, #00FF00, #32CD32); /* Green to lime gradient */
+    animation: backgroundAnimation 5s infinite alternate; /* Animation effect */
 }
 
-h1 {
-    text-align: center;
-    color: #4CAF50;
+@keyframes backgroundAnimation {
+    0% {
+        background: linear-gradient(180deg, #00FF00, #32CD32);
+    }
+    100% {
+        background: linear-gradient(180deg, #32CD32, #00FF00);
+    }
 }
 
-/* Menu Styles */
-.menu, .chat-menu {
-    display: flex;
-    justify-content: space-around;
-    background-color: #4CAF50;
-    padding: 10px;
+/* Snowflake Animation */
+@keyframes snowflakes {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(100vh);
+    }
 }
 
-.menu a, .chat-menu button {
-    color: white;
-    text-decoration: none;
-    padding: 10px;
-    border: none;
-    background: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
+/* Snowflakes Effect */
+.snowflakes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 9999;
 }
 
-.menu a:hover, .chat-menu button:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+.snowflakes div {
+    position: absolute;
+    background-color: white;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: snowflakes 10s linear infinite;
 }
 
-/* Form Styles */
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px;
-    z-index: 1;
+.snowflakes div:nth-child(odd) {
+    animation-duration: 12s;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-    width: 300px;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-/* Chat Area Styles */
-.chat-area {
-    border: 1px solid #ccc;
-    height: 400px;
-    overflow-y: scroll;
-    margin: 20px;
-    padding: 10px;
-    background-color: white;
-    border-radius: 5px;
-}
-
-/* Upload Area Styles */
-.upload-area {
-    margin: 20px;
-}
-
-/* Message Styles */
-#message {
-    text-align: center;
-    margin-top: 10px;
-}
-
-/* Hacker-style Background Grid */
-section {
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2px;
-    flex-wrap: wrap;
-    overflow: hidden;
-    background: #000;
-    z-index: -1;
-}
-
-section::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 29px,
-        rgba(0, 255, 0, 0.1) 30px
-    ),
-    repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 29px,
-        rgba(0, 255, 0, 0.1) 30px
-    );
-    animation: scan 4s linear infinite;
-}
-
-@keyframes scan {
-    0% {
-        transform: translateX(-100%);
-    }
-    100% {
-        transform: translateX(100%);
-    }
+.snowflakes div:nth-child(even) {
+    animation-duration: 15s;
 }
