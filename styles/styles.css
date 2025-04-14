@@ -24,16 +24,16 @@
 
 /* Green Animation Background */
 body {
-    background: linear-gradient(180deg, #00FF00, #32CD32); /* Green to lime gradient */
-    animation: backgroundAnimation 5s infinite alternate; /* Animation effect */
+    background: linear-gradient(180deg, #00FF00, #32CD32); /* Initial Gradient */
+    animation: backgroundAnimation 10s infinite alternate; /* Animation effect */
 }
 
 @keyframes backgroundAnimation {
     0% {
-        background: linear-gradient(180deg, #00FF00, #32CD32);
+        background: linear-gradient(180deg, #00FF00, #32CD32); /* Starting state */
     }
     100% {
-        background: linear-gradient(180deg, #32CD32, #00FF00);
+        background: linear-gradient(180deg, #32CD32, #006400); /* Ending state */
     }
 }
 
