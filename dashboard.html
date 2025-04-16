@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Smart Burme</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background-color: #1f293a;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .dashboard {
+            background-color: rgba(31, 41, 58, 0.8);
+            padding: 40px;
+            border-radius: 20px;
+            width: 400px;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            text-align: center;
+        }
+        .dashboard h1 {
+            color: #0ef;
+        }
+        .btn-logout {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff4d4d;
+            border: none;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .btn-logout:hover {
+            background-color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <h1>Welcome to the Dashboard!</h1>
+        <p>You're successfully logged in.</p>
+        <button class="btn-logout" onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        function logout() {
+            // Redirect to the login page
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>
