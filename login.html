@@ -1,130 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Smart Burme - Login</title>
+  <meta charset="UTF-8">
+  <title>Login - SMART BURME</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      box-sizing: border-box;
+    }
+
     body {
-      background: linear-gradient(-45deg, #262626, #000000, #1a1a1a, #0d0d0d);
-      background-size: 400% 400%;
-      animation: backgroundShift 12s ease infinite;
-      font-family: 'Segoe UI', sans-serif;
-      color: white;
       height: 100vh;
-      overflow: hidden;
+      background: linear-gradient(120deg, #2b2e4a, #1f293a);
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
+      position: relative;
     }
 
-    @keyframes backgroundShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    .container {
+      background: rgba(31, 41, 58, 0.8);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      width: 90%;
+      max-width: 400px;
+      position: relative;
+      z-index: 10;
     }
 
-    .floating-title {
-      font-size: 60px;
-      font-weight: bold;
-      animation: float3D 4s ease-in-out infinite, colorChange 6s infinite alternate;
+    h2 {
+      color: #0ef;
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
+      font-size: 2em;
     }
 
-    @keyframes float3D {
-      0% { transform: rotateY(0deg) translateY(0); }
-      25% { transform: rotateY(10deg) translateY(-10px); }
-      50% { transform: rotateY(0deg) translateY(0); }
-      75% { transform: rotateY(-10deg) translateY(10px); }
-      100% { transform: rotateY(0deg) translateY(0); }
+    .input-box {
+      position: relative;
+      margin: 25px 0;
     }
 
-    @keyframes colorChange {
-      0% { color: #a0a0a0; }
-      50% { color: #00ccff; }
-      100% { color: #cccccc; }
-    }
-
-    .form-container {
-      margin-top: 50px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .input-field {
-      padding: 15px;
-      margin: 10px;
-      border: 2px solid #fff;
-      border-radius: 8px;
-      background-color: transparent;
+    .input-box input {
+      width: 100%;
+      height: 50px;
+      background: transparent;
+      border: 2px solid #2c4766;
+      border-radius: 40px;
       color: white;
-      font-size: 18px;
+      padding: 0 20px;
+      font-size: 1em;
+      outline: none;
     }
 
-    .input-field:focus {
-      outline: none;
-      border-color: #00ccff;
+    .input-box label {
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+      color: #aaa;
+      pointer-events: none;
+      transition: 0.3s;
+    }
+
+    .input-box input:focus ~ label,
+    .input-box input:valid ~ label {
+      top: 1px;
+      font-size: 0.8em;
+      background: #1f293a;
+      padding: 0 6px;
+      color: #0ef;
     }
 
     .btn {
-      background: linear-gradient(90deg, #00ccff, #1e90ff);
-      background-size: 200% auto;
-      color: white;
-      padding: 15px 30px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-size: 18px;
+      width: 100%;
+      height: 45px;
+      background: #0ef;
+      border: none;
+      border-radius: 40px;
+      cursor: pointer;
       font-weight: bold;
-      box-shadow: 0 0 15px rgba(0, 204, 255, 0.3);
-      transition: background-position 0.5s, transform 0.3s;
-      text-align: center;
-      margin-top: 20px;
+      color: #1f293a;
+      margin-top: 10px;
     }
 
     .btn:hover {
-      background-position: right center;
-      transform: scale(1.05);
+      background: #09c;
+      box-shadow: 0 0 15px #0ef;
     }
 
-    #loader {
+    .floating {
       position: absolute;
-      top: 45%;
-      font-size: 20px;
-      color: #aaa;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
     }
 
-    #main-content {
-      display: none;
-      flex-direction: column;
-      align-items: center;
+    .floating span {
+      position: absolute;
+      display: block;
+      width: 20px;
+      height: 20px;
+      background: rgba(0, 255, 255, 0.2);
+      animation: float 25s linear infinite;
+      border-radius: 50%;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    .floating span:nth-child(1) {
+      left: 25%;
+      width: 60px;
+      height: 60px;
+      animation-duration: 20s;
+    }
+
+    .floating span:nth-child(2) {
+      left: 10%;
+      width: 30px;
+      height: 30px;
+      animation-duration: 15s;
+    }
+
+    .floating span:nth-child(3) {
+      left: 70%;
+      width: 20px;
+      height: 20px;
+      animation-duration: 18s;
+    }
+
+    .floating span:nth-child(4) {
+      left: 40%;
+      width: 50px;
+      height: 50px;
+      animation-duration: 22s;
+    }
+
+    .floating span:nth-child(5) {
+      left: 85%;
+      width: 25px;
+      height: 25px;
+      animation-duration: 17s;
     }
   </style>
 </head>
 <body>
-  <div id="loader">Loading...</div>
 
-  <div id="main-content">
-    <div class="floating-title">Login to Smart Burme</div>
-
-    <div class="form-container">
-      <input type="email" class="input-field" placeholder="Email" id="email" />
-      <input type="password" class="input-field" placeholder="Password" id="password" />
-      <a href="#" class="btn" id="loginBtn">Login</a>
-      <a href="registration.html" class="btn">Register</a>
-      <a href="forget_password.html" class="btn">Forgot Password</a>
-    </div>
+  <div class="floating">
+    <span></span><span></span><span></span><span></span><span></span>
   </div>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js"></script>
+  <div class="container">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <div class="input-box">
+        <input type="email" id="email" required>
+        <label for="email">Gmail</label>
+      </div>
+      <div class="input-box">
+        <input type="password" id="password" required>
+        <label for="password">Password</label>
+      </div>
+      <button class="btn" type="submit">Login</button>
+    </form>
+  </div>
 
-  <script>
-    // Firebase Configuration
+  <!-- Firebase Scripts -->
+  <script type="module">
+    // Firebase SDKs
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
     const firebaseConfig = {
       apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
       authDomain: "smart-burme-app.firebaseapp.com",
@@ -134,34 +196,25 @@
       appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7"
     };
 
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-    // Handle login
-    document.getElementById("loginBtn").addEventListener("click", function(event) {
-      event.preventDefault();
+    const loginForm = document.getElementById('loginForm');
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
 
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-
-      // Firebase login
-      auth.signInWithEmailAndPassword(email, password)
+      signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          // Redirect to main page after successful login
+          alert('Login successful!');
           window.location.href = "main.html";
         })
         .catch((error) => {
-          const errorMessage = error.message;
-          alert("Error: " + errorMessage);  // Show error message if login fails
+          alert("Login failed: " + error.message);
         });
     });
-
-    // Loading UI logic
-    setTimeout(() => {
-      document.getElementById('loader').style.display = 'none';
-      document.getElementById('main-content').style.display = 'flex';
-    }, 3000);
   </script>
+
 </body>
 </html>
