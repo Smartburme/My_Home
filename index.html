@@ -1,133 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loading | Smart Burme</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: #1f293a;
-            overflow: hidden;
-        }
-        .container {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        /* Background animation */
-        .container span {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: 32px;
-            height: 6px;
-            background: #2c4766;
-            border-radius: 8px;
-            transform-origin: left center;
-            transform: translate(-50%, -50%) rotate(calc(var(--i) * (360deg / 50))) translateX(128px);
-            animation: animateBlink 3s linear infinite;
-            animation-delay: calc(var(--i) * (0.06s));
-        }
-        @keyframes animateBlink {
-            0%, 100% {
-                background: #0ef;
-                box-shadow: 0 0 10px #0ef, 0 0 20px #0ef;
-            }
-            25% {
-                background: #2c4766;
-                box-shadow: none;
-            }
-        }
-        /* SMART BURME Text Styling */
-        h1 {
-            color: #0ef;
-            font-size: 1em; /* Size adjusted */
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Burme</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    h1 {
+      font-size: 3rem;
+      letter-spacing: 1rem;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- SMART BURME Text -->
-        <h1>SMART BURME</h1>
+  <h1>S M</h1>
 
-        <!-- Background animation spans -->
-        <span style="--i:0"></span>
-        <span style="--i:1"></span>
-        <span style="--i:2"></span>
-        <span style="--i:3"></span>
-        <span style="--i:4"></span>
-        <span style="--i:5"></span>
-        <span style="--i:6"></span>
-        <span style="--i:7"></span>
-        <span style="--i:8"></span>
-        <span style="--i:9"></span>
-        <span style="--i:10"></span>
-        <span style="--i:11"></span>
-        <span style="--i:12"></span>
-        <span style="--i:13"></span>
-        <span style="--i:14"></span>
-        <span style="--i:15"></span>
-        <span style="--i:16"></span>
-        <span style="--i:17"></span>
-        <span style="--i:18"></span>
-        <span style="--i:19"></span>
-        <span style="--i:20"></span>
-        <span style="--i:21"></span>
-        <span style="--i:22"></span>
-        <span style="--i:23"></span>
-        <span style="--i:24"></span>
-        <span style="--i:25"></span>
-        <span style="--i:26"></span>
-        <span style="--i:27"></span>
-        <span style="--i:28"></span>
-        <span style="--i:29"></span>
-        <span style="--i:30"></span>
-        <span style="--i:31"></span>
-        <span style="--i:32"></span>
-        <span style="--i:33"></span>
-        <span style="--i:34"></span>
-        <span style="--i:35"></span>
-        <span style="--i:36"></span>
-        <span style="--i:37"></span>
-        <span style="--i:38"></span>
-        <span style="--i:39"></span>
-        <span style="--i:40"></span>
-        <span style="--i:41"></span>
-        <span style="--i:42"></span>
-        <span style="--i:43"></span>
-        <span style="--i:44"></span>
-        <span style="--i:45"></span>
-        <span style="--i:46"></span>
-        <span style="--i:47"></span>
-        <span style="--i:48"></span>
-        <span style="--i:49"></span>
-    </div>
+  <!-- Firebase JS SDK Configuration -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js";
 
-    <script>
-        // Redirect to registration.html after 7 seconds
-        setTimeout(function() {
-            window.location.href = "registration.html";
-        }, 7000);
-    </script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
+      authDomain: "smart-burme-app.firebaseapp.com",
+      projectId: "smart-burme-app",
+      storageBucket: "smart-burme-app.firebasestorage.app",
+      messagingSenderId: "851502425686",
+      appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7",
+      measurementId: "G-EB564CY4KT"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+
+    // Redirect to registration.html after 7 seconds
+    setTimeout(() => {
+      window.location.href = "registration.html";
+    }, 7000);
+  </script>
 </body>
 </html>
