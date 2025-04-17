@@ -3,21 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Smart Burme - Main</title>
+  <title>Social Chat</title>
   <style>
     * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      margin: 0; padding: 0; box-sizing: border-box;
     }
 
     body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(-45deg, #000000, #1a1a1a, #262626, #000000);
+      background: linear-gradient(-45deg, #0d0d0d, #1a1a1a, #000000, #262626);
       background-size: 400% 400%;
-      animation: backgroundShift 15s ease infinite;
+      animation: backgroundShift 10s ease infinite;
+      font-family: 'Segoe UI', sans-serif;
       color: white;
-      overflow: hidden;
+      display: flex;
+      height: 100vh;
     }
 
     @keyframes backgroundShift {
@@ -26,93 +25,201 @@
       100% { background-position: 0% 50%; }
     }
 
-    .video-container {
-      position: relative;
-      width: 100%;
+    /* Header */
+    .header {
+      background-color: #3b5998;
+      color: white;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .header .profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header .profile img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .header .profile .name {
+      font-size: 16px;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background-color: #2d4373;
+      color: white;
+      padding: 20px;
+      width: 250px;
       height: 100vh;
-      overflow: hidden;
-    }
-
-    video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .overlay-controls {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 20px;
     }
 
-    .btn {
-      background: linear-gradient(90deg, #3a8bdc, #00d4ff, #3a8bdc);
-      background-size: 200% auto;
+    .sidebar a {
       color: white;
-      padding: 12px 20px;
-      border-radius: 10px;
-      font-size: 16px;
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .sidebar a:hover {
+      background-color: #455d85;
+      padding: 5px;
+      border-radius: 5px;
+    }
+
+    /* Main Content Area */
+    .main-content {
+      flex-grow: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .post {
+      background-color: #444;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .post img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+
+    .post-content {
+      flex-grow: 1;
+    }
+
+    .post-content .name {
       font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .post-content .message {
+      margin-bottom: 10px;
+    }
+
+    .post .actions {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .post .actions button {
+      background-color: #3b5998;
       border: none;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 5px;
       cursor: pointer;
-      animation: float3D 4s ease-in-out infinite, colorPulse 4s ease-in-out infinite;
-      box-shadow: 0 0 10px rgba(0, 204, 255, 0.3);
     }
 
-    .btn:hover {
-      transform: scale(1.05);
+    .post .actions button:hover {
+      background-color: #4568a7;
     }
 
-    @keyframes float3D {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0px); }
+    .message-input-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+      border-top: 1px solid #444;
+      padding-top: 10px;
     }
 
-    @keyframes colorPulse {
-      0% { background-position: 0% center; }
-      50% { background-position: 100% center; }
-      100% { background-position: 0% center; }
+    .message-input-area input {
+      width: 90%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
     }
 
-    .title {
-      position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 28px;
-      font-weight: bold;
-      text-shadow: 0 0 10px rgba(0, 204, 255, 0.6);
+    .send-btn {
+      background-color: #3b5998;
+      border: none;
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
     }
 
+    .send-btn:hover {
+      background-color: #4568a7;
+    }
   </style>
 </head>
 <body>
-  <div class="video-container">
-    <video autoplay muted loop>
-      <source src="your-video.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
 
-    <div class="title">Smart Burme Party System</div>
+  <div class="sidebar">
+    <a href="#">Home</a>
+    <a href="#">Friends</a>
+    <a href="#">Messages</a>
+    <a href="#">Groups</a>
+    <a href="#">Notifications</a>
+  </div>
 
-    <div class="overlay-controls">
-      <button class="btn" onclick="goToPrivateChat()">One-on-One Voice Chat</button>
-      <button class="btn" onclick="goToGroupParty()">Group Voice Party</button>
+  <div class="main-content">
+    <div class="header">
+      <div class="logo">SocialApp</div>
+      <div class="profile">
+        <img src="https://via.placeholder.com/40" alt="Profile Picture"/>
+        <div class="name">John Doe</div>
+      </div>
+    </div>
+
+    <!-- Posts -->
+    <div class="post">
+      <img src="https://via.placeholder.com/50" alt="User Profile" />
+      <div class="post-content">
+        <div class="name">John Doe</div>
+        <div class="message">This is my first post on SocialApp!</div>
+        <div class="actions">
+          <button>Like</button>
+          <button>Comment</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="post">
+      <img src="https://via.placeholder.com/50" alt="User Profile" />
+      <div class="post-content">
+        <div class="name">Jane Smith</div>
+        <div class="message">Had a great day today! #FeelingGood</div>
+        <div class="actions">
+          <button>Like</button>
+          <button>Comment</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Message Input Area -->
+    <div class="message-input-area">
+      <input type="text" placeholder="Write a message..." />
+      <button class="send-btn">Send</button>
     </div>
   </div>
 
-  <script>
-    function goToPrivateChat() {
-      window.location.href = "private_chat.html";
-    }
-
-    function goToGroupParty() {
-      window.location.href = "group_party.html";
-    }
+  <script type="module">
+    // Add your Firebase and message sending logic here
   </script>
+
 </body>
 </html>
