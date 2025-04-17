@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Smart Burme</title>
+  <title>Smart Burme - Index</title>
   <style>
     * {
       margin: 0;
@@ -12,11 +12,11 @@
     }
 
     body {
-      background: linear-gradient(-45deg, #000000, #1a1a1a, #000000, #1a1a1a);
+      background: linear-gradient(-45deg, #0d0d0d, #1a1a1a, #000000, #262626);
       background-size: 400% 400%;
-      animation: backgroundAnimation 10s ease infinite;
+      animation: backgroundShift 12s ease infinite;
+      font-family: 'Segoe UI', sans-serif;
       color: white;
-      font-family: Arial, sans-serif;
       height: 100vh;
       overflow: hidden;
       display: flex;
@@ -25,173 +25,120 @@
       justify-content: center;
     }
 
-    /* Background animation */
-    @keyframes backgroundAnimation {
+    @keyframes backgroundShift {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
-    /* Floating text effect */
-    #floating-text {
+    .floating-title {
       font-size: 60px;
       font-weight: bold;
-      animation: float3D 3s ease-in-out, grayBlueChange 3s ease-in-out;
-      perspective: 800px;
+      animation: float3D 4s ease-in-out infinite, colorChange 6s infinite alternate;
+      text-align: center;
+      margin-bottom: 20px;
     }
 
     @keyframes float3D {
       0% { transform: rotateY(0deg) translateY(0); }
-      25% { transform: rotateY(15deg) translateY(-10px); }
+      25% { transform: rotateY(10deg) translateY(-10px); }
       50% { transform: rotateY(0deg) translateY(0); }
-      75% { transform: rotateY(-15deg) translateY(10px); }
+      75% { transform: rotateY(-10deg) translateY(10px); }
       100% { transform: rotateY(0deg) translateY(0); }
     }
 
-    @keyframes grayBlueChange {
-      0% { color: #999; }
-      50% { color: #66ccff; }
-      100% { color: #999; }
+    @keyframes colorChange {
+      0% { color: #a0a0a0; }
+      50% { color: #00ccff; }
+      100% { color: #cccccc; }
     }
 
-    /* Loading Spinner */
-    .loading-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      display: none; /* Hidden by default */
-    }
-
-    .spinner {
-      border: 8px solid rgba(255, 255, 255, 0.3);
-      border-top: 8px solid #00d4ff;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    /* Welcome text fade in */
-    .welcome-text {
-      display: none;
-      font-size: 24px;
-      margin-top: 20px;
-      animation: fadeText 2s ease-in-out forwards;
+    .welcome {
+      font-size: 20px;
+      animation: fadeText 2s ease-out;
+      opacity: 0;
+      animation-fill-mode: forwards;
     }
 
     @keyframes fadeText {
-      0% { opacity: 0; transform: translateY(50px); }
-      100% { opacity: 1; transform: translateY(0); }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
     }
 
-    #buttons {
+    .buttons {
+      margin-top: 50px;
       display: flex;
       flex-direction: column;
       gap: 15px;
-      margin-top: 50px;
       opacity: 0;
-      animation: fadeButtons 2s forwards;
-      animation-delay: 5s;
+      animation: buttonFade 2s ease forwards;
+      animation-delay: 3s;
     }
 
-    @keyframes fadeButtons {
+    @keyframes buttonFade {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     .btn {
-      text-decoration: none;
-      text-align: center;
       background: linear-gradient(90deg, #3a8bdc, #00d4ff, #3a8bdc);
       background-size: 200% auto;
       color: white;
       padding: 15px 30px;
       border-radius: 10px;
+      text-decoration: none;
       font-size: 18px;
       font-weight: bold;
-      transition: background-position 0.5s ease, transform 0.3s ease;
       box-shadow: 0 0 15px rgba(0, 204, 255, 0.3);
+      transition: background-position 0.5s, transform 0.3s;
+      text-align: center;
     }
 
     .btn:hover {
       background-position: right center;
       transform: scale(1.05);
     }
+
+    #loader {
+      position: absolute;
+      top: 45%;
+      font-size: 20px;
+      color: #aaa;
+    }
+
+    #main-content {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
   </style>
 </head>
 <body>
+  <div id="loader">Loading Smart Burme App...</div>
 
-  <!-- Loading Overlay (Spinner) -->
-  <div class="loading-overlay" id="loadingOverlay">
-    <div class="spinner"></div>
+  <div id="main-content">
+    <div class="floating-title">Smart Burme</div>
+    <div class="welcome">Welcome to the Smart Burme App</div>
+
+    <div class="buttons">
+      <a href="login.html" class="btn">Login</a>
+      <a href="registration.html" class="btn">Register</a>
+      <a href="forget_password.html" class="btn">Forgot Password</a>
+    </div>
   </div>
-
-  <div id="floating-text">Smart Burme</div>
-
-  <div id="welcome-text" class="welcome-text">
-    Smart Burme App မှ ကြိုဆိုပါတယ်
-  </div>
-
-  <div id="buttons">
-    <a href="login.html" class="btn">Login</a>
-    <a href="registration.html" class="btn">Register</a>
-    <a href="forget_password.html" class="btn">Forgot Password</a>
-  </div>
-
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js"></script>
 
   <script>
-    // Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
-      authDomain: "smart-burme-app.firebaseapp.com",
-      projectId: "smart-burme-app",
-      storageBucket: "smart-burme-app.appspot.com",
-      messagingSenderId: "851502425686",
-      appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7"
-    };
-
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-
-    // Show loading overlay while Firebase is loading
-    document.getElementById("loadingOverlay").style.display = "flex";
-
-    // Simulate delay to show loading spinner (remove in production)
+    // Loading UI logic
     setTimeout(() => {
-      // Hide the loading spinner when the content is ready
-      document.getElementById("loadingOverlay").style.display = "none";
-      
-      // Display the welcome text after 3 seconds
-      setTimeout(() => {
-        document.getElementById("welcome-text").style.display = "block";
-      }, 3000);
-      
-      // Show the buttons after the welcome message
-      setTimeout(() => {
-        document.querySelectorAll('.btn').forEach(button => {
-          button.style.opacity = '1';
-          button.style.transform = 'translateY(0)';
-        });
-      }, 5000);
-    }, 3000); // You can change this to the actual Firebase load time if needed
-
+      document.getElementById('loader').style.display = 'none';
+      document.getElementById('main-content').style.display = 'flex';
+    }, 3000); // 3 seconds loading
   </script>
-
 </body>
 </html>
