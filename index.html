@@ -1,144 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Smart Burme - Index</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Burme - Index</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      background: linear-gradient(-45deg, #0d0d0d, #1a1a1a, #000000, #262626);
-      background-size: 400% 400%;
-      animation: backgroundShift 12s ease infinite;
-      font-family: 'Segoe UI', sans-serif;
-      color: white;
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
+        body {
+            background: linear-gradient(-45deg, #0d0d0d, #1a1a1a, #000000, #262626);
+            background-size: 400% 400%;
+            animation: backgroundShift 12s ease infinite;
+            font-family: 'Segoe UI', sans-serif;
+            color: white;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
 
-    @keyframes backgroundShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+        @keyframes backgroundShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-    .floating-title {
-      font-size: 60px;
-      font-weight: bold;
-      animation: float3D 4s ease-in-out infinite, colorChange 6s infinite alternate;
-      text-align: center;
-      margin-bottom: 20px;
-    }
+        .floating-title {
+            font-size: 60px;
+            font-weight: bold;
+            animation: float3D 4s ease-in-out infinite, colorChange 6s infinite alternate;
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-    @keyframes float3D {
-      0% { transform: rotateY(0deg) translateY(0); }
-      25% { transform: rotateY(10deg) translateY(-10px); }
-      50% { transform: rotateY(0deg) translateY(0); }
-      75% { transform: rotateY(-10deg) translateY(10px); }
-      100% { transform: rotateY(0deg) translateY(0); }
-    }
+        @keyframes float3D {
+            0% { transform: rotateY(0deg) translateY(0); }
+            25% { transform: rotateY(10deg) translateY(-10px); }
+            50% { transform: rotateY(0deg) translateY(0); }
+            75% { transform: rotateY(-10deg) translateY(10px); }
+            100% { transform: rotateY(0deg) translateY(0); }
+        }
 
-    @keyframes colorChange {
-      0% { color: #a0a0a0; }
-      50% { color: #00ccff; }
-      100% { color: #cccccc; }
-    }
+        @keyframes colorChange {
+            0% { color: #a0a0a0; }
+            50% { color: #00ccff; }
+            100% { color: #cccccc; }
+        }
 
-    .welcome {
-      font-size: 20px;
-      animation: fadeText 2s ease-out;
-      opacity: 0;
-      animation-fill-mode: forwards;
-    }
+        .welcome {
+            font-size: 20px;
+            animation: fadeText 2s ease-out;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
 
-    @keyframes fadeText {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-    }
+        @keyframes fadeText {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        }
 
-    .buttons {
-      margin-top: 50px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      opacity: 0;
-      animation: buttonFade 2s ease forwards;
-      animation-delay: 3s;
-    }
+        .buttons {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            opacity: 0;
+            animation: buttonFade 2s ease forwards;
+            animation-delay: 3s;
+        }
 
-    @keyframes buttonFade {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        @keyframes buttonFade {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    .btn {
-      background: linear-gradient(90deg, #3a8bdc, #00d4ff, #3a8bdc);
-      background-size: 200% auto;
-      color: white;
-      padding: 15px 30px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-size: 18px;
-      font-weight: bold;
-      box-shadow: 0 0 15px rgba(0, 204, 255, 0.3);
-      transition: background-position 0.5s, transform 0.3s;
-      text-align: center;
-    }
+        .btn {
+            background: linear-gradient(90deg, #3a8bdc, #00d4ff, #3a8bdc);
+            background-size: 200% auto;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 0 15px rgba(0, 204, 255, 0.3);
+            transition: background-position 0.5s, transform 0.3s;
+            text-align: center;
+        }
 
-    .btn:hover {
-      background-position: right center;
-      transform: scale(1.05);
-    }
+        .btn:hover {
+            background-position: right center;
+            transform: scale(1.05);
+        }
 
-    #loader {
-      position: absolute;
-      top: 45%;
-      font-size: 20px;
-      color: #aaa;
-    }
+        #loader {
+            position: absolute;
+            top: 45%;
+            font-size: 20px;
+            color: #aaa;
+        }
 
-    #main-content {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-    }
-  </style>
+        #main-content {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
 </head>
 <body>
-  <div id="loader">Loading...</div>
+    <div id="loader">Loading Smart Burme App...</div>
 
-  <div id="main-content">
-    <div class="floating-title">Smart Burme</div>
-    <div class="welcome">Welcome to the Smart Burme App</div>
+    <div id="main-content">
+        <div class="floating-title">Smart Burme</div>
+        <div class="welcome">Welcome to the Smart Burme App</div>
 
-    <div class="buttons">
-      <a href="login.html" class="btn">Login</a>
-      <a href="registration.html" class="btn">Register</a>
-      <a href="forget_password.html" class="btn">Forgot Password</a>
+        <div class="buttons">
+            <a href="login.html" class="btn">Login</a>
+            <a href="registration.html" class="btn">Register</a>
+            <a href="forget_password.html" class="btn">Forgot Password</a>
+        </div>
     </div>
-  </div>
 
-  <script>
-    // Loading UI logic
-    setTimeout(() => {
-      document.getElementById('loader').style.display = 'none';
-      document.getElementById('main-content').style.display = 'flex';
-    }, 3000); // 3 seconds loading
-  </script>
+    <script>
+        // Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
+            authDomain: "smart-burme-app.firebaseapp.com",
+            projectId: "smart-burme-app",
+            storageBucket: "smart-burme-app.appspot.com",
+            messagingSenderId: "851502425686",
+            appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+
+        // Loading UI logic
+        setTimeout(() => {
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('main-content').style.display = 'flex';
+        }, 3000); // 3 seconds loading
+    </script>
 </body>
 </html>
