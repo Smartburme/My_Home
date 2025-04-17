@@ -1,0 +1,12 @@
+{
+  "name": "smart-burme",
+  "version": "1.0.0",
+  "description": "Smart Burme App with Firebase & Genkit AI integration",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@genkit-ai/firebase": "^0.1.0"
+  }
+}
