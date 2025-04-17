@@ -6,17 +6,22 @@
   <title>Social Chat</title>
   <style>
     * {
-      margin: 0; padding: 0; box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     body {
       background: linear-gradient(-45deg, #0d0d0d, #1a1a1a, #000000, #262626);
       background-size: 400% 400%;
       animation: backgroundShift 10s ease infinite;
-      font-family: 'Segoe UI', sans-serif;
       color: white;
-      display: flex;
+      font-family: 'Segoe UI', sans-serif;
       height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
     }
 
     @keyframes backgroundShift {
@@ -29,10 +34,11 @@
     .header {
       background-color: #3b5998;
       color: white;
+      width: 100%;
       padding: 15px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
     }
 
     .header .logo {
@@ -63,6 +69,9 @@
       padding: 20px;
       width: 250px;
       height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
       display: flex;
       flex-direction: column;
       gap: 20px;
@@ -80,13 +89,17 @@
       border-radius: 5px;
     }
 
-    /* Main Content Area */
+    /* Main Content */
     .main-content {
-      flex-grow: 1;
+      margin-left: 250px;
       padding: 20px;
-      overflow-y: auto;
+      width: 100%;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
     }
 
+    /* Posts */
     .post {
       background-color: #444;
       padding: 20px;
@@ -135,6 +148,7 @@
       background-color: #4568a7;
     }
 
+    /* Message Input Area */
     .message-input-area {
       display: flex;
       align-items: center;
@@ -164,9 +178,50 @@
     .send-btn:hover {
       background-color: #4568a7;
     }
+
+    /* Footer */
+    .footer {
+      background-color: #3b5998;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      width: 100%;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .sidebar {
+        width: 100%;
+        position: static;
+        padding: 10px;
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 10px;
+      }
+
+      .footer {
+        font-size: 14px;
+      }
+    }
+
   </style>
 </head>
 <body>
+
+  <div class="header">
+    <div class="logo">SocialApp</div>
+    <div class="profile">
+      <img src="https://via.placeholder.com/40" alt="Profile Picture"/>
+      <div class="name">John Doe</div>
+    </div>
+  </div>
 
   <div class="sidebar">
     <a href="#">Home</a>
@@ -177,14 +232,6 @@
   </div>
 
   <div class="main-content">
-    <div class="header">
-      <div class="logo">SocialApp</div>
-      <div class="profile">
-        <img src="https://via.placeholder.com/40" alt="Profile Picture"/>
-        <div class="name">John Doe</div>
-      </div>
-    </div>
-
     <!-- Posts -->
     <div class="post">
       <img src="https://via.placeholder.com/50" alt="User Profile" />
@@ -215,6 +262,10 @@
       <input type="text" placeholder="Write a message..." />
       <button class="send-btn">Send</button>
     </div>
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2025 SocialApp</p>
   </div>
 
   <script type="module">
