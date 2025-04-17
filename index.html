@@ -1,121 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Smart Burme</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Burme</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    body {
-      background: linear-gradient(-45deg, #000000, #1a1a1a, #000000, #1a1a1a);
-      background-size: 400% 400%;
-      animation: backgroundAnimation 10s ease infinite;
-      color: white;
-      font-family: Arial, sans-serif;
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
+    body {
+      background: linear-gradient(-45deg, #000000, #1a1a1a, #000000, #1a1a1a);
+      background-size: 400% 400%;
+      animation: backgroundAnimation 10s ease infinite;
+      color: white;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
 
-    @keyframes backgroundAnimation {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+    @keyframes backgroundAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-    #floating-text {
-      font-size: 60px;
-      font-weight: bold;
-      animation: float3D 3s infinite ease-in-out, grayBlueChange 3s infinite ease-in-out;
-      perspective: 800px;
-    }
+    #floating-text {
+      font-size: 60px;
+      font-weight: bold;
+      animation: float3D 3s ease-in-out, grayBlueChange 3s ease-in-out;
+      perspective: 800px;
+    }
 
-    @keyframes float3D {
-      0% { transform: rotateX(0deg) translateY(0); }
-      25% { transform: rotateX(15deg) translateY(-10px); }
-      50% { transform: rotateX(0deg) translateY(0); }
-      75% { transform: rotateX(-15deg) translateY(10px); }
-      100% { transform: rotateX(0deg) translateY(0); }
-    }
+    @keyframes float3D {
+      0% { transform: rotateY(0deg) translateY(0); }
+      25% { transform: rotateY(15deg) translateY(-10px); }
+      50% { transform: rotateY(0deg) translateY(0); }
+      75% { transform: rotateY(-15deg) translateY(10px); }
+      100% { transform: rotateY(0deg) translateY(0); }
+    }
 
-    @keyframes grayBlueChange {
-      0% { color: #bbb; }
-      50% { color: #7ec8e3; }
-      100% { color: #bbb; }
-    }
+    @keyframes grayBlueChange {
+      0% { color: #999; }
+      50% { color: #66ccff; }
+      100% { color: #999; }
+    }
 
-    .welcome-text {
-      display: none;
-      font-size: 24px;
-      margin-top: 20px;
-      animation: fadeText 2s ease-in-out forwards;
-    }
+    .welcome-text {
+      display: none;
+      font-size: 24px;
+      margin-top: 20px;
+      animation: fadeText 2s ease-in-out forwards;
+    }
 
-    @keyframes fadeText {
-      0% { opacity: 0; transform: translateY(50px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeText {
+      0% { opacity: 0; transform: translateY(50px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
 
-    #buttons {
-      opacity: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      margin-top: 50px;
-      animation: fadeButtons 2s forwards;
-      animation-delay: 5s;
-    }
+    #buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 50px;
+    }
 
-    @keyframes fadeButtons {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .btn {
-      text-decoration: none;
-      text-align: center;
-      background: linear-gradient(90deg, #3a8bdc, #00d4ff, #3a8bdc);
-      background-size: 200% auto;
-      color: white;
-      padding: 15px 30px;
-      border-radius: 10px;
-      font-size: 18px;
-      font-weight: bold;
-      transition: background-position 0.5s ease, transform 0.3s ease;
-      box-shadow: 0 0 15px rgba(0, 204, 255, 0.3);
-    }
-
-    .btn:hover {
-      background-position: right center;
-      transform: scale(1.05);
-    }
-  </style>
-</head>
-<body>
-  <div id="floating-text">Smart Burme</div>
-
-  <div id="welcome-text" class="welcome-text">
-    Smart Burme App မှ ကြိုဆိုပါတယ်
-  </div>
-
-  <div id="buttons">
-    <a href="login.html" class="btn">Login</a>
-    <a href="registration.html" class="btn">Register</a>
-    <a href="forget_password.html" class="btn">Forgot Password</a>
-  </div>
-
-  <script>
-    setTimeout(() => {
-      document.getElementById("welcome-text").style.display = "block";
-    }, 3000);
-  </script>
-</body>
-</html>
+    .btn {
+      opacity: 0;
+      text-decoration: none;
+      text-align: center;
+      background: linear-gradient(90deg, #3a8bdc, #00d4ff, #3a8bdc);
+      background-size: 200% auto;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      transition: background-position 0.5s ease, transform 0
