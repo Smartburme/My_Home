@@ -92,20 +92,29 @@
     }
 
     .links {
-      margin-top: 15px;
-      font-size: 14px;
-      display: flex;
-      justify-content: space-between;
+      margin-top: 20px;
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
     }
 
     .links a {
-      color: #00d4ff;
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 10px;
+      font-weight: bold;
+      border-radius: 8px;
+      color: white;
+      background: rgba(0, 204, 255, 0.2);
       text-decoration: none;
+      transition: background 0.3s;
     }
 
     .links a:hover {
-      text-decoration: underline;
+      background: rgba(0, 204, 255, 0.4);
     }
   </style>
 </head>
@@ -119,7 +128,7 @@
     </form>
     <div class="links">
       <a href="registration.html">New Account</a>
-      <a href="forget_password.html">Forgot?</a>
+      <a href="forget_password.html">Forgot Password</a>
     </div>
   </div>
 
