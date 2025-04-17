@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registration - SMART BURME</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -15,28 +14,28 @@
     }
 
     body {
+      background-color: #0f0f0f;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      background: #1f293a; /* Nero background */
+      height: 100vh;
+      overflow: hidden;
     }
 
     .container {
+      position: relative;
       width: 90%;
       max-width: 400px;
-      background: rgba(31, 41, 58, 0.85);
+      background: rgba(31, 41, 58, 0.8);
       border-radius: 20px;
       padding: 40px;
       box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(5px);
     }
 
     .container h2 {
       font-size: 2em;
-      background: linear-gradient(to right, #ccc, #fff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #0ef;
       text-align: center;
       margin-bottom: 30px;
     }
@@ -103,12 +102,50 @@
       background: #09c;
       box-shadow: 0 0 15px #0ef;
     }
+
+    .menu {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      border-radius: 30px;
+      padding: 12px 30px;
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      z-index: 2;
+      animation: floatUp 1s ease-out;
+    }
+
+    .menu i {
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .menu i:hover {
+      color: #0ef;
+      transform: scale(1.2);
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateX(-50%) translateY(100px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
+    }
   </style>
 </head>
 <body>
-
   <div class="container">
-    <h2>SMART BURME</h2>
+    <h2>Registration</h2>
     <form id="registrationForm">
       <div class="input-box">
         <input type="text" id="username" required>
@@ -126,53 +163,39 @@
     </form>
   </div>
 
-  <!-- Firebase SDK -->
-  <script type="module">
-    // Firebase SDKs
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+  <div class="menu">
+    <i class="fas fa-home"></i>
+    <i class="fas fa-search"></i>
+    <i class="fas fa-plus-circle"></i>
+    <i class="fas fa-comments"></i>
+    <i class="fas fa-user"></i>
+  </div>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
-      authDomain: "smart-burme-app.firebaseapp.com",
-      projectId: "smart-burme-app",
-      storageBucket: "smart-burme-app.appspot.com",
-      messagingSenderId: "851502425686",
-      appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7",
-      measurementId: "G-EB564CY4KT"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
+  <script>
     document.getElementById("registrationForm").addEventListener("submit", function(e) {
       e.preventDefault();
-
       const username = document.getElementById("username").value;
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
 
+      // Validate email format (simple regex for Gmail)
       const emailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
       if (!emailPattern.test(email)) {
-        alert("Gmail လိပ်စာမှန်မှန် ရိုက်ထည့်ပါ");
+        alert("Please enter a valid Gmail address.");
         return;
       }
 
+      // Validate password length
       if (password.length < 6) {
-        alert("Password သည် အနည်းဆုံး ၆ လုံးရှိရမည်");
+        alert("Password must be at least 6 characters long.");
         return;
       }
 
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          alert("မှတ်ပုံတင်ပြီးပါပြီ။ Login များသို့ ဦးတည်နေပါပြီ...");
-          setTimeout(() => {
-            window.location.href = "login.html";
-          }, 3000);
-        })
-        .catch((error) => {
-          alert("Error: " + error.message);
-        });
+      // Registration successful, proceed to Login page after 7 seconds
+      setTimeout(function() {
+        alert("Registration successful! Redirecting to Login page.");
+        window.location.href = "login.html"; // Redirect to the login page after 7 seconds
+      }, 7000);
     });
   </script>
 </body>
