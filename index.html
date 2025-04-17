@@ -114,12 +114,20 @@
     </div>
   </div>
 
+  <!-- Loading animation -->
   <script>
-    // Loading UI logic
     setTimeout(() => {
       document.getElementById('loader').style.display = 'none';
       document.getElementById('main-content').style.display = 'flex';
-    }, 3000); // 3 seconds loading
+    }, 3000);
+  </script>
+
+  <!-- Firebase auth.js module import -->
+  <script type="module">
+    import { login, register, resetPassword } from './auth.js';
+
+    // အခုအတွက် အကြောင်းအရာမရှိပဲ import လုပ်ထားတာ ဖြစ်ပါတယ်
+    // လိုအပ်တဲ့နေရာမှာ ဒီ function တွေကို သုံးနိုင်ပါတယ်
   </script>
 </body>
 </html>
