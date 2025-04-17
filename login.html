@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login - Smart Burme</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Burme - Login</title>
   <style>
-    /* General Styles */
     * {
       margin: 0;
       padding: 0;
@@ -13,17 +12,15 @@
     }
 
     body {
+      height: 100vh;
       background: linear-gradient(-45deg, #0d0d0d, #1a1a1a, #000000, #262626);
       background-size: 400% 400%;
       animation: backgroundShift 12s ease infinite;
       font-family: 'Segoe UI', sans-serif;
       color: white;
-      height: 100vh;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
-      overflow: hidden;
+      justify-content: center;
     }
 
     @keyframes backgroundShift {
@@ -32,11 +29,21 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Floating Animation for Title */
-    .floating-title {
-      font-size: 60px;
+    .login-box {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(0, 204, 255, 0.3);
+      width: 90%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .title {
+      font-size: 36px;
       font-weight: bold;
-      text-align: center;
       margin-bottom: 20px;
       animation: float3D 4s ease-in-out infinite, colorChange 6s infinite alternate;
     }
@@ -55,44 +62,28 @@
       100% { color: #cccccc; }
     }
 
-    /* Login Form Styles */
-    .login-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      animation: fadeIn 2s ease-out forwards;
-      animation-delay: 1s;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
     input {
+      width: 100%;
+      padding: 12px;
       margin: 10px 0;
-      padding: 10px;
+      border: none;
+      border-radius: 8px;
       font-size: 16px;
-      width: 300px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
     }
 
     button {
+      margin-top: 15px;
+      padding: 12px;
+      width: 100%;
+      font-size: 18px;
       background: linear-gradient(90deg, #3a8bdc, #00d4ff, #3a8bdc);
       background-size: 200% auto;
-      color: white;
-      padding: 15px 30px;
+      border: none;
       border-radius: 10px;
-      text-decoration: none;
-      font-size: 18px;
+      color: white;
       font-weight: bold;
-      box-shadow: 0 0 15px rgba(0, 204, 255, 0.3);
-      transition: background-position 0.5s, transform 0.3s;
-      width: 300px;
       cursor: pointer;
+      transition: background-position 0.5s, transform 0.3s;
     }
 
     button:hover {
@@ -101,42 +92,34 @@
     }
 
     .links {
-      margin-top: 20px;
-      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
     }
 
     .links a {
       color: #00d4ff;
-      font-size: 16px;
       text-decoration: none;
-      margin: 0 10px;
     }
 
     .links a:hover {
       text-decoration: underline;
     }
-
-    /* Loader Style */
-    #loader {
-      font-size: 20px;
-      color: #aaa;
-    }
   </style>
 </head>
 <body>
-
-  <div id="loader">Loading Smart Burme App...</div>
-
-  <div class="login-container" id="main-content">
-    <div class="floating-title">Smart Burme</div>
-    <form id="login-form" onsubmit="event.preventDefault(); login();">
+  <div class="login-box">
+    <div class="title">Smart Burme</div>
+    <form onsubmit="event.preventDefault(); login();">
       <input type="email" id="email" placeholder="Email" required />
       <input type="password" id="password" placeholder="Password" required />
       <button type="submit">Login</button>
     </form>
     <div class="links">
-      <a href="registration.html">Create New Account</a>
-      <a href="forget_password.html">Forgot Password?</a>
+      <a href="registration.html">New Account</a>
+      <a href="forget_password.html">Forgot?</a>
     </div>
   </div>
 
@@ -145,30 +128,5 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js"></script>
   <script src="firebase-config.js"></script>
   <script src="auth.js"></script>
-
-  <script>
-    // Show Main Content after 3 seconds loading
-    setTimeout(() => {
-      document.getElementById('loader').style.display = 'none';
-      document.getElementById('main-content').style.display = 'flex';
-    }, 3000);
-
-    // Firebase login logic
-    function login() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          window.location.href = "main.html"; // Redirect to main page after successful login
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          alert("Login failed: " + errorMessage);
-        });
-    }
-  </script>
-
 </body>
 </html>
