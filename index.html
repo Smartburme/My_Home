@@ -4,62 +4,106 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Smart Burme</title>
-
-  <!-- Gradient Text Style -->
   <style>
-    body {
+    * {
       margin: 0;
       padding: 0;
-      background-color: #0f0f1a;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: black;
+      color: white;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      font-family: Arial, sans-serif;
       overflow: hidden;
-      font-family: 'Segoe UI', sans-serif;
     }
 
-    .gradient-text {
-      font-size: 2.5rem;
+    #floating-text {
+      font-size: 50px;
       font-weight: bold;
-      background: linear-gradient(to right, #888888, #e0e0e0);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: flicker 1.5s infinite alternate;
+      animation: floating 3s ease-in-out, colorChange 3s ease-in-out infinite;
     }
 
-    @keyframes flicker {
-      0% { opacity: 0.8; }
+    @keyframes floating {
+      0% { transform: translateY(0); }
+      25% { transform: translateY(-20px); }
+      50% { transform: translateY(0); }
+      75% { transform: translateY(20px); }
+      100% { transform: translateY(0); }
+    }
+
+    @keyframes colorChange {
+      0% { color: #ff6f61; }
+      33% { color: #ffcc00; }
+      66% { color: #00b5e2; }
+      100% { color: #ff6f61; }
+    }
+
+    .welcome-text {
+      display: none;
+      font-size: 24px;
+      text-align: center;
+      margin-top: 20px;
+      animation: textInOut 2s ease-in-out forwards;
+    }
+
+    @keyframes textInOut {
+      0% { opacity: 0; transform: translateY(50px); }
+      50% { opacity: 1; transform: translateY(0); }
       100% { opacity: 1; }
+    }
+
+    #buttons {
+      display: flex;
+      gap: 20px;
+      margin-top: 40px;
+      opacity: 0;
+      animation: fadeIn 2s forwards;
+      animation-delay: 5s;
+    }
+
+    .btn {
+      text-decoration: none;
+      background: linear-gradient(45deg, #ff6f61, #ffcc00, #00b5e2);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      font-size: 16px;
+      transition: transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+    }
+
+    .btn:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-  <div class="gradient-text">Smart Burme</div>
+  <div id="floating-text">Smart Burme</div>
 
-  <!-- Firebase Scripts -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-analytics.js";
+  <div id="welcome-text" class="welcome-text">
+    Smart Burme App မှ ကြိုဆိုပါတယ်
+  </div>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
-      authDomain: "smart-burme-app.firebaseapp.com",
-      projectId: "smart-burme-app",
-      storageBucket: "smart-burme-app.appspot.com",
-      messagingSenderId: "851502425686",
-      appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7",
-      measurementId: "G-EB564CY4KT"
-    };
+  <div id="buttons">
+    <a href="login.html" class="btn">Login</a>
+    <a href="signup.html" class="btn">Sign Up</a>
+    <a href="forget-password.html" class="btn">Forgot Password</a>
+  </div>
 
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-  </script>
-
-  <!-- Redirect After 3s -->
   <script>
     setTimeout(() => {
-      window.location.href = "registration.html";
+      document.getElementById("welcome-text").style.display = "block";
     }, 3000);
   </script>
 </body>
