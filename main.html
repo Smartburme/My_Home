@@ -2,153 +2,275 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smart Burme - Main</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Social Chat</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      background: linear-gradient(-45deg, #0d0d0d, #1a1a1a, #000000, #262626);
+      background-size: 400% 400%;
+      animation: backgroundShift 10s ease infinite;
       color: white;
+      font-family: 'Segoe UI', sans-serif;
       height: 100vh;
       display: flex;
       flex-direction: column;
-    }
-
-    header {
-      background: rgba(0, 0, 0, 0.4);
-      padding: 15px 20px;
-      display: flex;
-      justify-content: space-around;
       align-items: center;
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid #444;
+      justify-content: flex-start;
     }
 
-    header nav a {
-      color: #fff;
-      text-decoration: none;
-      margin: 0 10px;
+    @keyframes backgroundShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Header */
+    .header {
+      background-color: #3b5998;
+      color: white;
+      width: 100%;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header .logo {
+      font-size: 24px;
       font-weight: bold;
-      transition: color 0.3s;
     }
 
-    header nav a:hover {
-      color: #00e0ff;
-    }
-
-    .container {
+    .header .profile {
       display: flex;
-      flex: 1;
-      overflow: hidden;
-    }
-
-    .left-panel, .right-panel {
-      width: 20%;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 15px;
-      overflow-y: auto;
-    }
-
-    .center-panel {
-      flex: 1;
-      padding: 15px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .post {
-      background: rgba(255, 255, 255, 0.08);
-      padding: 10px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    }
-
-    .floating-menu {
-      position: fixed;
-      left: 10px;
-      bottom: 100px;
-      display: flex;
-      flex-direction: column;
+      align-items: center;
       gap: 10px;
     }
 
-    .floating-menu button {
-      background: #00d4ff;
-      color: white;
-      padding: 10px;
-      border: none;
+    .header .profile img {
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
+    }
+
+    .header .profile .name {
+      font-size: 16px;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background-color: #2d4373;
+      color: white;
+      padding: 20px;
+      width: 250px;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .sidebar a:hover {
+      background-color: #455d85;
+      padding: 5px;
+      border-radius: 5px;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 250px;
+      padding: 20px;
+      width: 100%;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Posts */
+    .post {
+      background-color: #444;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .post img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+
+    .post-content {
+      flex-grow: 1;
+    }
+
+    .post-content .name {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .post-content .message {
+      margin-bottom: 10px;
+    }
+
+    .post .actions {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .post .actions button {
+      background-color: #3b5998;
+      border: none;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 5px;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      transition: transform 0.3s;
     }
 
-    .floating-menu button:hover {
-      transform: scale(1.1);
+    .post .actions button:hover {
+      background-color: #4568a7;
     }
 
-    footer {
+    /* Message Input Area */
+    .message-input-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+      border-top: 1px solid #444;
+      padding-top: 10px;
+    }
+
+    .message-input-area input {
+      width: 90%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .send-btn {
+      background-color: #3b5998;
+      border: none;
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .send-btn:hover {
+      background-color: #4568a7;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #3b5998;
+      color: white;
       text-align: center;
       padding: 10px;
-      background: black;
-      font-size: 14px;
-      animation: footerColorChange 3s infinite alternate;
+      width: 100%;
     }
 
-    @keyframes footerColorChange {
-      0% { color: #ff00cc; }
-      50% { color: #00ffcc; }
-      100% { color: #ffcc00; }
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .sidebar {
+        width: 100%;
+        position: static;
+        padding: 10px;
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 10px;
+      }
+
+      .footer {
+        font-size: 14px;
+      }
     }
+
   </style>
 </head>
 <body>
-  <header>
-    <nav>
-      <a href="#">Newfeed</a>
-      <a href="#">Buy Items</a>
-      <a href="#">About Me</a>
-      <a href="#">Settings</a>
-    </nav>
-  </header>
 
-  <div class="container">
-    <div class="left-panel">
-      <h3>Friends</h3>
-      <ul>
-        <li>Mg Tun</li>
-        <li>Su Su</li>
-        <li>Aye Thandar</li>
-      </ul>
-    </div>
-
-    <div class="center-panel">
-      <div class="post">Post #1 - Welcome to Smart Burme</div>
-      <div class="post">Post #2 - You can share your thoughts here.</div>
-    </div>
-
-    <div class="right-panel">
-      <h3>Group Chat List</h3>
-      <ul>
-        <li>Developers Group</li>
-        <li>Family</li>
-        <li>Friends Forever</li>
-      </ul>
+  <div class="header">
+    <div class="logo">SocialApp</div>
+    <div class="profile">
+      <img src="https://via.placeholder.com/40" alt="Profile Picture"/>
+      <div class="name">John Doe</div>
     </div>
   </div>
 
-  <div class="floating-menu">
-    <button title="Group Chat">GC</button>
-    <button title="Message">Msg</button>
-    <button title="Bank">Bank</button>
+  <div class="sidebar">
+    <a href="#">Home</a>
+    <a href="#">Friends</a>
+    <a href="#">Messages</a>
+    <a href="#">Groups</a>
+    <a href="#">Notifications</a>
   </div>
 
-  <footer>
-    " Smart Burme "<br/>
-    Deployment by Mg Aung Thuyrain
-  </footer>
+  <div class="main-content">
+    <!-- Posts -->
+    <div class="post">
+      <img src="https://via.placeholder.com/50" alt="User Profile" />
+      <div class="post-content">
+        <div class="name">John Doe</div>
+        <div class="message">This is my first post on SocialApp!</div>
+        <div class="actions">
+          <button>Like</button>
+          <button>Comment</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="post">
+      <img src="https://via.placeholder.com/50" alt="User Profile" />
+      <div class="post-content">
+        <div class="name">Jane Smith</div>
+        <div class="message">Had a great day today! #FeelingGood</div>
+        <div class="actions">
+          <button>Like</button>
+          <button>Comment</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Message Input Area -->
+    <div class="message-input-area">
+      <input type="text" placeholder="Write a message..." />
+      <button class="send-btn">Send</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2025 SocialApp</p>
+  </div>
+
+  <script type="module">
+    // Add your Firebase and message sending logic here
+  </script>
+
 </body>
 </html>
