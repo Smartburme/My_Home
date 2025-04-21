@@ -4,62 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Smart Burme - Main</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #001f3f, #005082, #003366);
       color: white;
       overflow-x: hidden;
-      animation: floatBG 20s ease-in-out infinite;
-    }
-
-    @keyframes floatBG {
-      0%, 100% { background-position: left; }
-      50% { background-position: right; }
     }
 
     header {
       padding: 1rem;
       text-align: center;
-      font-size: 2rem;
+      font-size: 1.5rem;
       font-weight: bold;
-      text-shadow: 0 0 10px #00f2ff;
+      background: rgba(0, 0, 0, 0.4);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     }
 
-    .story-section {
-      display: flex;
-      overflow-x: auto;
-      padding: 1rem;
-    }
-
-    .story {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      margin-right: 1rem;
-      background: #555;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-    }
-
-    .post-box {
-      margin: 1rem;
-      background: #1a1a2e;
-      border-radius: 16px;
-      padding: 1rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    }
-
-    .post-box textarea {
-      width: 100%;
-      background: transparent;
-      border: none;
-      color: white;
-      font-size: 1rem;
-      resize: none;
+    .content-area {
+      padding: 2rem;
+      text-align: center;
+      min-height: 70vh;
     }
 
     .bottom-nav {
@@ -67,62 +34,94 @@
       bottom: 0;
       left: 0;
       width: 100%;
+      background: linear-gradient(90deg, #001f3f, #005082, #003366);
       display: flex;
       justify-content: space-around;
-      background: #0e0e2c;
-      padding: 0.75rem 0;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
+      align-items: center;
+      padding: 12px 0;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.5);
+      z-index: 1000;
     }
 
-    .nav-item {
-      color: white;
-      font-size: 1.2rem;
-      text-align: center;
-    }
-
-    .float-btn {
-      position: absolute;
-      top: -30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #ff0080;
-      color: white;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
+    .nav-btn {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-size: 2rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      color: #00d4ff;
+      font-size: 14px;
+      animation: float3D 5s infinite ease-in-out;
+      cursor: pointer;
+    }
+
+    .nav-btn i {
+      font-size: 22px;
+      margin-bottom: 4px;
+      filter: drop-shadow(0 0 6px #00d4ff);
+    }
+
+    .nav-float-btn {
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: -30px;
+      box-shadow: 0 0 12px #00d4ff;
+      font-size: 24px;
+      animation: float3D 3s ease-in-out infinite;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-float-btn:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes float3D {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+      100% { transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-  <header>Smart Burme</header>
+  <header>Welcome to Smart Burme</header>
+  <div class="content-area">
+    <h2>Public Post Feed</h2>
+    <p>(Your future social post content will appear here)</p>
+  </div>
 
-  <section class="story-section">
-    <div class="story">You</div>
-    <div class="story">Aung</div>
-    <div class="story">Mya</div>
-    <div class="story">Kyaw</div>
-  </section>
-
-  <section class="post-box">
-    <textarea placeholder="What's on your mind?"></textarea>
-  </section>
-
-  <nav class="bottom-nav">
-    <div class="nav-item">🏠</div>
-    <div class="nav-item">💬</div>
-    <div class="float-btn">＋</div>
-    <div class="nav-item">📷</div>
-    <div class="nav-item">⚙️</div>
-  </nav>
+  <div class="bottom-nav">
+    <div class="nav-btn" id="homeBtn">
+      <i class="fas fa-home"></i>
+      <span>Home</span>
+    </div>
+    <div class="nav-btn" id="chatBtn">
+      <i class="fas fa-comments"></i>
+      <span>Chat</span>
+    </div>
+    <div class="nav-float-btn" id="addBtn">
+      <i class="fas fa-plus"></i>
+    </div>
+    <div class="nav-btn" id="videoBtn">
+      <i class="fas fa-video"></i>
+      <span>Live</span>
+    </div>
+    <div class="nav-btn" id="profileBtn">
+      <i class="fas fa-user"></i>
+      <span>Me</span>
+    </div>
+  </div>
 
   <script>
-    // Firebase JS & interactions will go here later
-    console.log("Smart Burme main.html loaded");
+    document.getElementById("homeBtn").onclick = () => alert("Go Home");
+    document.getElementById("chatBtn").onclick = () => alert("Open Chat");
+    document.getElementById("addBtn").onclick = () => alert("Add New Post");
+    document.getElementById("videoBtn").onclick = () => alert("Start Live");
+    document.getElementById("profileBtn").onclick = () => alert("Open Profile");
   </script>
 </body>
 </html>
