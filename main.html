@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Social Chat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Burme - Main</title>
   <style>
     * {
       margin: 0;
@@ -12,16 +12,17 @@
     }
 
     body {
-      background: linear-gradient(-45deg, #0d0d0d, #1a1a1a, #000000, #262626);
+      background: linear-gradient(-45deg, #0d47a1, #1976d2, #2196f3, #0d47a1);
       background-size: 400% 400%;
       animation: backgroundShift 10s ease infinite;
       color: white;
       font-family: 'Segoe UI', sans-serif;
       height: 100vh;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: center;
     }
 
     @keyframes backgroundShift {
@@ -30,247 +31,102 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Header */
-    .header {
-      background-color: #3b5998;
-      color: white;
-      width: 100%;
-      padding: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .header .logo {
-      font-size: 24px;
+    .floating-title {
+      font-size: 48px;
       font-weight: bold;
-    }
-
-    .header .profile {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .header .profile img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-    }
-
-    .header .profile .name {
-      font-size: 16px;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      background-color: #2d4373;
-      color: white;
-      padding: 20px;
-      width: 250px;
-      height: 100vh;
-      position: fixed;
-      top: 0;
-      left: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .sidebar a {
-      color: white;
-      text-decoration: none;
-      font-size: 18px;
-    }
-
-    .sidebar a:hover {
-      background-color: #455d85;
-      padding: 5px;
-      border-radius: 5px;
-    }
-
-    /* Main Content */
-    .main-content {
-      margin-left: 250px;
-      padding: 20px;
-      width: 100%;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Posts */
-    .post {
-      background-color: #444;
-      padding: 20px;
       margin-bottom: 20px;
-      border-radius: 8px;
+      animation: float3D 4s ease-in-out infinite, colorChange 6s infinite alternate;
+    }
+
+    @keyframes float3D {
+      0% { transform: rotateY(0deg) translateY(0); }
+      25% { transform: rotateY(10deg) translateY(-10px); }
+      50% { transform: rotateY(0deg) translateY(0); }
+      75% { transform: rotateY(-10deg) translateY(10px); }
+      100% { transform: rotateY(0deg) translateY(0); }
+    }
+
+    @keyframes colorChange {
+      0% { color: #a0a0a0; }
+      50% { color: #00ccff; }
+      100% { color: #cccccc; }
+    }
+
+    .menu-bar {
       display: flex;
-      gap: 10px;
-    }
-
-    .post img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-    }
-
-    .post-content {
-      flex-grow: 1;
-    }
-
-    .post-content .name {
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .post-content .message {
-      margin-bottom: 10px;
-    }
-
-    .post .actions {
-      display: flex;
-      flex-direction: column;
+      gap: 15px;
+      flex-wrap: wrap;
       justify-content: center;
-      gap: 5px;
+      margin-bottom: 20px;
     }
 
-    .post .actions button {
-      background-color: #3b5998;
-      border: none;
+    .btn {
+      background: linear-gradient(90deg, #3a8bdc, #00d4ff, #3a8bdc);
+      background-size: 200% auto;
       color: white;
-      padding: 8px 12px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .post .actions button:hover {
-      background-color: #4568a7;
-    }
-
-    /* Message Input Area */
-    .message-input-area {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 20px;
-      border-top: 1px solid #444;
-      padding-top: 10px;
-    }
-
-    .message-input-area input {
-      width: 90%;
-      padding: 12px;
-      border: none;
+      font-weight: bold;
       border-radius: 8px;
-      font-size: 16px;
-    }
-
-    .send-btn {
-      background-color: #3b5998;
-      border: none;
-      color: white;
-      padding: 12px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .send-btn:hover {
-      background-color: #4568a7;
-    }
-
-    /* Footer */
-    .footer {
-      background-color: #3b5998;
-      color: white;
+      padding: 12px 20px;
       text-align: center;
-      padding: 10px;
-      width: 100%;
+      text-decoration: none;
+      transition: background-position 0.5s, transform 0.3s;
     }
 
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .header {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .sidebar {
-        width: 100%;
-        position: static;
-        padding: 10px;
-      }
-
-      .main-content {
-        margin-left: 0;
-        padding: 10px;
-      }
-
-      .footer {
-        font-size: 14px;
-      }
+    .btn:hover {
+      background-position: right center;
+      transform: scale(1.05);
     }
 
+    .footer-text {
+      position: absolute;
+      bottom: 10px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      animation: glow 3s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #00ccff; }
+      to { text-shadow: 0 0 15px #00ccff; }
+    }
   </style>
 </head>
 <body>
+  <div class="floating-title">Welcome to Smart Burme</div>
 
-  <div class="header">
-    <div class="logo">SocialApp</div>
-    <div class="profile">
-      <img src="https://via.placeholder.com/40" alt="Profile Picture"/>
-      <div class="name">John Doe</div>
-    </div>
+  <div class="menu-bar">
+    <a href="#" class="btn">Newfeed</a>
+    <a href="#" class="btn">Messages</a>
+    <a href="#" class="btn">Group Chat</a>
+    <a href="#" class="btn">Buy Items</a>
+    <a href="#" class="btn">KBZ Bank</a>
+    <a href="#" class="btn">About Me</a>
+    <a href="#" class="btn">Settings</a>
   </div>
 
-  <div class="sidebar">
-    <a href="#">Home</a>
-    <a href="#">Friends</a>
-    <a href="#">Messages</a>
-    <a href="#">Groups</a>
-    <a href="#">Notifications</a>
-  </div>
-
-  <div class="main-content">
-    <!-- Posts -->
-    <div class="post">
-      <img src="https://via.placeholder.com/50" alt="User Profile" />
-      <div class="post-content">
-        <div class="name">John Doe</div>
-        <div class="message">This is my first post on SocialApp!</div>
-        <div class="actions">
-          <button>Like</button>
-          <button>Comment</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="post">
-      <img src="https://via.placeholder.com/50" alt="User Profile" />
-      <div class="post-content">
-        <div class="name">Jane Smith</div>
-        <div class="message">Had a great day today! #FeelingGood</div>
-        <div class="actions">
-          <button>Like</button>
-          <button>Comment</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Message Input Area -->
-    <div class="message-input-area">
-      <input type="text" placeholder="Write a message..." />
-      <button class="send-btn">Send</button>
-    </div>
-  </div>
-
-  <div class="footer">
-    <p>&copy; 2025 SocialApp</p>
-  </div>
+  <div class="footer-text">© 2025 Smart Burme - Powered by Firebase</div>
 
   <script type="module">
-    // Add your Firebase and message sending logic here
-  </script>
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
+    const firebaseConfig = {
+      apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
+      authDomain: "smart-burme-app.firebaseapp.com",
+      projectId: "smart-burme-app",
+      storageBucket: "smart-burme-app.appspot.com",
+      messagingSenderId: "851502425686",
+      appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "login.html";
+      }
+    });
+  </script>
 </body>
 </html>
