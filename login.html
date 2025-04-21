@@ -149,9 +149,8 @@
       const password = document.getElementById('password').value;
 
       signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          alert('Login successful!');
-          window.location.href = "mail.html";
+        .then(() => {
+          window.location.href = "main.html";
         })
         .catch((error) => {
           alert("Login failed: " + error.message);
