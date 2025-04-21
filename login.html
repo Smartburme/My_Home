@@ -1,5 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Burme - Login</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(-45deg, #0d0d0d, #1a1a1a, #000000, #262626);
+      background-size: 400% 400%;
+      animation: backgroundShift 12s ease infinite;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
 
-      
+    @keyframes backgroundShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .floating-title {
+      font-size: 60px;
+      font-weight: bold;
+      animation: float3D 4s ease-in-out infinite, colorChange 6s infinite alternate;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    @keyframes float3D {
+      0% { transform: rotateY(0deg) translateY(0); }
+      25% { transform: rotateY(10deg) translateY(-10px); }
+      50% { transform: rotateY(0deg) translateY(0); }
+      75% { transform: rotateY(-10deg) translateY(10px); }
+      100% { transform: rotateY(0deg) translateY(0); }
+    }
+
+    @keyframes colorChange {
+      0% { color: #a0a0a0; }
+      50% { color: #00ccff; }
+      100% { color: #cccccc; }
+    }
+
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 40px;
+      border-radius: 10px;
+      width: 300px;
+      box-shadow: 0 0 10px rgba(0, 204, 255, 0.3);
+    }
+
+    .form-container input {
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 10px;
+      width: 100%;
+      font-size: 16px;
+      box-shadow: 0 0 5px rgba(0, 204, 255, 0.3);
+    }
+
+    .form-container input:focus {
+      outline: none;
+      border: 2px solid #00ccff;
+    }
+
+    .btn {
+      background: linear-gradient(90deg, #3a8bdc, #00d4ff, #3a8bdc);
+      background-size: 200% auto;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: bold;
+      box-shadow: 0 0 15px rgba(0, 204, 255, 0.3);
+      transition: background-position 0.5s, transform 0.3s;
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .btn:hover {
+      background-position: right center;
+      transform: scale(1.05);
+    }
+
+    .links {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .links a {
+      color: #00ccff;
+      text-decoration: none;
+      margin: 5px;
+      font-size: 14px;
+    }
+
+    .links a:hover {
+      text-decoration: underline;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="floating-title">Smart Burme</div>
+  <div class="form-container">
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <a href="#" class="btn" id="loginBtn">Login</a>
+  </div>
+  <div class="links">
+    <a href="registration.html">Don't have an account? Register</a>
+    <a href="forget_password.html">Forgot password?</a>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js"></script>
+  <script src="auth.js"></script>
   <!-- Firebase Scripts -->
   <script type="module">
     // Firebase SDKs
