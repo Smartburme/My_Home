@@ -2,145 +2,127 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Smart Burme - Main</title>
   <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-    }
-
     body {
-      background: linear-gradient(-45deg, #0077be, #1a1a1a, #000000, #1e3c72);
-      background-size: 400% 400%;
-      animation: backgroundShift 10s ease infinite;
-      color: white;
+      margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: white;
+      overflow-x: hidden;
+      animation: floatBG 20s ease-in-out infinite;
     }
 
-    @keyframes backgroundShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    @keyframes floatBG {
+      0%, 100% { background-position: left; }
+      50% { background-position: right; }
     }
 
-    .floating-title {
-      font-size: 48px;
+    header {
+      padding: 1rem;
+      text-align: center;
+      font-size: 2rem;
       font-weight: bold;
-      margin: 30px 0 20px;
-      animation: float3D 4s ease-in-out infinite, colorChange 6s infinite alternate;
+      text-shadow: 0 0 10px #00f2ff;
+    }
+
+    .story-section {
+      display: flex;
+      overflow-x: auto;
+      padding: 1rem;
+    }
+
+    .story {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin-right: 1rem;
+      background: #555;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+    }
+
+    .post-box {
+      margin: 1rem;
+      background: #1a1a2e;
+      border-radius: 16px;
+      padding: 1rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .post-box textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      resize: none;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      background: #0e0e2c;
+      padding: 0.75rem 0;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
+    }
+
+    .nav-item {
+      color: white;
+      font-size: 1.2rem;
       text-align: center;
     }
 
-    @keyframes float3D {
-      0% { transform: rotateY(0deg) translateY(0); }
-      25% { transform: rotateY(10deg) translateY(-10px); }
-      50% { transform: rotateY(0deg) translateY(0); }
-      75% { transform: rotateY(-10deg) translateY(10px); }
-      100% { transform: rotateY(0deg) translateY(0); }
-    }
-
-    @keyframes colorChange {
-      0% { color: #a0a0a0; }
-      50% { color: #00ccff; }
-      100% { color: #cccccc; }
-    }
-
-    .nav-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-
-    .nav-buttons button {
-      background: linear-gradient(90deg, #3a8bdc, #00d4ff, #3a8bdc);
-      background-size: 200% auto;
+    .float-btn {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ff0080;
       color: white;
-      font-weight: bold;
-      border-radius: 8px;
-      padding: 10px 16px;
-      border: none;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background-position 0.5s, transform 0.3s;
-      flex: 1 1 30%;
-      min-width: 100px;
-      max-width: 120px;
-    }
-
-    .nav-buttons button:hover {
-      background-position: right center;
-      transform: scale(1.05);
-    }
-
-    .content-area {
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
       display: flex;
-      flex: 1;
-      width: 100%;
-      padding: 10px;
-      justify-content: space-around;
-      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
-
-    .box {
-      background-color: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      padding: 20px;
-      width: 30%;
-      min-width: 250px;
-      height: 300px;
-      overflow-y: auto;
-    }
-
-    @media (max-width: 768px) {
-      .content-area {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .box {
-        width: 90%;
-        margin-bottom: 15px;
-      }
-
-      .nav-buttons {
-        flex-wrap: wrap;
-      }
-
-      .nav-buttons button {
-        flex: 1 1 40%;
-      }
-    }
-
   </style>
 </head>
 <body>
+  <header>Smart Burme</header>
 
-  <div class="floating-title">Smart Burme</div>
+  <section class="story-section">
+    <div class="story">You</div>
+    <div class="story">Aung</div>
+    <div class="story">Mya</div>
+    <div class="story">Kyaw</div>
+  </section>
 
-  <div class="nav-buttons">
-    <button>Newfeed</button>
-    <button>Message</button>
-    <button>Group Chat</button>
-    <button>KBZ Pay</button>
-    <button>Buy Items</button>
-    <button>About Me</button>
-    <button>Settings</button>
-  </div>
+  <section class="post-box">
+    <textarea placeholder="What's on your mind?"></textarea>
+  </section>
 
-  <div class="content-area">
-    <div class="box">Friends List</div>
-    <div class="box">Public Posts View</div>
-    <div class="box">Group List</div>
-  </div>
+  <nav class="bottom-nav">
+    <div class="nav-item">🏠</div>
+    <div class="nav-item">💬</div>
+    <div class="float-btn">＋</div>
+    <div class="nav-item">📷</div>
+    <div class="nav-item">⚙️</div>
+  </nav>
 
-  <script type="module">
-    // Firebase and future logic here
+  <script>
+    // Firebase JS & interactions will go here later
+    console.log("Smart Burme main.html loaded");
   </script>
 </body>
 </html>
