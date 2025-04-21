@@ -3,125 +3,151 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smart Burme - Main</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <title>Smart Burme Feed</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #001f3f, #005082, #003366);
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #001F3F, #0074D9);
       color: white;
-      overflow-x: hidden;
-    }
-
-    header {
-      padding: 1rem;
-      text-align: center;
-      font-size: 1.5rem;
-      font-weight: bold;
-      background: rgba(0, 0, 0, 0.4);
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    }
-
-    .content-area {
-      padding: 2rem;
-      text-align: center;
-      min-height: 70vh;
-    }
-
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: linear-gradient(90deg, #001f3f, #005082, #003366);
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 12px 0;
-      box-shadow: 0 -2px 8px rgba(0,0,0,0.5);
-      z-index: 1000;
-    }
-
-    .nav-btn {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      color: #00d4ff;
-      font-size: 14px;
-      animation: float3D 5s infinite ease-in-out;
-      cursor: pointer;
+      min-height: 100vh;
     }
 
-    .nav-btn i {
-      font-size: 22px;
-      margin-bottom: 4px;
-      filter: drop-shadow(0 0 6px #00d4ff);
+    .header {
+      width: 100%;
+      text-align: center;
+      padding: 1rem;
+      background-color: rgba(0,0,0,0.3);
+      font-size: 1.5rem;
+      font-weight: bold;
     }
 
-    .nav-float-btn {
-      background: linear-gradient(90deg, #00c6ff, #0072ff);
-      color: white;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
+    .feed-container {
+      width: 90%;
+      max-width: 600px;
+      margin-top: 20px;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: -30px;
-      box-shadow: 0 0 12px #00d4ff;
-      font-size: 24px;
-      animation: float3D 3s ease-in-out infinite;
-      transition: transform 0.3s ease;
+      flex-direction: column;
+      gap: 15px;
     }
 
-    .nav-float-btn:hover {
-      transform: scale(1.1);
+    .post-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 16px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+      animation: float3D 5s ease-in-out infinite;
+    }
+
+    .post-card h4 {
+      color: #00d4ff;
+      margin-bottom: 8px;
+    }
+
+    .post-card p {
+      color: white;
+      margin-bottom: 5px;
+      word-wrap: break-word;
+    }
+
+    .post-card span {
+      font-size: 12px;
+      color: #cccccc;
     }
 
     @keyframes float3D {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-      100% { transform: translateY(0); }
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-5px);
+      }
+    }
+
+    .bottom-nav {
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      display: flex;
+      justify-content: space-around;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px 0;
+      border-top: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .bottom-nav button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .bottom-nav button:hover {
+      transform: scale(1.2);
+      color: #00d4ff;
     }
   </style>
 </head>
 <body>
-  <header>Welcome to Smart Burme</header>
-  <div class="content-area">
-    <h2>Public Post Feed</h2>
-    <p>(Your future social post content will appear here)</p>
+  <div class="header">Smart Burme Feed</div>
+
+  <div id="feed" class="feed-container">
+    <!-- Firebase Post View Loaded Here -->
   </div>
 
   <div class="bottom-nav">
-    <div class="nav-btn" id="homeBtn">
-      <i class="fas fa-home"></i>
-      <span>Home</span>
-    </div>
-    <div class="nav-btn" id="chatBtn">
-      <i class="fas fa-comments"></i>
-      <span>Chat</span>
-    </div>
-    <div class="nav-float-btn" id="addBtn">
-      <i class="fas fa-plus"></i>
-    </div>
-    <div class="nav-btn" id="videoBtn">
-      <i class="fas fa-video"></i>
-      <span>Live</span>
-    </div>
-    <div class="nav-btn" id="profileBtn">
-      <i class="fas fa-user"></i>
-      <span>Me</span>
-    </div>
+    <button>Home</button>
+    <button>Message</button>
+    <button>Group</button>
+    <button>Settings</button>
   </div>
 
-  <script>
-    document.getElementById("homeBtn").onclick = () => alert("Go Home");
-    document.getElementById("chatBtn").onclick = () => alert("Open Chat");
-    document.getElementById("addBtn").onclick = () => alert("Add New Post");
-    document.getElementById("videoBtn").onclick = () => alert("Start Live");
-    document.getElementById("profileBtn").onclick = () => alert("Open Profile");
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      query,
+      orderBy,
+      onSnapshot
+    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "smart-burme-app.firebaseapp.com",
+      projectId: "smart-burme-app",
+      storageBucket: "smart-burme-app.appspot.com",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const feedContainer = document.getElementById("feed");
+    const q = query(collection(db, "posts"), orderBy("timestamp", "desc"));
+
+    onSnapshot(q, (querySnapshot) => {
+      feedContainer.innerHTML = "";
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const postEl = document.createElement("div");
+        postEl.className = "post-card";
+        postEl.innerHTML = `
+          <h4>${data.username}</h4>
+          <p>${data.content}</p>
+          <span>${data.timestamp}</span>
+        `;
+        feedContainer.appendChild(postEl);
+      });
+    });
   </script>
 </body>
 </html>
