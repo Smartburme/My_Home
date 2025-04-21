@@ -3,149 +3,130 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smart Burme Feed</title>
+  <title>Smart Burme - Main</title>
   <style>
-    body {
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(-45deg, #0d47a1, #1976d2, #2196f3, #64b5f6);
+      background-size: 400% 400%;
+      animation: backgroundShift 12s ease infinite;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #001F3F, #0074D9);
       color: white;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
+      height: 100vh;
+      overflow: hidden;
     }
 
-    .header {
-      width: 100%;
+    @keyframes backgroundShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    header {
+      padding: 20px;
       text-align: center;
-      padding: 1rem;
-      background-color: rgba(0,0,0,0.3);
-      font-size: 1.5rem;
+      font-size: 32px;
       font-weight: bold;
-    }
-
-    .feed-container {
-      width: 90%;
-      max-width: 600px;
-      margin-top: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .post-card {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      padding: 16px;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.1);
-      animation: float3D 5s ease-in-out infinite;
-    }
-
-    .post-card h4 {
-      color: #00d4ff;
-      margin-bottom: 8px;
-    }
-
-    .post-card p {
-      color: white;
-      margin-bottom: 5px;
-      word-wrap: break-word;
-    }
-
-    .post-card span {
-      font-size: 12px;
-      color: #cccccc;
+      animation: float3D 4s ease-in-out infinite, colorChange 6s infinite alternate;
     }
 
     @keyframes float3D {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-5px);
-      }
+      0%, 100% { transform: translateY(0) rotateY(0); }
+      25% { transform: translateY(-10px) rotateY(5deg); }
+      75% { transform: translateY(10px) rotateY(-5deg); }
     }
 
-    .bottom-nav {
-      width: 100%;
-      position: fixed;
-      bottom: 0;
+    @keyframes colorChange {
+      0% { color: #bbdefb; }
+      50% { color: #ffffff; }
+      100% { color: #e3f2fd; }
+    }
+
+    #content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .post {
+      background: rgba(255, 255, 255, 0.1);
+      margin-bottom: 15px;
+      padding: 15px;
+      border-radius: 10px;
+      backdrop-filter: blur(5px);
+    }
+
+    footer {
       display: flex;
       justify-content: space-around;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 10px 0;
-      border-top: 1px solid rgba(255,255,255,0.2);
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.4);
+      padding: 12px 0;
+      position: sticky;
+      bottom: 0;
+      width: 100%;
     }
 
-    .bottom-nav button {
-      background: none;
-      border: none;
+    .footer-icon {
       color: white;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: transform 0.2s ease;
+      font-size: 22px;
+      text-align: center;
+      transition: transform 0.3s ease;
     }
 
-    .bottom-nav button:hover {
+    .footer-icon:hover {
       transform: scale(1.2);
-      color: #00d4ff;
     }
   </style>
 </head>
 <body>
-  <div class="header">Smart Burme Feed</div>
+  <header>Smart Burme</header>
 
-  <div id="feed" class="feed-container">
-    <!-- Firebase Post View Loaded Here -->
-  </div>
+  <div id="content"></div>
 
-  <div class="bottom-nav">
-    <button>Home</button>
-    <button>Message</button>
-    <button>Group</button>
-    <button>Settings</button>
-  </div>
+  <footer>
+    <div class="footer-icon">Home</div>
+    <div class="footer-icon">Post</div>
+    <div class="footer-icon">Chat</div>
+    <div class="footer-icon">Friends</div>
+    <div class="footer-icon">Settings</div>
+  </footer>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-    import {
-      getFirestore,
-      collection,
-      query,
-      orderBy,
-      onSnapshot
-    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
+      apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
       authDomain: "smart-burme-app.firebaseapp.com",
+      databaseURL: "https://smart-burme-app-default-rtdb.firebaseio.com",
       projectId: "smart-burme-app",
       storageBucket: "smart-burme-app.appspot.com",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID"
+      messagingSenderId: "851502425686",
+      appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7"
     };
 
     const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    const db = getDatabase(app);
 
-    const feedContainer = document.getElementById("feed");
-    const q = query(collection(db, "posts"), orderBy("timestamp", "desc"));
+    const contentDiv = document.getElementById("content");
+    const postsRef = ref(db, 'posts/');
 
-    onSnapshot(q, (querySnapshot) => {
-      feedContainer.innerHTML = "";
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        const postEl = document.createElement("div");
-        postEl.className = "post-card";
-        postEl.innerHTML = `
-          <h4>${data.username}</h4>
-          <p>${data.content}</p>
-          <span>${data.timestamp}</span>
-        `;
-        feedContainer.appendChild(postEl);
+    onValue(postsRef, (snapshot) => {
+      contentDiv.innerHTML = '';
+      snapshot.forEach((child) => {
+        const data = child.val();
+        const post = document.createElement("div");
+        post.className = "post";
+        post.innerHTML = `<strong>${data.username}</strong><br/><p>${data.content}</p><small>${data.timestamp}</small>`;
+        contentDiv.appendChild(post);
       });
     });
   </script>
