@@ -1,133 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Smart Burme - Main</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      background: linear-gradient(-45deg, #0d47a1, #1976d2, #2196f3, #64b5f6);
-      background-size: 400% 400%;
-      animation: backgroundShift 12s ease infinite;
+      margin: 0;
       font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #1e3c72, #2a5298);
+      overflow-x: hidden;
       color: white;
+    }
+    header {
+      text-align: center;
+      padding: 20px 10px;
+      font-size: 28px;
+      font-weight: bold;
+      text-shadow: 2px 2px 5px #000;
+    }
+    form {
+      margin: 20px auto;
+      width: 90%;
+      max-width: 500px;
       display: flex;
       flex-direction: column;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    @keyframes backgroundShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    header {
-      padding: 20px;
-      text-align: center;
-      font-size: 32px;
-      font-weight: bold;
-      animation: float3D 4s ease-in-out infinite, colorChange 6s infinite alternate;
-    }
-
-    @keyframes float3D {
-      0%, 100% { transform: translateY(0) rotateY(0); }
-      25% { transform: translateY(-10px) rotateY(5deg); }
-      75% { transform: translateY(10px) rotateY(-5deg); }
-    }
-
-    @keyframes colorChange {
-      0% { color: #bbdefb; }
-      50% { color: #ffffff; }
-      100% { color: #e3f2fd; }
-    }
-
-    #content {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px;
-    }
-
-    .post {
+      gap: 10px;
       background: rgba(255, 255, 255, 0.1);
-      margin-bottom: 15px;
       padding: 15px;
-      border-radius: 10px;
-      backdrop-filter: blur(5px);
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
     }
-
-    footer {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      background-color: rgba(0, 0, 0, 0.4);
-      padding: 12px 0;
-      position: sticky;
+    textarea, input[type="file"] {
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px;
+      font-size: 18px;
+      background-color: #4fc3f7;
+      border: none;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #0288d1;
+    }
+    #postContainer {
+      margin: 20px auto;
+      max-width: 600px;
+    }
+    .post {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+    }
+    .bottom-nav {
+      position: fixed;
       bottom: 0;
       width: 100%;
+      display: flex;
+      justify-content: space-around;
+      background: rgba(0,0,0,0.6);
+      padding: 10px 0;
+      backdrop-filter: blur(6px);
     }
-
-    .footer-icon {
+    .bottom-nav button {
+      background: none;
+      border: none;
       color: white;
-      font-size: 22px;
-      text-align: center;
-      transition: transform 0.3s ease;
+      font-size: 16px;
+      transition: transform 0.3s;
     }
-
-    .footer-icon:hover {
-      transform: scale(1.2);
+    .bottom-nav button:hover {
+      transform: scale(1.1);
+    }
+    @keyframes float3D {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0); }
+    }
+    .floating {
+      animation: float3D 2s ease-in-out infinite;
     }
   </style>
 </head>
 <body>
-  <header>Smart Burme</header>
+  <header class="floating">Smart Burme</header>
+  <form id="uploadForm">
+    <input type="file" id="mediaInput" accept="image/*,video/*" />
+    <textarea id="messageInput" placeholder="Write your message..."></textarea>
+    <button type="submit">Post</button>
+  </form>
+  <div id="postContainer"></div>
 
-  <div id="content"></div>
-
-  <footer>
-    <div class="footer-icon">🪩</div>
-    <div class="footer-icon">🕊️</div>
-    <div class="footer-icon">💌</div>
-    <div class="footer-icon">👩‍❤️‍👨</div>
-    <div class="footer-icon">🧩</div>
-  </footer>
+  <div class="bottom-nav">
+    <button>Home</button>
+    <button>Friends</button>
+    <button>Chat</button>
+    <button>Upload</button>
+    <button>Me</button>
+  </div>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+    import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
+    import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 
     const firebaseConfig = {
-      apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
+      apiKey: "YOUR_API_KEY",
       authDomain: "smart-burme-app.firebaseapp.com",
       databaseURL: "https://smart-burme-app-default-rtdb.firebaseio.com",
       projectId: "smart-burme-app",
       storageBucket: "smart-burme-app.appspot.com",
-      messagingSenderId: "851502425686",
-      appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7"
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
     };
 
     const app = initializeApp(firebaseConfig);
+    const storage = getStorage(app);
     const db = getDatabase(app);
 
-    const contentDiv = document.getElementById("content");
-    const postsRef = ref(db, 'posts/');
+    document.getElementById("uploadForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    onValue(postsRef, (snapshot) => {
-      contentDiv.innerHTML = '';
-      snapshot.forEach((child) => {
-        const data = child.val();
-        const post = document.createElement("div");
-        post.className = "post";
-        post.innerHTML = `<strong>${data.username}</strong><br/><p>${data.content}</p><small>${data.timestamp}</small>`;
-        contentDiv.appendChild(post);
+      const file = document.getElementById("mediaInput").files[0];
+      const message = document.getElementById("messageInput").value;
+
+      if (!file || !message) return alert("Fill everything!");
+
+      const fileRef = sRef(storage, 'uploads/' + file.name);
+      await uploadBytes(fileRef, file);
+      const fileUrl = await getDownloadURL(fileRef);
+
+      const postRef = push(ref(db, "posts"));
+      await set(postRef, {
+        username: "user1",
+        content: message,
+        mediaUrl: fileUrl,
+        mediaType: file.type,
+        timestamp: new Date().toISOString()
       });
+
+      alert("Posted!");
     });
   </script>
 </body>
