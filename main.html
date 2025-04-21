@@ -2,27 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Smart Burme - Main</title>
   <style>
     * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      margin: 0; padding: 0; box-sizing: border-box;
     }
 
     body {
-      background: linear-gradient(-45deg, #0d47a1, #1976d2, #2196f3, #0d47a1);
+      background: linear-gradient(-45deg, #0077be, #1a1a1a, #000000, #1e3c72);
       background-size: 400% 400%;
       animation: backgroundShift 10s ease infinite;
       color: white;
       font-family: 'Segoe UI', sans-serif;
       height: 100vh;
-      overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
     }
 
     @keyframes backgroundShift {
@@ -34,8 +30,9 @@
     .floating-title {
       font-size: 48px;
       font-weight: bold;
-      margin-bottom: 20px;
+      margin: 30px 0 20px;
       animation: float3D 4s ease-in-out infinite, colorChange 6s infinite alternate;
+      text-align: center;
     }
 
     @keyframes float3D {
@@ -52,81 +49,98 @@
       100% { color: #cccccc; }
     }
 
-    .menu-bar {
+    .nav-buttons {
       display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
       justify-content: center;
+      gap: 10px;
       margin-bottom: 20px;
+      flex-wrap: wrap;
     }
 
-    .btn {
+    .nav-buttons button {
       background: linear-gradient(90deg, #3a8bdc, #00d4ff, #3a8bdc);
       background-size: 200% auto;
       color: white;
       font-weight: bold;
       border-radius: 8px;
-      padding: 12px 20px;
-      text-align: center;
-      text-decoration: none;
+      padding: 10px 16px;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
       transition: background-position 0.5s, transform 0.3s;
+      flex: 1 1 30%;
+      min-width: 100px;
+      max-width: 120px;
     }
 
-    .btn:hover {
+    .nav-buttons button:hover {
       background-position: right center;
       transform: scale(1.05);
     }
 
-    .footer-text {
-      position: absolute;
-      bottom: 10px;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.6);
-      animation: glow 3s infinite alternate;
+    .content-area {
+      display: flex;
+      flex: 1;
+      width: 100%;
+      padding: 10px;
+      justify-content: space-around;
+      flex-wrap: wrap;
     }
 
-    @keyframes glow {
-      from { text-shadow: 0 0 5px #00ccff; }
-      to { text-shadow: 0 0 15px #00ccff; }
+    .box {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 20px;
+      width: 30%;
+      min-width: 250px;
+      height: 300px;
+      overflow-y: auto;
     }
+
+    @media (max-width: 768px) {
+      .content-area {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .box {
+        width: 90%;
+        margin-bottom: 15px;
+      }
+
+      .nav-buttons {
+        flex-wrap: wrap;
+      }
+
+      .nav-buttons button {
+        flex: 1 1 40%;
+      }
+    }
+
   </style>
 </head>
 <body>
-  <div class="floating-title">Welcome to Smart Burme</div>
 
-  <div class="menu-bar">
-    <a href="#" class="btn">Newfeed</a>
-    <a href="#" class="btn">Messages</a>
-    <a href="#" class="btn">Group Chat</a>
-    <a href="#" class="btn">Buy Items</a>
-    <a href="#" class="btn">KBZ Bank</a>
-    <a href="#" class="btn">About Me</a>
-    <a href="#" class="btn">Settings</a>
+  <div class="floating-title">Smart Burme</div>
+
+  <div class="nav-buttons">
+    <button>Newfeed</button>
+    <button>Message</button>
+    <button>Group Chat</button>
+    <button>KBZ Pay</button>
+    <button>Buy Items</button>
+    <button>About Me</button>
+    <button>Settings</button>
   </div>
 
-  <div class="footer-text">© 2025 Smart Burme - Powered by Firebase</div>
+  <div class="content-area">
+    <div class="box">Friends List</div>
+    <div class="box">Public Posts View</div>
+    <div class="box">Group List</div>
+  </div>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
-      authDomain: "smart-burme-app.firebaseapp.com",
-      projectId: "smart-burme-app",
-      storageBucket: "smart-burme-app.appspot.com",
-      messagingSenderId: "851502425686",
-      appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        window.location.href = "login.html";
-      }
-    });
+    // Firebase and future logic here
   </script>
 </body>
 </html>
