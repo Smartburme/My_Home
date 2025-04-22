@@ -1,209 +1,274 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Burme - Main</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(to right, #00c6ff, #0072ff);
-      font-family: 'Segoe UI', sans-serif;
-      overflow: hidden;
-      height: 100vh;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Burme</title>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.140.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.140.0/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        /* General Styles */
+        body {
+            background-color: #1A1A1D;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            overflow: hidden;
+        }
 
-    .header {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 10px 0;
-      color: white;
-      backdrop-filter: blur(10px);
-      position: sticky;
-      top: 0;
-    }
+        /* Slide Menu */
+        .slide-menu {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: #333;
+            padding-top: 20px;
+            transition: 0.3s;
+        }
 
-    .search-box {
-      display: flex;
-      justify-content: center;
-      margin: 10px;
-    }
+        .slide-menu ul {
+            list-style-type: none;
+            padding: 0;
+        }
 
-    .search-box input {
-      width: 60%;
-      padding: 10px;
-      border-radius: 20px;
-      border: none;
-      outline: none;
-      font-size: 16px;
-    }
+        .slide-menu ul li {
+            padding: 8px;
+            text-align: left;
+        }
 
-    .main {
-      display: grid;
-      grid-template-columns: 1fr 2fr 1fr;
-      height: calc(100vh - 160px);
-      padding: 20px;
-      gap: 10px;
-      color: white;
-    }
+        .slide-menu ul li a {
+            color: white;
+            text-decoration: none;
+        }
 
-    .column {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 15px;
-      backdrop-filter: blur(10px);
-      padding: 10px;
-      overflow-y: auto;
-    }
+        /* Main Content */
+        .main-content {
+            margin-left: 0;
+            padding: 20px;
+        }
 
-    .floating-buttons {
-      position: fixed;
-      right: 20px;
-      bottom: 80px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
+        /* View System */
+        .view-system {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
 
-    .floating-buttons button {
-      padding: 10px 15px;
-      border: none;
-      border-radius: 50%;
-      background: white;
-      color: #0072ff;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      font-size: 18px;
-      cursor: pointer;
-    }
+        .view-btn {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
 
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      display: flex;
-      justify-content: space-around;
-      background: rgba(255, 255, 255, 0.2);
-      padding: 10px 0;
-      backdrop-filter: blur(10px);
-    }
+        .view-btn:hover {
+            background-color: #444;
+        }
 
-    .bottom-nav i {
-      font-size: 24px;
-      color: white;
-      cursor: pointer;
-    }
+        /* Icon Bottom */
+        .icon-bottom {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+        }
 
-    footer {
-      position: fixed;
-      bottom: 40px;
-      width: 100%;
-      text-align: center;
-      color: white;
-      font-size: 12px;
-      text-shadow: 0 0 10px white;
-    }
-  </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        .icon-bottom button {
+            background-color: transparent;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .icon-bottom button:hover {
+            background-color: #444;
+        }
+
+        /* Search Bar */
+        .search-bar input {
+            width: 100%;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        /* Text Bottom */
+        .text-bottom {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #bbb;
+        }
+
+        /* Menu Toggle */
+        .menu-toggle {
+            background-color: transparent;
+            color: white;
+            border: none;
+            font-size: 30px;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+        }
+
+        /* Floating 3D Animation */
+        #floating-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: transparent;
+            z-index: -1;
+        }
+    </style>
 </head>
 <body>
+    <!-- Slide Menu -->
+    <div class="slide-menu" id="slide-menu">
+        <ul>
+            <li><a href="#setting">Settings</a></li>
+            <li><a href="#help">Help</a></li>
+            <li><a href="#deployment">Deployment</a></li>
+        </ul>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="search-bar">
+            <input type="text" placeholder="Search...">
+        </div>
 
-  <div class="header">
-    <div>Newfeed</div>
-    <div>Buy Items</div>
-    <div>About Me</div>
-    <div>Settings</div>
-  </div>
+        <!-- View System -->
+        <div class="view-system">
+            <button id="for-you" class="view-btn">For You</button>
+            <button id="newfeed" class="view-btn">Newfeed</button>
+            <button id="friends" class="view-btn">Friends</button>
+        </div>
 
-  <div class="search-box">
-    <input type="text" placeholder="Search...">
-  </div>
+        <!-- Content Area for Photos/Videos -->
+        <div class="content-area">
+            <!-- Dynamic Content will be here -->
+        </div>
+        
+        <!-- Text Bottom -->
+        <div class="text-bottom">
+            <p>Explore our new features and enjoy a seamless experience.</p>
+        </div>
+    </div>
 
-  <div class="main">
-    <div class="column" id="friends-list">Friends List</div>
-    <div class="column" id="post-area">Post Area</div>
-    <div class="column" id="group-list">Group List</div>
-  </div>
+    <!-- Icon Bottom -->
+    <div class="icon-bottom">
+        <button id="reload">Reload</button>
+        <button id="post">Post</button>
+        <button id="chatting">Chatting</button>
+        <button id="friends-icon">Friends</button>
+    </div>
 
-  <div class="floating-buttons">
-    <button title="Group Chat"><i class="fas fa-users"></i></button>
-    <button title="Messages"><i class="fas fa-comments"></i></button>
-  </div>
+    <!-- Slide Menu Toggle Button -->
+    <button id="menu-toggle" class="menu-toggle">☰</button>
 
-  <div class="bottom-nav">
-    <i class="fas fa-home"></i>
-    <i class="fas fa-user-friends"></i>
-    <i class="fas fa-plus-circle"></i>
-    <i class="fas fa-bell"></i>
-    <i class="fas fa-user"></i>
-  </div>
+    <!-- 3D Animation -->
+    <div id="floating-animation"></div>
 
-  <footer>
-    deployment by Aung Thuyrain - Wayne
-  </footer>
+    <script>
+        // Firebase configuration (add your Firebase config here)
+        const firebaseConfig = {
+            apiKey: "your-api-key",
+            authDomain: "your-auth-domain",
+            projectId: "your-project-id",
+            storageBucket: "your-storage-bucket",
+            messagingSenderId: "your-sender-id",
+            appId: "your-app-id"
+        };
+        firebase.initializeApp(firebaseConfig);
 
-  <!-- Firebase + JS logic here -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
-  <script src="auth.js"></script>
+        // Slide Menu Toggle
+        document.getElementById('menu-toggle').addEventListener('click', () => {
+            const slideMenu = document.getElementById('slide-menu');
+            if (slideMenu.style.left === "0px") {
+                slideMenu.style.left = "-250px";
+            } else {
+                slideMenu.style.left = "0px";
+            }
+        });
 
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
-      authDomain: "smart-burme-app.firebaseapp.com",
-      projectId: "smart-burme-app",
-      storageBucket: "smart-burme-app.appspot.com",
-      messagingSenderId: "851502425686",
-      appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7"
-    };
+        // View Buttons
+        document.getElementById('for-you').addEventListener('click', () => {
+            // Load 'For You' content
+        });
 
-    const app = firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-    const auth = firebase.auth();
+        document.getElementById('newfeed').addEventListener('click', () => {
+            // Load 'Newfeed' content
+        });
 
-    // Handle Auth State Change
-    auth.onAuthStateChanged((user) => {
-      if (!user) {
-        window.location.href = 'login.html';
-      }
-    });
+        document.getElementById('friends').addEventListener('click', () => {
+            // Load 'Friends' content
+        });
 
-    // Post New Post to Firestore
-    function postNewContent(content) {
-      db.collection('posts').add({
-        content: content,
-        userId: auth.currentUser.uid,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      })
-      .then(() => {
-        console.log('Post added successfully');
-        loadPosts();
-      })
-      .catch((error) => console.error('Error adding post: ', error));
-    }
+        // Icon Bottom Actions
+        document.getElementById('reload').addEventListener('click', () => {
+            location.reload();
+        });
 
-    // Load Posts from Firestore
-    function loadPosts() {
-      db.collection('posts').orderBy('timestamp', 'desc').get()
-        .then((snapshot) => {
-          const postArea = document.getElementById('post-area');
-          postArea.innerHTML = ''; // Clear existing posts
-          snapshot.forEach((doc) => {
-            const post = doc.data();
-            const postElement = document.createElement('div');
-            postElement.classList.add('post');
-            postElement.innerText = post.content;
-            postArea.appendChild(postElement);
-          });
-        })
-        .catch((error) => console.error('Error loading posts: ', error));
-    }
+        document.getElementById('post').addEventListener('click', () => {
+            // Open Post Form
+        });
 
-    // Call loadPosts on page load
-    loadPosts();
-  </script>
+        document.getElementById('chatting').addEventListener('click', () => {
+            // Open Chatting Page
+        });
 
+        document.getElementById('friends-icon').addEventListener('click', () => {
+            // Open Friends List
+        });
+
+        // 3D Floating Animation using Three.js
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('floating-animation').appendChild(renderer.domElement);
+
+        const geometry = new THREE.SphereGeometry(1, 32, 32);
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        const sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere);
+
+        camera.position.z = 5;
+
+        const animate = function () {
+            requestAnimationFrame(animate);
+
+            sphere.rotation.x += 0.01;
+            sphere.rotation.y += 0.01;
+
+            renderer.render(scene, camera);
+        };
+
+        animate();
+
+        // Firebase Real-Time Database Example
+        const database = firebase.database();
+        const userRef = database.ref('users/');
+
+        userRef.on('value', (snapshot) => {
+            const data = snapshot.val();
+            console.log(data); // Process user data as needed
+        });
+    </script>
 </body>
 </html>
