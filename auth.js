@@ -1,55 +1,65 @@
-// Firebase SDK ထည့်ပါ
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
-
-// Firebase Configuration
+// Firebase Initialization
 const firebaseConfig = {
-  apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
+  apiKey: "YOUR_API_KEY",
   authDomain: "smart-burme-app.firebaseapp.com",
   projectId: "smart-burme-app",
   storageBucket: "smart-burme-app.appspot.com",
-  messagingSenderId: "851502425686",
-  appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7"
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
 };
 
-// Firebase initialization
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+firebase.initializeApp(firebaseConfig);
 
-// User Login Function
-export function login(email, password) {
-  signInWithEmailAndPassword(auth, email, password)
+// Firebase Authentication object
+const auth = firebase.auth();
+
+// -------------------------
+// Login Function
+// -------------------------
+function loginUser(email, password) {
+  auth.signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      console.log('Logged in successfully', user);
-      // Redirect to main page or dashboard
+      // Redirect to mail.html
+      window.location.href = "mail.html";
     })
     .catch((error) => {
-      console.error('Error logging in:', error.message);
+      alert("Login failed: " + error.message);
     });
 }
 
-// User Registration Function
-export function register(email, password) {
-  createUserWithEmailAndPassword(auth, email, password)
+// -------------------------
+// Register Function
+// -------------------------
+function registerUser(email, password) {
+  auth.createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
-      const user = userCredential.user;
-      console.log('Registration successful', user);
-      // Redirect to login page or home
+      alert("Registration successful!");
+      window.location.href = "mail.html";
     })
     .catch((error) => {
-      console.error('Error registering:', error.message);
+      alert("Register failed: " + error.message);
     });
 }
 
-// Password Reset Function
-export function resetPassword(email) {
-  sendPasswordResetEmail(auth, email)
+// -------------------------
+// Forget Password Function
+// -------------------------
+function resetPassword(email) {
+  auth.sendPasswordResetEmail(email)
     .then(() => {
-      console.log('Password reset email sent!');
+      alert("Password reset email sent!");
     })
     .catch((error) => {
-      console.error('Error sending reset email:', error.message);
+      alert("Error: " + error.message);
+    });
+}
+
+// -------------------------
+// Logout Function
+// -------------------------
+function logoutUser() {
+  auth.signOut()
+    .then(() => {
+      window.location.href = "login.html";
     });
 }
