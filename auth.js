@@ -1,16 +1,17 @@
-// Firebase Initialization
+// Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
-      authDomain: "smart-burme-app.firebaseapp.com",
-      projectId: "smart-burme-app",
-      storageBucket: "smart-burme-app.appspot.com",
-      messagingSenderId: "851502425686",
-      appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7"
-    };
+  authDomain: "smart-burme-app.firebaseapp.com",
+  projectId: "smart-burme-app",
+  storageBucket: "smart-burme-app.appspot.com",
+  messagingSenderId: "851502425686",
+  appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7"
+};
 
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-// Firebase Authentication object
+// Firebase Auth reference
 const auth = firebase.auth();
 
 // -------------------------
@@ -19,8 +20,7 @@ const auth = firebase.auth();
 function loginUser(email, password) {
   auth.signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
-      // Redirect to mail.html
-      window.location.href = "mail.html";
+      window.location.href = "mail.html"; // Redirect after login
     })
     .catch((error) => {
       alert("Login failed: " + error.message);
@@ -33,7 +33,7 @@ function loginUser(email, password) {
 function registerUser(email, password) {
   auth.createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
-      alert("Registration successful!");
+      alert("Registered Successfully!");
       window.location.href = "mail.html";
     })
     .catch((error) => {
@@ -42,7 +42,7 @@ function registerUser(email, password) {
 }
 
 // -------------------------
-// Forget Password Function
+// Reset Password Function
 // -------------------------
 function resetPassword(email) {
   auth.sendPasswordResetEmail(email)
