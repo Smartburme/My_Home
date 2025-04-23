@@ -5,164 +5,133 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Smart Burme - Main</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
     body {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #1e3c72, #2a5298);
-      color: #fff;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(to bottom, #0f0f0f, #1c1c1c);
+      color: white;
       overflow-x: hidden;
     }
 
-    .float3D {
-      animation: floatAnim 4s ease-in-out infinite;
+    .logo {
+      text-align: center;
+      margin-top: 30px;
     }
 
-    @keyframes floatAnim {
-      0% { transform: translateY(0); }
+    .logo img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(0, 255, 100, 0.6);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
       50% { transform: translateY(-10px); }
-      100% { transform: translateY(0); }
+      100% { transform: translateY(0px); }
     }
 
-    .header {
+    h1 {
       text-align: center;
-      padding: 1rem;
-      font-size: 2rem;
-      font-weight: bold;
+      margin-top: 10px;
+      font-size: 1.5rem;
     }
 
-    .search-bar {
+    .card-container {
+      margin: 20px;
       display: flex;
-      justify-content: center;
-      margin-bottom: 1rem;
+      flex-direction: column;
+      gap: 15px;
     }
 
-    .search-bar input {
-      padding: 0.5rem 1rem;
-      width: 60%;
+    .card {
+      background: linear-gradient(to right, #a84ad2, #3d7cf3);
       border-radius: 20px;
-      border: none;
-      outline: none;
-      font-size: 1rem;
+      padding: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
     }
 
-    .search-bar i {
-      margin-left: -2rem;
-      cursor: pointer;
-    }
-
-    .frame {
-      width: 90%;
-      margin: 0 auto;
-      background-color: rgba(255,255,255,0.1);
-      border-radius: 10px;
-      padding: 1rem;
-      text-align: center;
-    }
-
-    .view-options {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 1rem;
-    }
-
-    .view-options button {
-      background: rgba(255,255,255,0.2);
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 10px;
-      color: #fff;
-      cursor: pointer;
+    .card:hover {
+      transform: scale(1.02);
     }
 
     .bottom-nav {
       position: fixed;
       bottom: 0;
       width: 100%;
+      background-color: #121212;
       display: flex;
       justify-content: space-around;
-      background: rgba(0,0,0,0.5);
-      padding: 0.5rem 0;
+      padding: 10px 0;
+      border-top: 1px solid #2c2c2c;
     }
 
-    .bottom-nav button {
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 1.2rem;
+    .nav-icon {
+      color: white;
+      font-size: 20px;
     }
 
-    .slide-menu {
-      position: fixed;
-      top: 50%;
-      right: 0;
-      transform: translateY(-50%);
+    .search-box {
       display: flex;
-      flex-direction: column;
+      justify-content: center;
+      margin: 20px;
     }
 
-    .slide-menu button {
-      background: #2a5298;
+    .search-box input {
+      background: #2c2c2c;
       border: none;
-      padding: 1rem;
-      margin: 0.5rem 0;
-      color: #fff;
-      border-radius: 10px 0 0 10px;
-      cursor: pointer;
+      border-radius: 25px;
+      padding: 10px 20px;
+      width: 80%;
+      color: white;
+      font-size: 1rem;
+      outline: none;
     }
 
-    footer {
+    .credit {
       text-align: center;
-      margin-bottom: 3rem;
+      margin: 30px 0;
       font-size: 0.8rem;
-      color: #ccc;
+      color: #aaa;
     }
   </style>
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
-      authDomain: "smart-burme-app.firebaseapp.com",
-      projectId: "smart-burme-app",
-      storageBucket: "smart-burme-app.appspot.com",
-      messagingSenderId: "851502425686",
-      appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7"
-    };
-    firebase.initializeApp(firebaseConfig);
+    document.addEventListener("DOMContentLoaded", () => {
+      console.log("Smart Burme Main Loaded");
+      // Firebase integration goes here
+    });
   </script>
 </head>
 <body>
-  <div class="header float3D">Smart Burme</div>
-  <div class="search-bar">
-    <input type="text" placeholder="Search">
-    <i class="fa fa-search"></i>
+  <div class="logo">
+    <img src="logo.png" alt="Smart Burme Logo">
+  </div>
+  <h1>Welcome to Smart Burme</h1>
+
+  <div class="search-box">
+    <input type="text" placeholder="Search...">
   </div>
 
-  <div class="frame float3D">
-    <h3>Photo / Video Viewer</h3>
-    <!-- Media Preview Goes Here -->
-    <div class="view-options">
-      <button>All</button>
-      <button>Photos</button>
-      <button>Videos</button>
-    </div>
-  </div>
-
-  <div class="slide-menu">
-    <button>Group</button>
-    <button>Message</button>
-    <button>Other</button>
+  <div class="card-container">
+    <div class="card">Post #1: Welcome to the new Smart Burme App!</div>
+    <div class="card">Post #2: More features coming soon...</div>
   </div>
 
   <div class="bottom-nav">
-    <button><i class="fa fa-home"></i></button>
-    <button><i class="fa fa-user"></i></button>
-    <button><i class="fa fa-cog"></i></button>
+    <div class="nav-icon">🏠</div>
+    <div class="nav-icon">🔍</div>
+    <div class="nav-icon">➕</div>
+    <div class="nav-icon">📨</div>
+    <div class="nav-icon">⚙️</div>
   </div>
 
-  <footer>deployment by Aung Thuyrain - Wayne</footer>
-
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <div class="credit">
+    Deployment by Aung Thuyrain - Wayne
+  </div>
 </body>
 </html>
