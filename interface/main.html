@@ -7,7 +7,8 @@
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
   <!-- Three.js -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.140.0/build/three.min.js"></script>
   <!-- Style -->
@@ -131,6 +132,31 @@
       top: 0;
       left: 0;
     }
+
+    /* Upload Modal Style */
+    .upload-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    .upload-modal-content {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .upload-modal input, .upload-modal textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
   </style>
 </head>
 <body>
@@ -174,6 +200,22 @@
     <button id="chatting">Chatting</button>
     <button id="friends">Friends</button>
   </div>
+
+  <!-- Upload Modal -->
+  <div class="upload-modal" id="upload-modal">
+    <div class="upload-modal-content">
+      <h3>Upload Photo/Video</h3>
+      <input type="file" id="media-file" accept="image/*,video/*"/>
+      <textarea id="media-caption" placeholder="Say something..." rows="4"></textarea>
+      <button onclick="uploadMedia()">Upload</button>
+      <button onclick="closeUploadModal()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Floating Upload Button -->
+  <button onclick="openUploadModal()" style="position: fixed; bottom: 100px; right: 20px; background: blue; color: white; padding: 15px; border-radius: 50%; box-shadow: 0 4px 8px rgba(0,0,0,0.5);">
+    <i class="fas fa-upload"></i>
+  </button>
 
   <!-- Floating Animation -->
   <div id="floating-animation"></div>
@@ -236,6 +278,27 @@
       renderer.render(scene, camera);
     }
     animate();
-  </script>
-</body>
-</html>
+
+    // Open Upload Modal
+    function openUploadModal() {
+      document.getElementById("upload-modal").style.display = "flex";
+    }
+
+    // Close Upload Modal
+    function closeUploadModal() {
+      document.getElementById("upload-modal").style.display = "none";
+    }
+
+    // Upload Media to Firebase
+    function uploadMedia() {
+      const file = document.getElementById("media-file").files[0];
+      const caption = document.getElementById("media-caption").value;
+      if (!file) return alert("Please select a file.");
+
+      const storageRef = firebase.storage().ref("posts/" + file.name);
+      const uploadTask = storageRef.put(file);
+
+      uploadTask.on("state_changed", null, (error) => {
+        alert("Upload failed: " + error.message);
+      }, async () => {
+        const url = await uploadTask.snapshot.ref.getDownload
