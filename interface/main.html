@@ -1,67 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Burme - Main</title>
-    
-    <!-- Link to External CSS -->
-    <link rel="stylesheet" href="interface/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Burme - Main</title>
+  <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <!-- Menu Toggle Button -->
-    <button id="menu-toggle" class="menu-toggle">&#9776;</button>
+  <!-- Menu Toggle -->
+  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
 
-    <!-- Slide Menu -->
-    <div id="slide-menu" class="slide-menu">
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Log Out</a></li>
-        </ul>
+  <!-- Slide Menu -->
+  <div class="slide-menu" id="slideMenu">
+    <ul>
+      <li><a href="#">Group Chat</a></li>
+      <li><a href="#">Messages</a></li>
+      <li><a href="#">Bank</a></li>
+    </ul>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-bar">
+    <input type="text" placeholder="🔍 Search...">
+  </div>
+
+  <!-- View System Buttons -->
+  <div class="view-system">
+    <button class="view-btn">For You</button>
+    <button class="view-btn">Newfeed</button>
+    <button class="view-btn">Friends</button>
+  </div>
+
+  <!-- Photo/Video Frame -->
+  <div class="content-area">
+    <h2>📷 Photo & Video Display</h2>
+    <div id="media-container">
+      <!-- Future uploads will show here -->
     </div>
+  </div>
 
-    <!-- Floating Animation -->
-    <div id="floating-animation"></div>
+  <!-- Bottom Icon Bar -->
+  <div class="icon-bottom">
+    <button onclick="location.reload()">🔄</button>
+    <button onclick="openUploadModal()">➕</button>
+    <button>💬</button>
+    <button>👥</button>
+  </div>
 
-    <!-- Search Bar -->
-    <div class="search-bar">
-        <input type="text" placeholder="Search...">
+  <!-- Upload Modal -->
+  <div class="upload-modal" id="uploadModal">
+    <div class="upload-modal-content">
+      <h3>Upload Media</h3>
+      <input type="file" accept="image/*,video/*">
+      <textarea placeholder="Say something..."></textarea>
+      <button onclick="submitUpload()">Post</button>
+      <button onclick="closeUploadModal()">Cancel</button>
     </div>
+  </div>
 
-    <!-- View System Buttons -->
-    <div class="view-system">
-        <button id="view-for-you" class="view-btn">For You</button>
-        <button id="view-newfeed" class="view-btn">Newfeed</button>
-        <button id="view-friends" class="view-btn">Friends</button>
-    </div>
-
-    <!-- Content Area -->
-    <div id="content" class="content-area">
-        <h2>Welcome to Smart Burme</h2>
-        <p>Choose a view above to start.</p>
-    </div>
-
-    <!-- Icon Bottom -->
-    <div class="icon-bottom">
-        <button id="reload">🔄</button>
-        <button id="post">📝</button>
-        <button id="chatting">💬</button>
-        <button id="friends">👥</button>
-    </div>
-
-    <!-- Upload Modal (Hidden by default) -->
-    <div id="upload-modal" class="upload-modal">
-        <div class="upload-modal-content">
-            <input type="file" id="media-file">
-            <textarea id="media-caption" placeholder="Add a caption..."></textarea>
-            <button onclick="uploadMedia()">Upload</button>
-            <button onclick="closeUploadModal()">Close</button>
-        </div>
-    </div>
-
-    <!-- Link to External JS -->
-    <script src="interface/bottom.js" defer></script>
+  <script src="animation.js"></script>
 </body>
 </html>
