@@ -1,304 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Smart Burme</title>
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
-  <!-- Three.js -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.140.0/build/three.min.js"></script>
-  <!-- Style -->
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: white;
-      overflow-x: hidden;
-    }
-
-    .menu-toggle {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      background: transparent;
-      color: white;
-      border: none;
-      font-size: 28px;
-      z-index: 1001;
-      cursor: pointer;
-    }
-
-    .slide-menu {
-      position: fixed;
-      left: -250px;
-      top: 0;
-      width: 250px;
-      height: 100%;
-      background-color: rgba(0,0,0,0.9);
-      transition: 0.3s;
-      padding-top: 60px;
-      z-index: 1000;
-    }
-
-    .slide-menu ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .slide-menu ul li {
-      padding: 15px 20px;
-      border-bottom: 1px solid #444;
-    }
-
-    .slide-menu ul li a {
-      color: white;
-      text-decoration: none;
-    }
-
-    .search-bar {
-      padding: 80px 20px 10px;
-    }
-
-    .search-bar input {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 8px;
-      background-color: rgba(255,255,255,0.1);
-      color: white;
-    }
-
-    .view-system {
-      display: flex;
-      justify-content: space-around;
-      padding: 10px 20px;
-    }
-
-    .view-btn {
-      padding: 10px 15px;
-      background-color: rgba(255,255,255,0.1);
-      border: none;
-      border-radius: 5px;
-      color: white;
-      cursor: pointer;
-    }
-
-    .content-area {
-      padding: 20px;
-      text-align: center;
-    }
-
-    .text-bottom {
-      margin-top: 40px;
-      text-align: center;
-      font-size: 14px;
-      color: #ccc;
-    }
-
-    .icon-bottom {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(0,0,0,0.9);
-      display: flex;
-      justify-content: space-around;
-      padding: 10px 0;
-      z-index: 1001;
-    }
-
-    .icon-bottom button {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .icon-bottom button:hover {
-      color: #1e90ff;
-    }
-
-    #floating-animation {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      top: 0;
-      left: 0;
-    }
-
-    /* Upload Modal Style */
-    .upload-modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-    }
-
-    .upload-modal-content {
-      background: white;
-      border-radius: 10px;
-      padding: 20px;
-      width: 90%;
-      max-width: 400px;
-    }
-
-    .upload-modal input, .upload-modal textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Burme - Main</title>
+    
+    <!-- Link to External CSS -->
+    <link rel="stylesheet" href="interface/main.css">
 </head>
 <body>
-  <!-- Slide Menu -->
-  <button class="menu-toggle" id="menu-toggle">☰</button>
-  <div class="slide-menu" id="slide-menu">
-    <ul>
-      <li><a href="#setting">Settings</a></li>
-      <li><a href="#help">Help</a></li>
-      <li><a href="#deploy">Deployment</a></li>
-    </ul>
-  </div>
+    <!-- Menu Toggle Button -->
+    <button id="menu-toggle" class="menu-toggle">&#9776;</button>
 
-  <!-- Search Bar -->
-  <div class="search-bar">
-    <input type="text" placeholder="Search..."/>
-  </div>
-
-  <!-- View System -->
-  <div class="view-system">
-    <button class="view-btn" id="view-for-you">For You</button>
-    <button class="view-btn" id="view-newfeed">Newfeed</button>
-    <button class="view-btn" id="view-friends">Friends</button>
-  </div>
-
-  <!-- Content Area -->
-  <div class="content-area" id="content">
-    <h2>Welcome to Smart Burme</h2>
-    <p>Your photo and video content will show here...</p>
-  </div>
-
-  <!-- Text Bottom -->
-  <div class="text-bottom">
-    <p>Smart Burme | Built by Aung Myo Kyaw</p>
-  </div>
-
-  <!-- Icon Bottom -->
-  <div class="icon-bottom">
-    <button id="reload">Reload</button>
-    <button id="post">Post</button>
-    <button id="chatting">Chatting</button>
-    <button id="friends">Friends</button>
-  </div>
-
-  <!-- Upload Modal -->
-  <div class="upload-modal" id="upload-modal">
-    <div class="upload-modal-content">
-      <h3>Upload Photo/Video</h3>
-      <input type="file" id="media-file" accept="image/*,video/*"/>
-      <textarea id="media-caption" placeholder="Say something..." rows="4"></textarea>
-      <button onclick="uploadMedia()">Upload</button>
-      <button onclick="closeUploadModal()">Cancel</button>
+    <!-- Slide Menu -->
+    <div id="slide-menu" class="slide-menu">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Log Out</a></li>
+        </ul>
     </div>
-  </div>
 
-  <!-- Floating Upload Button -->
-  <button onclick="openUploadModal()" style="position: fixed; bottom: 100px; right: 20px; background: blue; color: white; padding: 15px; border-radius: 50%; box-shadow: 0 4px 8px rgba(0,0,0,0.5);">
-    <i class="fas fa-upload"></i>
-  </button>
+    <!-- Floating Animation -->
+    <div id="floating-animation"></div>
 
-  <!-- Floating Animation -->
-  <div id="floating-animation"></div>
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <input type="text" placeholder="Search...">
+    </div>
 
-  <!-- Script -->
-  <script>
-    // Firebase Config (Replace with your real config)
-    const firebaseConfig = {
-      apiKey: "YOUR-API-KEY",
-      authDomain: "smart-burme-app.firebaseapp.com",
-      projectId: "smart-burme-app",
-      storageBucket: "smart-burme-app.appspot.com",
-      messagingSenderId: "SENDER-ID",
-      appId: "APP-ID"
-    };
-    firebase.initializeApp(firebaseConfig);
+    <!-- View System Buttons -->
+    <div class="view-system">
+        <button id="view-for-you" class="view-btn">For You</button>
+        <button id="view-newfeed" class="view-btn">Newfeed</button>
+        <button id="view-friends" class="view-btn">Friends</button>
+    </div>
 
-    // Slide menu toggle
-    const menuToggle = document.getElementById("menu-toggle");
-    const slideMenu = document.getElementById("slide-menu");
-    menuToggle.addEventListener("click", () => {
-      slideMenu.style.left = slideMenu.style.left === "0px" ? "-250px" : "0px";
-    });
+    <!-- Content Area -->
+    <div id="content" class="content-area">
+        <h2>Welcome to Smart Burme</h2>
+        <p>Choose a view above to start.</p>
+    </div>
 
-    // View System
-    document.getElementById("view-for-you").onclick = () => {
-      document.getElementById("content").innerHTML = "<h2>For You</h2><p>Recommended content...</p>";
-    };
-    document.getElementById("view-newfeed").onclick = () => {
-      document.getElementById("content").innerHTML = "<h2>Newfeed</h2><p>Latest posts...</p>";
-    };
-    document.getElementById("view-friends").onclick = () => {
-      document.getElementById("content").innerHTML = "<h2>Friends</h2><p>Friend posts...</p>";
-    };
+    <!-- Icon Bottom -->
+    <div class="icon-bottom">
+        <button id="reload">🔄</button>
+        <button id="post">📝</button>
+        <button id="chatting">💬</button>
+        <button id="friends">👥</button>
+    </div>
 
-    // Icon Bottom Events
-    document.getElementById("reload").onclick = () => location.reload();
-    document.getElementById("post").onclick = () => alert("Post clicked");
-    document.getElementById("chatting").onclick = () => alert("Chatting clicked");
-    document.getElementById("friends").onclick = () => alert("Friends clicked");
+    <!-- Upload Modal (Hidden by default) -->
+    <div id="upload-modal" class="upload-modal">
+        <div class="upload-modal-content">
+            <input type="file" id="media-file">
+            <textarea id="media-caption" placeholder="Add a caption..."></textarea>
+            <button onclick="uploadMedia()">Upload</button>
+            <button onclick="closeUploadModal()">Close</button>
+        </div>
+    </div>
 
-    // 3D Animation
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.getElementById("floating-animation").appendChild(renderer.domElement);
-
-    const geometry = new THREE.SphereGeometry(0.5, 32, 32);
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ffcc });
-    const sphere = new THREE.Mesh(geometry, material);
-    scene.add(sphere);
-
-    camera.position.z = 2;
-
-    function animate() {
-      requestAnimationFrame(animate);
-      sphere.rotation.x += 0.01;
-      sphere.rotation.y += 0.01;
-      renderer.render(scene, camera);
-    }
-    animate();
-
-    // Open Upload Modal
-    function openUploadModal() {
-      document.getElementById("upload-modal").style.display = "flex";
-    }
-
-    // Close Upload Modal
-    function closeUploadModal() {
-      document.getElementById("upload-modal").style.display = "none";
-    }
-
-    // Upload Media to Firebase
-    function uploadMedia() {
-      const file = document.getElementById("media-file").files[0];
-      const caption = document.getElementById("media-caption").value;
-      if (!file) return alert("Please select a file.");
-
-      const storageRef = firebase.storage().ref("posts/" + file.name);
-      const uploadTask = storageRef.put(file);
-
-      uploadTask.on("state_changed", null, (error) => {
-        alert("Upload failed: " + error.message);
-      }, async () => {
-        const url = await uploadTask.snapshot.ref.getDownload
+    <!-- Link to External JS -->
+    <script src="interface/main.js" defer></script>
+</body>
+</html>
