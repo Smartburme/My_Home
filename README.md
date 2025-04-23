@@ -1,33 +1,42 @@
-# Smart Burme
+# Smart Burme Project
 
-Welcome to **Smart Burme**, a chatting social website designed for seamless communication. This project allows users to register, log in, and engage in private and group chats, along with various multimedia features.
+## Overview
+Smart Burme is a social app designed to help users connect with their friends and explore various social features. The app will include features such as voice chat, private and public posts, photo/video uploads, and more.
 
 ## Features
+- **Voice Chat Party**: One-on-one and group voice chat functionality.
+- **Feed System**: Newfeed, Friends' posts, and messaging.
+- **Post Sharing**: Users can share text, photos, and videos.
+- **Bank Payment**: Integration with KBZ Bank for payments.
+- **Item Store**: Buy and sell items through the app.
+- **Profile Management**: Users can manage their profile, settings, and privacy.
 
-- **User  Registration**: Users can create an account to access the platform.
-- **Login System**: Secure login for registered users.
-- **Forgot Password**: Users can reset their password via email.
-- **Chatting Interface**: Engage in private chats, group chats, and manage your groups.
-- **Multimedia Support**: Upload photos, videos, and share frames.
-- **Voice Communication**: Integrated voice chat feature for real-time communication.
+## Key Pages
+- **Login Page**: Simple login functionality with Firebase Authentication.
+- **Main Page**: Features a modern social app UI with Newfeed, Contacts, and Posts.
+- **Mail Dashboard**: Includes Newsfeed, Chat, Profile Management, and Settings.
 
-## Technologies Used
+## UI/UX Design
+- **Design Theme**: Blue gradient background with floating animation.
+- **Layout**: A bottom navigation bar, search box, and animated branding text.
+- **Modern Elements**: Rounded UI components, card-style posts, and 3D float animations.
+- **Navigation**: Slide menu with easy access to important features.
 
-- HTML
-- CSS
-- JavaScript
+## Firebase Integration
+- **Authentication**: Firebase Auth for secure login/signup.
+- **Database**: Firebase Firestore for storing user data, posts, and messages.
+- **Storage**: Firebase Storage for handling media uploads (photos/videos).
 
-## Getting Started
+## Future Plans
+- Expand the app with more advanced features, such as:
+  - **Real-time Chat**: Chat system with text and media sharing.
+  - **User Profiles**: Full-fledged user profiles with photos and posts.
+  - **Payments**: Complete payment system integration for online transactions.
 
-To run the Smart Burme project locally, follow these steps:
+## Contact
+For more information, feel free to reach out to the development team.
 
-### Prerequisites
+> *"Smart Burme - Connecting People, Exploring Opportunities."*
 
-- A web browser (e.g., Chrome, Firefox)
-- A code editor (e.g., Visual Studio Code, Sublime Text)
-
-### Installation
-
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/burmese-website-ai/Smart-Burme.git
+## Link to GitHub Pages
+You can visit the app at: [Smart Burme - My Home](https://smartburme.github.io/My_Home/)
