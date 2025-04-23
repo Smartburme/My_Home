@@ -1,137 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Smart Burme - Main</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
-
     body {
       margin: 0;
-      padding: 0;
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(to bottom, #0f0f0f, #1c1c1c);
-      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #fff;
       overflow-x: hidden;
     }
 
-    .logo {
-      text-align: center;
-      margin-top: 30px;
+    .container {
+      padding: 20px;
+      animation: float3D 4s ease-in-out infinite;
     }
 
-    .logo img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      box-shadow: 0 0 20px rgba(0, 255, 100, 0.6);
-      animation: float 3s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0% { transform: translateY(0px); }
+    @keyframes float3D {
+      0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
-      100% { transform: translateY(0px); }
     }
 
-    h1 {
-      text-align: center;
-      margin-top: 10px;
-      font-size: 1.5rem;
-    }
-
-    .card-container {
-      margin: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .card {
-      background: linear-gradient(to right, #a84ad2, #3d7cf3);
+    .profile, .post, .bottom-nav {
+      background: rgba(255, 255, 255, 0.05);
       border-radius: 20px;
-      padding: 15px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-      transition: transform 0.3s ease;
-    }
-
-    .card:hover {
-      transform: scale(1.02);
+      padding: 20px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     }
 
     .bottom-nav {
       position: fixed;
       bottom: 0;
+      left: 0;
       width: 100%;
-      background-color: #121212;
       display: flex;
       justify-content: space-around;
-      padding: 10px 0;
-      border-top: 1px solid #2c2c2c;
+      background: rgba(0, 0, 0, 0.6);
     }
 
-    .nav-icon {
-      color: white;
-      font-size: 20px;
+    .bottom-nav i {
+      font-size: 24px;
+      color: #fff;
+      padding: 10px;
     }
 
-    .search-box {
+    .search {
       display: flex;
-      justify-content: center;
-      margin: 20px;
+      align-items: center;
+      background: rgba(255,255,255,0.1);
+      border-radius: 30px;
+      padding: 8px 20px;
+      margin-bottom: 20px;
     }
 
-    .search-box input {
-      background: #2c2c2c;
+    .search input {
       border: none;
-      border-radius: 25px;
-      padding: 10px 20px;
-      width: 80%;
-      color: white;
-      font-size: 1rem;
+      background: transparent;
       outline: none;
-    }
-
-    .credit {
-      text-align: center;
-      margin: 30px 0;
-      font-size: 0.8rem;
-      color: #aaa;
+      color: #fff;
+      width: 100%;
+      padding-left: 10px;
     }
   </style>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      console.log("Smart Burme Main Loaded");
-      // Firebase integration goes here
-    });
-  </script>
 </head>
+
 <body>
-  <div class="logo">
-    <img src="assets/logo.png" alt="Smart Burme Logo">
-  </div>
-  <h1>Welcome to Smart Burme</h1>
+  <div class="container">
+    <div class="search">
+      <i class="fa fa-search"></i>
+      <input type="text" placeholder="Search anything..." />
+    </div>
 
-  <div class="search-box">
-    <input type="text" placeholder="Search...">
-  </div>
+    <div class="profile">
+      <h2>Welcome, <span id="username">User</span></h2>
+      <p>User ID: <span id="userid"></span></p>
+    </div>
 
-  <div class="card-container">
-    <div class="card">Post #1: Welcome to the new Smart Burme App!</div>
-    <div class="card">Post #2: More features coming soon...</div>
+    <div class="post">
+      <h3>Today's Thought</h3>
+      <p>This is your space to write and share with the world.</p>
+    </div>
   </div>
 
   <div class="bottom-nav">
-    <div class="nav-icon">🏠</div>
-    <div class="nav-icon">🔍</div>
-    <div class="nav-icon">➕</div>
-    <div class="nav-icon">📨</div>
-    <div class="nav-icon">⚙️</div>
+    <i class="fa fa-home"></i>
+    <i class="fa fa-user"></i>
+    <i class="fa fa-plus-circle"></i>
+    <i class="fa fa-comments"></i>
+    <i class="fa fa-cog"></i>
   </div>
 
-  <div class="credit">
-    Deployment by Aung Thuyrain - Wayne
-  </div>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
+      authDomain: "smart-burme-app.firebaseapp.com",
+      projectId: "smart-burme-app",
+      storageBucket: "smart-burme-app.appspot.com",
+      messagingSenderId: "851502425686",
+      appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        document.getElementById('username').textContent = user.displayName || "Anonymous";
+        document.getElementById('userid').textContent = user.uid;
+      } else {
+        window.location.href = 'login.html';
+      }
+    });
+  </script>
+  <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
 </body>
+
 </html>
