@@ -1,63 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Smart Burme - Main</title>
-  <link rel="stylesheet" href="main.css">
-</head>
-<body>
-  <!-- Menu Toggle -->
-  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+<!-- HTML Structure -->
+<div class="app-container">
+  <!-- Header -->
+  <header class="floating-header">
+    <h1 class="gradient-text">Smart Burme</h1>
+    <input type="text" class="glass-search" placeholder="Search...">
+  </header>
 
-  <!-- Slide Menu -->
-  <div class="slide-menu" id="slideMenu">
-    <ul>
-      <li><a href="#">Group Chat</a></li>
-      <li><a href="#">Messages</a></li>
-      <li><a href="#">Bank</a></li>
-    </ul>
-  </div>
-
-  <!-- Search Bar -->
-  <div class="search-bar">
-    <input type="text" placeholder="🔍 Search...">
-  </div>
-
-  <!-- View System Buttons -->
-  <div class="view-system">
-    <button class="view-btn">For You</button>
-    <button class="view-btn">Newfeed</button>
-    <button class="view-btn">Friends</button>
-  </div>
-
-  <!-- Photo/Video Frame -->
-  <div class="content-area">
-    <h2>📷 Photo & Video Display</h2>
-    <div id="media-container">
-      <!-- Future uploads will show here -->
+  <!-- User Profile Section -->
+  <div class="profile-card float-3D">
+    <div class="profile-pic"></div>
+    <div class="stats">
+      <div class="gradient-card">10.6K Followers</div>
+      <div class="gradient-card">1.2K Following</div>
     </div>
   </div>
 
-  <!-- Bottom Icon Bar -->
-  <div class="icon-bottom">
-    <button onclick="location.reload()">🔄</button>
-    <button onclick="openUploadModal()">➕</button>
-    <button>💬</button>
-    <button>👥</button>
+  <!-- Posts Section -->
+  <div class="post-card float-3D">
+    <p>I make my podcasts too much and I haven't cake to them in a year.</p>
+    <button class="comment-btn-3D">D'Comments (12)</button>
   </div>
-
-  <!-- Upload Modal -->
-  <div class="upload-modal" id="uploadModal">
-    <div class="upload-modal-content">
-      <h3>Upload Media</h3>
-      <input type="file" accept="image/*,video/*">
-      <textarea placeholder="Say something..."></textarea>
-      <button onclick="submitUpload()">Post</button>
-      <button onclick="closeUploadModal()">Cancel</button>
-    </div>
-  </div>
-
-  <script src="animation.js"></script>
-</body>
-</html>
+</div>
