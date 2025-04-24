@@ -1,19 +1,21 @@
-// Float3D Animation for elements with .view-btn
-document.querySelectorAll('.view-btn').forEach(btn => {
-  btn.addEventListener('mousemove', e => {
-    const { left, top, width, height } = btn.getBoundingClientRect();
-    const x = e.clientX - left - width / 2;
-    const y = e.clientY - top - height / 2;
-    btn.style.transform = `rotateX(${-y / 10}deg) rotateY(${x / 10}deg)`;
-  });
+/* CSS Styling */
+.gradient-text {
+  background: linear-gradient(45deg, #007CF0, #00DFD8);
+  -webkit-background-clip: text;
+  color: transparent;
+}
 
-  btn.addEventListener('mouseleave', () => {
-    btn.style.transform = 'rotateX(0deg) rotateY(0deg)';
-  });
-});
+.float-3D {
+  transform: translate3d(0, 0, 20px);
+  transition: transform 0.3s ease;
+}
 
-// Slide Menu Animation
-function toggleMenu() {
-  const menu = document.getElementById('slideMenu');
-  menu.classList.toggle('open');
+.glass-search {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.comment-btn-3D {
+  transform: rotateX(10deg) rotateY(-5deg);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
 }
