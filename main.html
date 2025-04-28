@@ -2,132 +2,168 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <title>Smart Burme - Main</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Burme</title>
+  
+  <!-- Ionicons CDN -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-  <!-- Firebase SDK -->
-  <script type="module" src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
-  <script type="module" src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"></script>
-  <script type="module" src="https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js"></script>
+  <style>
+    /* Body Background */
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('background/main.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
 
-  <!-- CSS for Floating Effects and Styles -->
-  <link rel="stylesheet" href="CSS/styles.css">
+    /* Upload View Area */
+    .upload-view {
+      width: 100%;
+      height: calc(100vh - 80px);
+      position: relative;
+      overflow: hidden;
+    }
 
-  <!-- Main JS -->
-  <script type="module" src="interface-bottom/main-bottom.js"></script>
+    /* Upload Content Placeholder */
+    .upload-content {
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      color: white;
+    }
+
+    /* View Area Icons Layout */
+    .view-icons {
+      position: fixed;
+      right: 15px;
+      top: 350px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 999;
+    }
+
+    .icon-box {
+      width: 40px;
+      height: 50px;
+      background: rgba(32, 156, 255, 0.8);
+      backdrop-filter: blur(8px);
+      border-radius: 30%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-size: 26px;
+      box-shadow: 0 0 12px #209cff, 0 0 25px #209cff;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .icon-box:hover {
+      transform: scale(1.2);
+      box-shadow: 0 0 20px #00ffe0, 0 0 40px #00ffe0;
+    }
+
+    /* Bottom Navigation */
+    .navigation {
+      width: 100%;
+      height: 70px;
+      background: rgba(0, 0, 0, 0.6);
+      position: fixed;
+      bottom: 0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 1000;
+      border-top: 2px solid #209cff;
+      backdrop-filter: blur(10px);
+    }
+
+    .navigation a {
+      color: white;
+      font-size: 26px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .navigation a:hover {
+      color: #00ffe0;
+      transform: scale(1.2);
+    }
+
+    /* Floating Add Button */
+    .add-button {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #209cff, #68e0cf);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 30px;
+      box-shadow: 0 0 15px #00ffe0;
+      position: relative;
+      top: -30px;
+      z-index: 1001;
+      animation: float3D 2s infinite ease-in-out;
+    }
+
+    /* 3D floating animation */
+    @keyframes float3D {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+  </style>
 </head>
+
 <body>
 
-  <!-- Page Header -->
-  <header>
-    <h1>Smart Burme</h1>
-  </header>
-
-  <!-- Background -->
-  <div class="background-container">
-    <img src="background/main.jpg" alt="Background" class="background-image">
-  </div>
-
-  <!-- Content Area (For Photo/Video Upload) -->
-  <div class="content-area">
-    <div class="photo-video-area">
-      <h3>Upload Your Post</h3>
-      <input type="file" id="uploadInput" accept="image/*,video/*">
-      <button id="uploadButton">Upload</button>
+  <!-- Upload View Area -->
+  <div class="upload-view">
+    <div class="upload-content">
+      Upload your Photo / Video
     </div>
 
-    <!-- Add Friend, Like, Save, Share Icons -->
-    <div class="action-icons">
-      <div class="action-icon">
+    <!-- Up to Down Right Side Icons -->
+    <div class="view-icons">
+      <div class="icon-box">
         <ion-icon name="person-add-outline"></ion-icon>
-        <span>Add Friend</span>
       </div>
-      <div class="action-icon">
+      <div class="icon-box">
         <ion-icon name="heart-outline"></ion-icon>
-        <span>Like</span>
       </div>
-      <div class="action-icon">
+      <div class="icon-box">
         <ion-icon name="bookmark-outline"></ion-icon>
-        <span>Save</span>
       </div>
-      <div class="action-icon">
+      <div class="icon-box">
         <ion-icon name="share-social-outline"></ion-icon>
-        <span>Share</span>
       </div>
     </div>
   </div>
 
-  <!-- Bottom Navigation (with Floating Effect) -->
+  <!-- Bottom Navigation -->
   <div class="navigation">
-    <ul>
-      <li class="list bottom-icon" data-target="home">
-        <a href="#">
-          <span class="icon">
-            <ion-icon name="home-outline"></ion-icon>
-          </span>
-        </a>
-      </li>
-      <li class="list bottom-icon" data-target="friend">
-        <a href="#">
-          <span class="icon">
-            <ion-icon name="people-outline"></ion-icon>
-          </span>
-        </a>
-      </li>
-      <li class="list bottom-icon" data-target="add">
-        <a href="#">
-          <span class="icon">
-            <ion-icon name="add-circle-outline"></ion-icon>
-          </span>
-        </a>
-      </li>
-      <li class="list bottom-icon" data-target="message">
-        <a href="#">
-          <span class="icon">
-            <ion-icon name="chatbubble-outline"></ion-icon>
-          </span>
-        </a>
-      </li>
-      <li class="list bottom-icon" data-target="account">
-        <a href="#">
-          <span class="icon">
-            <ion-icon name="person-outline"></ion-icon>
-          </span>
-        </a>
-      </li>
-    </ul>
+    <a href="#"><ion-icon name="home-outline"></ion-icon></a>
+    <a href="#"><ion-icon name="people-outline"></ion-icon></a>
+
+    <!-- Floating Add Button -->
+    <div class="add-button">
+      <ion-icon name="add-outline"></ion-icon>
+    </div>
+
+    <a href="#"><ion-icon name="chatbubble-ellipses-outline"></ion-icon></a>
+    <a href="#"><ion-icon name="person-circle-outline"></ion-icon></a>
   </div>
 
-  <!-- Firebase Script for Upload Logic -->
-  <script>
-    const uploadButton = document.getElementById('uploadButton');
-    const uploadInput = document.getElementById('uploadInput');
-    
-    uploadButton.addEventListener('click', function () {
-      const file = uploadInput.files[0];
-      if (file) {
-        const storageRef = firebase.storage().ref('uploads/' + file.name);
-        const uploadTask = storageRef.put(file);
-
-        uploadTask.on('state_changed', 
-          function(snapshot) {
-            // progress function (optional)
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log('Upload is ' + progress + '% done');
-          }, 
-          function(error) {
-            console.error(error);
-          }, 
-          function() {
-            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-              console.log('File available at', downloadURL);
-              alert("Upload Successful!");
-            });
-          });
-      } else {
-        alert("Please select a file.");
-      }
-    });
-  </script>
+  <!-- Link to main-bottom.js -->
+  <script src="inserface-bottom/main-bottom.js"></script>
 </body>
 </html>
