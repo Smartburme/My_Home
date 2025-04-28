@@ -3,125 +3,232 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Main Page</title>
-  
-  <!-- Ionicons CDN -->
+  <title>Smart Burme - Photo/Video Post</title>
+
+  <!-- Ionicons CDN for icons -->
   <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js"></script>
 
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+
   <style>
-    /* Navigation Bar */
-    .navigation {
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    /* Content Area */
+    .content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       width: 100%;
-      height: 70px;
-      background: #209cff;
+      height: 80vh;
+    }
+
+    /* Left Side - Photo/Video View */
+    .media-view {
+      width: 60%;
+      height: 100%;
+      background-color: #fff;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .media-view img, .media-view video {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 10px;
+    }
+
+    /* Right Side - Action Icons */
+    .actions {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 1;
+    }
+
+    .actions .icon {
+      margin: 20px 0;
+      width: 60px;
+      height: 60px;
+      background-color: #fff;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .actions .icon:hover {
+      background-color: #209cff;
+      transform: scale(1.2);
+    }
+
+    .actions .icon ion-icon {
+      font-size: 35px;
+      color: #209cff;
+      transition: color 0.3s ease;
+    }
+
+    .actions .icon:hover ion-icon {
+      color: white;
+    }
+
+    /* Floating Bottom Navigation */
+    .bottom-nav {
       position: fixed;
       bottom: 0;
-      display: flex;
-      justify-content: space-around;
-      z-index: 1;
-      border-radius: 10px 10px 0 0;
-    }
-
-    .navigation ul {
-      display: flex;
       width: 100%;
-      justify-content: space-around;
-      padding: 0;
-      margin: 0;
-    }
-
-    .navigation ul li {
-      position: relative;
-      list-style: none;
-      width: 70px;
-      height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1;
-    }
-
-    .navigation ul li a {
-      display: block;
-      width: 40px;
-      height: 40px;
-      background-color: white;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 40px;
-      font-size: 20px;
-      color: #209cff;
-      text-decoration: none;
-    }
-
-    .navigation ul li a:hover {
       background-color: #209cff;
+      padding: 15px 0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-radius: 20px 20px 0 0;
+      box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
+      z-index: 10;
+    }
+
+    .bottom-nav .nav-item {
+      width: 60px;
+      height: 60px;
+      background-color: #fff;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .bottom-nav .nav-item:hover {
+      background-color: #209cff;
+      transform: scale(1.1);
+    }
+
+    .bottom-nav .nav-item ion-icon {
+      font-size: 30px;
+      color: #209cff;
+    }
+
+    .bottom-nav .nav-item:hover ion-icon {
       color: white;
     }
 
-    /* Active class for the currently selected item */
-    .navigation ul li.active a {
-      background-color: #0d80b0;
-      color: white;
-    }
-
-    /* Content */
-    .content {
-      padding-bottom: 80px; /* Ensure the content doesn't hide behind the navigation bar */
-    }
   </style>
 </head>
 <body>
 
-  <!-- Main content area -->
+  <!-- Content Area -->
   <div class="content">
-    <!-- Your page content goes here -->
-    <h1>Welcome to the Main Page</h1>
-    <p>Content goes here. Add your posts, videos, etc.</p>
+    <!-- Left: Photo/Video View -->
+    <div class="media-view">
+      <img src="your-image-url.jpg" alt="Sample Post"> <!-- Replace with actual photo/video URL -->
+      <!-- <video src="your-video-url.mp4" controls></video> -->
+    </div>
+
+    <!-- Right: Action Icons -->
+    <div class="actions">
+      <!-- Add Friend Icon -->
+      <div class="icon" onclick="addFriend()">
+        <ion-icon name="person-add-outline"></ion-icon>
+      </div>
+
+      <!-- Like Icon -->
+      <div class="icon" onclick="likePost()">
+        <ion-icon name="heart-outline"></ion-icon>
+      </div>
+
+      <!-- Save Icon -->
+      <div class="icon" onclick="savePost()">
+        <ion-icon name="bookmark-outline"></ion-icon>
+      </div>
+
+      <!-- Share Icon -->
+      <div class="icon" onclick="sharePost()">
+        <ion-icon name="share-social-outline"></ion-icon>
+      </div>
+    </div>
   </div>
 
-  <!-- Bottom Navigation Bar -->
-  <div class="navigation">
-    <ul>
-      <li class="list active">
-        <a href="#">
-          <span class="icon">
-            <ion-icon name="home-outline"></ion-icon>
-          </span>
-        </a>
-      </li>
-      <li class="list">
-        <a href="#">
-          <span class="icon">
-            <ion-icon name="search-outline"></ion-icon>
-          </span>
-        </a>
-      </li>
-      <li class="list">
-        <a href="#">
-          <span class="icon">
-            <ion-icon name="add-circle-outline"></ion-icon>
-          </span>
-        </a>
-      </li>
-      <li class="list">
-        <a href="#">
-          <span class="icon">
-            <ion-icon name="chatbubble-outline"></ion-icon>
-          </span>
-        </a>
-      </li>
-      <li class="list">
-        <a href="#">
-          <span class="icon">
-            <ion-icon name="person-outline"></ion-icon>
-          </span>
-        </a>
-      </li>
-    </ul>
+  <!-- Floating Bottom Navigation -->
+  <div class="bottom-nav">
+    <div class="nav-item">
+      <ion-icon name="home-outline"></ion-icon>
+    </div>
+    <div class="nav-item">
+      <ion-icon name="person-outline"></ion-icon>
+    </div>
+    <div class="nav-item">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </div>
+    <div class="nav-item">
+      <ion-icon name="chatbubbles-outline"></ion-icon>
+    </div>
+    <div class="nav-item">
+      <ion-icon name="settings-outline"></ion-icon>
+    </div>
   </div>
+
+  <!-- Firebase SDK Setup -->
+  <script>
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
+      authDomain: "smart-burme-app.firebaseapp.com",
+      projectId: "smart-burme-app",
+      storageBucket: "smart-burme-app.appspot.com",
+      messagingSenderId: "851502425686",
+      appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // JavaScript Functions for Actions
+    function addFriend() {
+      console.log("Friend added!");
+      alert("You added a friend!");
+    }
+
+    function likePost() {
+      console.log("Post liked!");
+      alert("You liked this post!");
+    }
+
+    function savePost() {
+      console.log("Post saved!");
+      alert("You saved this post!");
+    }
+
+    function sharePost() {
+      console.log("Post shared!");
+      alert("You shared this post!");
+    }
+  </script>
 
 </body>
-    </html>
-    
+</html>
