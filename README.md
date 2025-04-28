@@ -16,8 +16,8 @@ Smart Burme is a social app designed to help users connect with their friends an
 │    ├── message.html
 │    └── account.html
 │
-├── js/
-│    └── bottom.js
+├── inserface-bottom/
+│    └── main-bottom.js
 │
 ├── main.html
 └── (firebase ထည့်ပြီးသား file တွေ)
