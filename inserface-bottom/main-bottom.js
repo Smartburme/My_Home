@@ -7,13 +7,13 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'https://w
 
 // Firebase config
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
-  measurementId: "YOUR_MEASUREMENT_ID"
+  const firebaseConfig = {
+    apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
+    authDomain: "smart-burme-app.firebaseapp.com",
+    projectId: "smart-burme-app",
+    storageBucket: "smart-burme-app.appspot.com",
+    messagingSenderId: "851502425686",
+    appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7"
 };
 
 // Initialize Firebase
