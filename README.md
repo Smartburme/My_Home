@@ -3,7 +3,7 @@
 ## Overview
 Smart Burme is a social app designed to help users connect with their friends and explore various social features. The app will include features such as voice chat, private and public posts, photo/video uploads, and more.
 ## app structure 
-``
+```
 /project-folder/
 │
 ├── background/
@@ -21,7 +21,7 @@ Smart Burme is a social app designed to help users connect with their friends an
 │
 ├── main.html
 └── (firebase ထည့်ပြီးသား file တွေ)
-
+```
 ---
 
 ## Features
