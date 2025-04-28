@@ -7,7 +7,6 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'https://w
 
 // Firebase config
 const firebaseConfig = {
-  const firebaseConfig = {
     apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
     authDomain: "smart-burme-app.firebaseapp.com",
     projectId: "smart-burme-app",
