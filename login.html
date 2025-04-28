@@ -10,7 +10,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: url('background/login.png') no-repeat center center/cover;
+      background: url('background/login.jpg') no-repeat center center/cover;
       font-family: Arial, sans-serif;
     }
 
@@ -96,7 +96,7 @@
     auth.signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         alert('Sign In Successful!');
-        window.location.href = "main.html"; // login အောင်မြင်ရင် mail.html သွားမယ်
+        window.location.href = "main.html"; // login အောင်မြင်ရင် main.html သွားမယ်
       })
       .catch((error) => {
         alert(error.message);
