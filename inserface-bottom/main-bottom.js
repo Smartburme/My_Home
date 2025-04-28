@@ -1,11 +1,4 @@
-// main-bottom.js
-
-// Firebase Initialization
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
-import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js';
-
-// Firebase config
+// Firebase Configuration (Set up your Firebase config here)
 const firebaseConfig = {
     apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
     authDomain: "smart-burme-app.firebaseapp.com",
@@ -13,79 +6,65 @@ const firebaseConfig = {
     storageBucket: "smart-burme-app.appspot.com",
     messagingSenderId: "851502425686",
     appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth();
-const storage = getStorage();
-
-// Handle Authentication - Sign in Anonymously (for demo purposes)
-signInAnonymously(auth)
-  .then(() => {
-    console.log("Signed in anonymously");
-  })
-  .catch((error) => {
-    console.error("Error signing in:", error.message);
-  });
-
-// Handle Navigation for Bottom Menu
-document.addEventListener('DOMContentLoaded', function() {
-
-  // Navigation links
-  const navItems = document.querySelectorAll('.navigation a');
-  
-  navItems.forEach(item => {
-    item.addEventListener('click', function(e) {
-      e.preventDefault();  // Prevent default anchor behavior
-      const selectedItem = e.target.closest('a').getAttribute('href');
-      console.log('Navigating to:', selectedItem);
-      // Example: Navigate to the selected section
-      window.location.href = selectedItem;
-    });
-  });
-
-  // Handle Floating Add Button Click (Photo/Video upload)
-  const addButton = document.querySelector('.add-button');
-  addButton.addEventListener('click', function() {
-    console.log("Add button clicked");
-    openFileUploadDialog();
-  });
-
-});
-
-// Open file upload dialog for photo/video upload
-function openFileUploadDialog() {
-  const fileInput = document.createElement('input');
-  fileInput.type = 'file';
-  fileInput.accept = 'image/*,video/*';  // Accept both images and videos
-  fileInput.click(); // Trigger file input click event
-
-  fileInput.addEventListener('change', function() {
-    const file = fileInput.files[0];
-    if (file) {
-      uploadFile(file);
-    }
-  });
 }
 
-// Upload file to Firebase Storage
-function uploadFile(file) {
-  const storageRef = ref(storage, 'uploads/' + file.name);
-  const uploadTask = uploadBytesResumable(storageRef, file);
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const storage = firebase.storage();
 
-  uploadTask.on('state_changed', 
-    (snapshot) => {
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log('Upload is ' + progress + '% done');
-    }, 
-    (error) => {
-      console.error("Error uploading file:", error);
-    }, 
-    () => {
-      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-        console.log('File available at', downloadURL);
-        alert("Upload complete! File URL: " + downloadURL);
-      });
-    });
+// Floating Add Button Click Event
+const addButton = document.querySelector('.add-button');
+addButton.addEventListener('click', function() {
+  // Redirect to the photo/video upload page or open upload modal
+  alert("Upload your photo/video!");
+  // You can also add logic to open a modal for file selection, etc.
+});
+
+// Bottom Navigation Logic
+const homeButton = document.querySelector('.navigation a:nth-child(1)');
+const peopleButton = document.querySelector('.navigation a:nth-child(2)');
+const chatButton = document.querySelector('.navigation a:nth-child(3)');
+const profileButton = document.querySelector('.navigation a:nth-child(4)');
+
+// Navigate to different sections
+homeButton.addEventListener('click', function() {
+  alert("Navigating to Home");
+  // Add your logic here to load the home section (e.g., load main feed)
+});
+
+peopleButton.addEventListener('click', function() {
+  alert("Navigating to People");
+  // Add your logic here to load the people section (e.g., load friends list)
+});
+
+chatButton.addEventListener('click', function() {
+  alert("Navigating to Chat");
+  // Add your logic here to load the chat section (e.g., load message inbox)
+});
+
+profileButton.addEventListener('click', function() {
+  alert("Navigating to Profile");
+  // Add your logic here to load the profile section
+});
+
+// Firebase Authentication Logic (Example: Login)
+auth.onAuthStateChanged(user => {
+  if (user) {
+    console.log("User is logged in:", user.email);
+  } else {
+    console.log("No user logged in");
+  }
+});
+
+// File Upload Logic (For Floating Add Button - Upload photo/video)
+function uploadFile(file) {
+  const storageRef = storage.ref();
+  const fileRef = storageRef.child('uploads/' + file.name);
+
+  fileRef.put(file).then(() => {
+    alert("File uploaded successfully!");
+  }).catch((error) => {
+    console.error("Error uploading file:", error);
+  });
 }
