@@ -1,72 +1,28 @@
-// Firebase Init
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getStorage } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+// main-bottom.js
 
-// Firebase Config
-const firebaseConfig = {
-  apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
-  authDomain: "smart-burme-app.firebaseapp.com",
-  projectId: "smart-burme-app",
-  storageBucket: "smart-burme-app.appspot.com",
-  messagingSenderId: "851502425686",
-  appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7"
-};
+// Functionality for bottom navigation
+document.addEventListener('DOMContentLoaded', function() {
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const storage = getStorage(app);
-const auth = getAuth(app);
+  const navItems = document.querySelectorAll('.navigation a');
 
-// --- Bottom Navigation Functions ---
-
-function loadHomeContent() {
-  console.log("Home Page Loaded");
-}
-
-function loadFriendList() {
-  console.log("Friend List Loaded");
-}
-
-function uploadNewPost() {
-  console.log("Add New Post Page Opened");
-}
-
-function loadMessages() {
-  console.log("Messages Page Loaded");
-}
-
-function loadUserProfile() {
-  console.log("User Profile Page Loaded");
-}
-
-// --- Bottom Navigation Event Handler ---
-document.addEventListener('DOMContentLoaded', () => {
-  const bottomIcons = document.querySelectorAll('.bottom-icon');
-
-  bottomIcons.forEach(icon => {
-    icon.addEventListener('click', (e) => {
-      const target = e.currentTarget.getAttribute('data-target');
-
-      switch (target) {
-        case 'home':
-          loadHomeContent();
-          break;
-        case 'friend':
-          loadFriendList();
-          break;
-        case 'add':
-          uploadNewPost();
-          break;
-        case 'message':
-          loadMessages();
-          break;
-        case 'account':
-          loadUserProfile();
-          break;
-        default:
-          console.log("Unknown action");
-      }
+  // Handle navigation item click event
+  navItems.forEach(item => {
+    item.addEventListener('click', function(e) {
+      e.preventDefault(); // Prevent default anchor link behavior
+      const selectedItem = e.target.closest('a').getAttribute('href');
+      console.log('Navigating to:', selectedItem);
+      
+      // Example action: Show alert or redirect
+      window.location.href = selectedItem;
     });
   });
+
+  // Add functionality for floating button (add new post)
+  const addButton = document.querySelector('.add-button');
+  addButton.addEventListener('click', function() {
+    console.log("Add new post clicked");
+    // You can replace this with actual functionality like opening an upload dialog
+    alert("Open photo/video upload dialog");
+  });
+
 });
