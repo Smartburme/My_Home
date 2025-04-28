@@ -2,149 +2,132 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Smart Burme - Main</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+  <title>Smart Burme</title>
+
   <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js"></script>
 
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: url('background/main.jpg') no-repeat center center fixed;
-      background-size: cover;
-      font-family: Arial, sans-serif;
-    }
-    .view-area {
-      position: relative;
-      height: calc(100vh - 80px);
-      overflow: hidden;
-      padding-top: 10px;
-    }
-    .floating-icons {
-      position: absolute;
-      top: 50px;
-      right: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      z-index: 10;
-    }
-    .floating-icons ion-icon {
-      font-size: 30px;
-      color: #fff;
-      filter: drop-shadow(0 0 5px #00f0ff);
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-    .floating-icons ion-icon:hover {
-      transform: scale(1.2);
-    }
-    .navigation {
-      width: 100%;
-      height: 70px;
-      background: rgba(32, 156, 255, 0.9);
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      z-index: 100;
-      border-radius: 20px 20px 0 0;
-    }
-    .navigation a, .navigation .add-button {
-      text-decoration: none;
-      color: white;
-      font-size: 24px;
-    }
-    .add-button {
-      background: linear-gradient(45deg, #209cff, #68e0cf);
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: -30px;
-      box-shadow: 0 0 10px #68e0cf, 0 0 20px #68e0cf;
-      cursor: pointer;
-    }
-  </style>
+  <!-- CSS for Floating Effects and Styles -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Main JS -->
+  <script type="module" src="interface-bottom/main-bottom.js"></script>
 </head>
-
 <body>
 
-  <!-- View Area -->
-  <div class="view-area">
-    <!-- Floating Icons (Right Side) -->
-    <div class="floating-icons">
-      <ion-icon name="person-add-outline" onclick="addFriend()"></ion-icon>
-      <ion-icon name="heart-outline" onclick="likePost()"></ion-icon>
-      <ion-icon name="bookmark-outline" onclick="savePost()"></ion-icon>
-      <ion-icon name="share-social-outline" onclick="sharePost()"></ion-icon>
-    </div>
+  <!-- Page Header -->
+  <header>
+    <h1>Smart Burme</h1>
+  </header>
 
-    <!-- Your upload photos & videos area can be here -->
-
+  <!-- Background -->
+  <div class="background-container">
+    <img src="background/main.jpg" alt="Background" class="background-image">
   </div>
 
-  <!-- Bottom Navigation -->
+  <!-- Content Area (For Photo/Video Upload) -->
+  <div class="content-area">
+    <div class="photo-video-area">
+      <h3>Upload Your Post</h3>
+      <input type="file" id="uploadInput" accept="image/*,video/*">
+      <button id="uploadButton">Upload</button>
+    </div>
+
+    <!-- Add Friend, Like, Save, Share Icons -->
+    <div class="action-icons">
+      <div class="action-icon">
+        <ion-icon name="person-add-outline"></ion-icon>
+        <span>Add Friend</span>
+      </div>
+      <div class="action-icon">
+        <ion-icon name="heart-outline"></ion-icon>
+        <span>Like</span>
+      </div>
+      <div class="action-icon">
+        <ion-icon name="bookmark-outline"></ion-icon>
+        <span>Save</span>
+      </div>
+      <div class="action-icon">
+        <ion-icon name="share-social-outline"></ion-icon>
+        <span>Share</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation (with Floating Effect) -->
   <div class="navigation">
-    <a href="interface-bottom/home.html"><ion-icon name="home-outline"></ion-icon></a>
-    <a href="interface-bottom/friend.html"><ion-icon name="people-outline"></ion-icon></a>
-
-    <!-- Floating Add Button -->
-    <div class="add-button" onclick="openAddPage()">
-      <ion-icon name="add-outline"></ion-icon>
-    </div>
-
-    <a href="interface-bottom/message.html"><ion-icon name="chatbubble-ellipses-outline"></ion-icon></a>
-    <a href="interface-bottom/account.html"><ion-icon name="person-circle-outline"></ion-icon></a>
+    <ul>
+      <li class="list bottom-icon" data-target="home">
+        <a href="#">
+          <span class="icon">
+            <ion-icon name="home-outline"></ion-icon>
+          </span>
+        </a>
+      </li>
+      <li class="list bottom-icon" data-target="friend">
+        <a href="#">
+          <span class="icon">
+            <ion-icon name="people-outline"></ion-icon>
+          </span>
+        </a>
+      </li>
+      <li class="list bottom-icon" data-target="add">
+        <a href="#">
+          <span class="icon">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </span>
+        </a>
+      </li>
+      <li class="list bottom-icon" data-target="message">
+        <a href="#">
+          <span class="icon">
+            <ion-icon name="chatbubble-outline"></ion-icon>
+          </span>
+        </a>
+      </li>
+      <li class="list bottom-icon" data-target="account">
+        <a href="#">
+          <span class="icon">
+            <ion-icon name="person-outline"></ion-icon>
+          </span>
+        </a>
+      </li>
+    </ul>
   </div>
 
-  <!-- Ionicons -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
-  <!-- Firebase Config -->
+  <!-- Firebase Script for Upload Logic -->
   <script>
-    var firebaseConfig = {
-      apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
-      authDomain: "smart-burme-app.firebaseapp.com",
-      projectId: "smart-burme-app",
-      storageBucket: "smart-burme-app.appspot.com",
-      messagingSenderId: "851502425686",
-      appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7"
-    };
-    firebase.initializeApp(firebaseConfig);
+    const uploadButton = document.getElementById('uploadButton');
+    const uploadInput = document.getElementById('uploadInput');
+    
+    uploadButton.addEventListener('click', function () {
+      const file = uploadInput.files[0];
+      if (file) {
+        const storageRef = firebase.storage().ref('uploads/' + file.name);
+        const uploadTask = storageRef.put(file);
+
+        uploadTask.on('state_changed', 
+          function(snapshot) {
+            // progress function (optional)
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+          }, 
+          function(error) {
+            console.error(error);
+          }, 
+          function() {
+            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+              console.log('File available at', downloadURL);
+              alert("Upload Successful!");
+            });
+          });
+      } else {
+        alert("Please select a file.");
+      }
+    });
   </script>
-
-  <!-- Bottom Functions -->
-  <script src="js/bottom.js"></script>
-
-  <!-- Floating Icon Functions -->
-  <script>
-    function addFriend() {
-      alert("Add Friend Clicked!");
-    }
-    function likePost() {
-      alert("Liked!");
-    }
-    function savePost() {
-      alert("Saved!");
-    }
-    function sharePost() {
-      alert("Shared!");
-    }
-    function openAddPage() {
-      window.location.href = "interface-bottom/add.html";
-    }
-  </script>
-
 </body>
 </html>
