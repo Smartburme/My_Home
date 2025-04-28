@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main Page</title>
+  
+  <!-- Ionicons CDN -->
+  <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js"></script>
+
+  <style>
+    /* Navigation Bar */
+    .navigation {
+      width: 100%;
+      height: 70px;
+      background: #209cff;
+      position: fixed;
+      bottom: 0;
+      display: flex;
+      justify-content: space-around;
+      z-index: 1;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .navigation ul {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+      padding: 0;
+      margin: 0;
+    }
+
+    .navigation ul li {
+      position: relative;
+      list-style: none;
+      width: 70px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .navigation ul li a {
+      display: block;
+      width: 40px;
+      height: 40px;
+      background-color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 40px;
+      font-size: 20px;
+      color: #209cff;
+      text-decoration: none;
+    }
+
+    .navigation ul li a:hover {
+      background-color: #209cff;
+      color: white;
+    }
+
+    /* Active class for the currently selected item */
+    .navigation ul li.active a {
+      background-color: #0d80b0;
+      color: white;
+    }
+
+    /* Content */
+    .content {
+      padding-bottom: 80px; /* Ensure the content doesn't hide behind the navigation bar */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Main content area -->
+  <div class="content">
+    <!-- Your page content goes here -->
+    <h1>Welcome to the Main Page</h1>
+    <p>Content goes here. Add your posts, videos, etc.</p>
+  </div>
+
+  <!-- Bottom Navigation Bar -->
+  <div class="navigation">
+    <ul>
+      <li class="list active">
+        <a href="#">
+          <span class="icon">
+            <ion-icon name="home-outline"></ion-icon>
+          </span>
+        </a>
+      </li>
+      <li class="list">
+        <a href="#">
+          <span class="icon">
+            <ion-icon name="search-outline"></ion-icon>
+          </span>
+        </a>
+      </li>
+      <li class="list">
+        <a href="#">
+          <span class="icon">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </span>
+        </a>
+      </li>
+      <li class="list">
+        <a href="#">
+          <span class="icon">
+            <ion-icon name="chatbubble-outline"></ion-icon>
+          </span>
+        </a>
+      </li>
+      <li class="list">
+        <a href="#">
+          <span class="icon">
+            <ion-icon name="person-outline"></ion-icon>
+          </span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</body>
+    </html>
+    
