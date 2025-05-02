@@ -1,198 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Smart Burme AI - Payment</title>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
-      authDomain: "smart-burme-app.firebaseapp.com",
-      projectId: "smart-burme-app",
-      storageBucket: "smart-burme-app.appspot.com",
-      messagingSenderId: "851502425686",
-      appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7"
-    };
-    firebase.initializeApp(firebaseConfig);
-    emailjs.init("MLJqwYo1ZN4j15iYx");
-  </script>
-  <style>
-    body {
-      margin: 0;
-      background-color: #0000ff;
-      font-family: Arial, sans-serif;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      min-height: 100vh;
-    }
-    h1, label, #message {
-      text-align: center;
-    }
-    input, button {
-      width: 90%;
-      max-width: 300px;
-      margin: 10px 0;
-      padding: 10px;
-      font-size: 16px;
-    }
-    #videoContainer {
-      margin-top: 2em;
-      width: 320px;
-      height: 240px;
-      background-color: #222288;
-      border-radius: 8px;
-      box-shadow: 0 0 15px #0000cc;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    #outputVideo {
-      max-width: 100%;
-      max-height: 100%;
-      border-radius: 8px;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Smart Burme AI</title>
+<style>
+  body {
+    margin: 0;
+    background: linear-gradient(to right, #6dd5fa, #2980b9);
+    font-family: Arial, sans-serif;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+  }
+
+  h1 {
+    margin-bottom: 1em;
+  }
+
+  label {
+    margin-top: 1em;
+    font-weight: bold;
+  }
+
+  input[type="file"],
+  input[type="text"] {
+    margin-top: 0.5em;
+    padding: 0.5em;
+    font-size: 1em;
+    width: 90%;
+    max-width: 320px;
+    border-radius: 6px;
+    border: none;
+  }
+
+  .generate-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.8em 2em;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 30px;
+    background-color: #0044cc;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .generate-btn:disabled {
+    background-color: #8888ff;
+    cursor: not-allowed;
+  }
+
+  #videoContainer {
+    margin-top: 2em;
+    width: 100%;
+    max-width: 320px;
+    height: 240px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 0 10px #0000cc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #outputVideo {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+  }
+
+  #message {
+    margin-top: 1em;
+    font-style: italic;
+    color: #eeeeff;
+  }
+</style>
 </head>
 <body>
-  <h1>Smart Burme AI</h1>
 
-  <label for="imageInput">Select Image</label>
-  <input type="file" id="imageInput" accept="image/*" />
+<h1>Smart Burme AI</h1>
 
-  <label for="promptInput">Enter Prompt</label>
-  <input type="text" id="promptInput" placeholder="Enter your prompt here..." />
+<label for="imageInput">Select Image</label>
+<input type="file" id="imageInput" accept="image/*" />
 
-  <button id="generateBtn" disabled>Generate Video</button>
+<label for="promptInput">Prompt Text</label>
+<input type="text" id="promptInput" placeholder="Enter your prompt..." />
 
-  <div id="videoContainer">
-    <video id="outputVideo" controls autoplay loop muted></video>
-  </div>
+<div id="videoContainer">
+  <video id="outputVideo" controls autoplay loop muted></video>
+</div>
 
-  <div id="message"></div>
+<div id="message"></div>
 
-  <label for="username">Username</label>
-  <input type="text" id="username" placeholder="Username" />
+<button id="generateBtn" class="generate-btn" disabled>Generate Video</button>
 
-  <label for="password">Password</label>
-  <input type="text" id="password" placeholder="Password" />
+<script>
+  const imageInput = document.getElementById('imageInput');
+  const promptInput = document.getElementById('promptInput');
+  const generateBtn = document.getElementById('generateBtn');
+  const outputVideo = document.getElementById('outputVideo');
+  const message = document.getElementById('message');
 
-  <label for="email">Email</label>
-  <input type="email" id="email" placeholder="example@mail.com" />
+  let imageFile = null;
 
-  <button onclick="processPayment()">Confirm Payment</button>
+  function updateGenerateButton() {
+    generateBtn.disabled = !imageFile || !promptInput.value.trim();
+  }
 
-  <script>
-    const imageInput = document.getElementById('imageInput');
-    const promptInput = document.getElementById('promptInput');
-    const generateBtn = document.getElementById('generateBtn');
-    const outputVideo = document.getElementById('outputVideo');
-    const message = document.getElementById('message');
-
-    let imageFile = null;
-    function updateGenerateButton() {
-      generateBtn.disabled = !imageFile || !promptInput.value.trim();
+  imageInput.addEventListener('change', (e) => {
+    if (e.target.files.length > 0) {
+      imageFile = e.target.files[0];
+    } else {
+      imageFile = null;
     }
+    updateGenerateButton();
+    outputVideo.src = '';
+    message.textContent = '';
+  });
 
-    imageInput.addEventListener('change', (e) => {
-      imageFile = e.target.files[0] || null;
-      updateGenerateButton();
-      outputVideo.src = '';
-      message.textContent = '';
+  promptInput.addEventListener('input', () => {
+    updateGenerateButton();
+  });
+
+  async function generateVideoFromImageAndPrompt(imageFile, promptText) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    const img = await new Promise((resolve, reject) => {
+      const tempImg = new Image();
+      tempImg.onload = () => resolve(tempImg);
+      tempImg.onerror = () => reject(new Error('Failed to load image'));
+      tempImg.src = URL.createObjectURL(imageFile);
     });
 
-    promptInput.addEventListener('input', updateGenerateButton);
+    const maxWidth = 640;
+    const maxHeight = 480;
+    let scale = Math.min(maxWidth / img.width, maxHeight / img.height, 1);
+    canvas.width = img.width * scale;
+    canvas.height = img.height * scale;
 
-    async function generateVideoFromImageAndPrompt(imageFile, promptText) {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      const img = await new Promise((res, rej) => {
-        const i = new Image();
-        i.onload = () => res(i);
-        i.onerror = () => rej('Image load error');
-        i.src = URL.createObjectURL(imageFile);
-      });
+    const stream = canvas.captureStream(30);
+    const recordedChunks = [];
+    const mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
 
-      const scale = Math.min(640 / img.width, 480 / img.height, 1);
-      canvas.width = img.width * scale;
-      canvas.height = img.height * scale;
+    mediaRecorder.ondataavailable = function(e) {
+      if (e.data.size > 0) recordedChunks.push(e.data);
+    };
 
-      const stream = canvas.captureStream(30);
-      const chunks = [];
-      const recorder = new MediaRecorder(stream);
-      recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+    const totalFrames = 90;
+    let frame = 0;
 
-      let frame = 0;
-      const totalFrames = 90;
+    function drawFrame() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const alpha = Math.min(frame / totalFrames, 1);
+      ctx.globalAlpha = alpha;
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      ctx.font = 'bold 30px Arial';
+      ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+      ctx.textAlign = 'center';
+      const x = canvas.width / 2;
+      const y = canvas.height - 40 + 10 * Math.sin(frame / 10);
+      ctx.fillText(promptText, x, y);
+      ctx.globalAlpha = 1;
 
-      function drawFrame() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        const alpha = Math.min(frame / totalFrames, 1);
-        ctx.globalAlpha = alpha;
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        ctx.font = 'bold 24px Arial';
-        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
-        ctx.textAlign = 'center';
-        ctx.fillText(promptText, canvas.width / 2, canvas.height - 30);
-        ctx.globalAlpha = 1;
-        frame++;
-        if (frame < totalFrames) requestAnimationFrame(drawFrame);
-        else recorder.stop();
+      frame++;
+      if (frame < totalFrames) {
+        requestAnimationFrame(drawFrame);
+      } else {
+        mediaRecorder.stop();
       }
-
-      recorder.start();
-      drawFrame();
-
-      await new Promise(res => recorder.onstop = res);
-
-      const videoBlob = new Blob(chunks, { type: 'video/webm' });
-      return URL.createObjectURL(videoBlob);
     }
 
-    generateBtn.addEventListener('click', async () => {
-      if (!imageFile || !promptInput.value.trim()) return;
-      generateBtn.disabled = true;
-      message.textContent = 'Generating video, please wait...';
-      outputVideo.src = '';
-      try {
-        const videoUrl = await generateVideoFromImageAndPrompt(imageFile, promptInput.value.trim());
-        outputVideo.src = videoUrl;
-        message.textContent = 'Video generated below:';
-      } catch (err) {
-        console.error(err);
-        message.textContent = 'Error generating video';
-      } finally {
-        generateBtn.disabled = false;
-      }
+    mediaRecorder.start();
+    drawFrame();
+
+    await new Promise(resolve => {
+      mediaRecorder.onstop = resolve;
     });
 
-    function processPayment() {
-      const email = document.getElementById('email').value;
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-      if (!email || !username || !password) return alert("All fields required!");
+    const videoBlob = new Blob(recordedChunks, { type: 'video/webm' });
+    const videoUrl = URL.createObjectURL(videoBlob);
+    return videoUrl;
+  }
 
-      const templateParams = {
-        to_email: email,
-        username,
-        password,
-        login_link: "https://smartburme.web.app/login.html"
-      };
-
-      emailjs.send("smartburme25", "mail25", templateParams)
-        .then(() => {
-          alert("Payment success! Login info sent to email.");
-        })
-        .catch((err) => {
-          console.error("Mail Error", err);
-          alert("Payment success but mail failed.");
-        });
+  generateBtn.addEventListener('click', async () => {
+    if (!imageFile || !promptInput.value.trim()) return;
+    generateBtn.disabled = true;
+    message.textContent = 'Generating video, please wait...';
+    outputVideo.src = '';
+    outputVideo.style.display = 'none';
+    try {
+      const videoUrl = await generateVideoFromImageAndPrompt(imageFile, promptInput.value.trim());
+      outputVideo.src = videoUrl;
+      outputVideo.style.display = 'block';
+      message.textContent = 'Video generated below:';
+    } catch (err) {
+      console.error(err);
+      message.textContent = 'Error generating video. Please try again.';
+    } finally {
+      generateBtn.disabled = false;
     }
-  </script>
+  });
+</script>
+
 </body>
 </html>
