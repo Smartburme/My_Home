@@ -1,252 +1,127 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Smart Burme AI</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Burme</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #3a7bd5, #00d2ff);
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-storage.js"></script>
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
 
-  <!-- Firebase Configuration -->
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
-      authDomain: "smart-burme-app.firebaseapp.com",
-      projectId: "smart-burme-app",
-      storageBucket: "smart-burme-app.appspot.com",
-      messagingSenderId: "851502425686",
-      appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7"
-    };
-    firebase.initializeApp(firebaseConfig);
-  </script>
+        #uploadForm {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
 
-  <!-- Styles -->
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: white;
-      background: linear-gradient(135deg, #6fb1fc, #4364f7);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      min-height: 100vh;
-    }
-    h1 {
-      margin-bottom: 0.5em;
-      text-align: center;
-    }
-    label {
-      margin-top: 1em;
-      font-weight: bold;
-    }
-    input[type="file"], input[type="text"] {
-      margin-top: 0.5em;
-      padding: 0.5em;
-      font-size: 1em;
-      width: 90%;
-      max-width: 300px;
-      border-radius: 4px;
-      border: none;
-    }
-    button {
-      margin-top: 1.5em;
-      padding: 0.75em 1.5em;
-      font-size: 1.1em;
-      border: none;
-      border-radius: 4px;
-      background-color: #0044cc;
-      color: white;
-      cursor: pointer;
-      transition: transform 0.3s ease-in-out;
-    }
-    button:disabled {
-      background-color: #8888ff;
-      cursor: not-allowed;
-    }
-    button:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
-    #videoContainer {
-      margin-top: 2em;
-      width: 320px;
-      height: 240px;
-      background-color: #222288;
-      border-radius: 8px;
-      box-shadow: 0 0 15px #0000cc;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    #outputVideo {
-      max-width: 100%;
-      max-height: 100%;
-      border-radius: 8px;
-    }
-    #message {
-      margin-top: 1em;
-      font-style: italic;
-      color: #ddddff;
-    }
-    .floating {
-      animation: float 3s ease-in-out infinite;
-    }
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0px); }
-    }
-    footer {
-      margin-top: 2em;
-      font-size: 0.9em;
-      color: #cccccc;
-    }
-    @media (max-width: 600px) {
-      input[type="file"], input[type="text"] {
-        width: 100%;
-      }
-      #videoContainer {
-        width: 100%;
-        height: auto;
-      }
-    }
-  </style>
+        #fileInput {
+            margin: 10px;
+        }
+
+        #generateButton {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        #generateButton:hover {
+            background-color: #45a049;
+        }
+
+        #generationResult {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        #videoOutput {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #222;
+            text-align: center;
+            padding: 10px;
+            color: white;
+        }
+
+        footer .deployment-info {
+            font-size: 12px;
+            color: lightgray;
+        }
+    </style>
 </head>
 <body>
-  <h1>Smart Burme AI</h1>
 
-  <label for="imageInput">ပုံရွေးပါ</label>
-  <input type="file" id="imageInput" accept="image/*" />
+    <h1>Smart Burme</h1>
 
-  <label for="promptInput">စာသားထည့်ပါ</label>
-  <input type="text" id="promptInput" placeholder="သင့်စာသားကို ထည့်ပါ..." />
+    <!-- Image upload form -->
+    <div id="uploadForm">
+        <input type="file" id="fileInput" accept="image/*" />
+        <button id="generateButton">Generate Video</button>
+    </div>
 
-  <button id="generateBtn" disabled class="floating">ဗီဒီယိုဖန်တီးပါ</button>
+    <!-- Generated video result display -->
+    <div id="generationResult">
+        <p>Your generated video:</p>
+        <img id="videoOutput" src="" alt="Generated Video" style="display:none;">
+    </div>
 
-  <div id="videoContainer" aria-label="Generated video preview">
-    <video id="outputVideo" controls autoplay loop muted></video>
-  </div>
+    <!-- Footer with deployment info -->
+    <footer>
+        <div>
+            <p>Deployment by Aung Thuyrain - Wayne</p>
+            <p class="deployment-info">AI Model API powered by ModelsLab</p>
+        </div>
+    </footer>
 
-  <div id="message"></div>
+    <script>
+        // Handle the button click to generate the video
+        document.getElementById('generateButton').addEventListener('click', function() {
+            // You can replace this with your video generation code using the API
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            if (!file) {
+                alert('Please upload an image first.');
+                return;
+            }
 
-  <footer>
-    Deployment by Aung Myo Kyaw
-  </footer>
+            // Assuming the API returns a video link after processing
+            const videoLink = "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/video_generations/ddde786a-a9cb-499f-83d9-f4fa45664404.gif"; // Placeholder
 
-  <!-- Scripts -->
-  <script>
-    const imageInput = document.getElementById('imageInput');
-    const promptInput = document.getElementById('promptInput');
-    const generateBtn = document.getElementById('generateBtn');
-    const outputVideo = document.getElementById('outputVideo');
-    const message = document.getElementById('message');
+            // Show the generated video
+            const videoOutput = document.getElementById('videoOutput');
+            videoOutput.src = videoLink;
+            videoOutput.style.display = "block";
+        });
+    </script>
 
-    let imageFile = null;
-
-    function updateGenerateButton() {
-      generateBtn.disabled = !imageFile || !promptInput.value.trim();
-    }
-
-    imageInput.addEventListener('change', (e) => {
-      if (e.target.files.length > 0) {
-        imageFile = e.target.files[0];
-      } else {
-        imageFile = null;
-      }
-      updateGenerateButton();
-      outputVideo.src = '';
-      message.textContent = '';
-    });
-
-    promptInput.addEventListener('input', () => {
-      updateGenerateButton();
-    });
-
-    async function generateVideoFromImageAndPrompt(imageFile, promptText) {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-
-      const img = await new Promise((resolve, reject) => {
-        const tempImg = new Image();
-        tempImg.onload = () => resolve(tempImg);
-        tempImg.onerror = () => reject(new Error('ပုံတင်ရန် မအောင်မြင်ပါ'));
-        tempImg.src = URL.createObjectURL(imageFile);
-      });
-
-      const maxWidth = 640;
-      const maxHeight = 480;
-      let scale = Math.min(maxWidth / img.width, maxHeight / img.height, 1);
-      canvas.width = img.width * scale;
-      canvas.height = img.height * scale;
-
-      const stream = canvas.captureStream(30);
-      const recordedChunks = [];
-      const mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
-
-      mediaRecorder.ondataavailable = function(e) {
-        if (e.data.size > 0) recordedChunks.push(e.data);
-      };
-
-      const totalFrames = 90;
-      let frame = 0;
-
-      function drawFrame() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        const alpha = Math.min(frame / totalFrames, 1);
-        ctx.globalAlpha = alpha;
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        ctx.font = 'bold 30px Arial';
-        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
-        ctx.textAlign = 'center';
-        const x = canvas.width / 2;
-        const y = canvas.height - 40 + 10 * Math.sin(frame / 10);
-        ctx.fillText(promptText, x, y);
-        ctx.globalAlpha = 1;
-
-        frame++;
-        if (frame < totalFrames) {
-          requestAnimationFrame(drawFrame);
-        } else {
-          mediaRecorder.stop();
-        }
-      }
-
-      mediaRecorder.start();
-      drawFrame();
-
-      await new Promise(resolve => {
-        mediaRecorder.onstop = resolve;
-      });
-
-      const videoBlob = new Blob(recordedChunks, { type: 'video/webm' });
-      const videoUrl = URL.createObjectURL(videoBlob);
-      return videoUrl;
-    }
-
-    generateBtn.addEventListener('click', async () => {
-      if (!imageFile || !promptInput.value.trim()) return;
-      generateBtn.disabled = true;
-      message.textContent = 'ဗီဒီယိုဖန်တီးနေသည်၊ ခဏစောင့်ပါ...';
-      outputVideo.src = '';
-      outputVideo.style.display = 'none';
-      try {
-        const videoUrl = await generateVideoFromImageAndPrompt(imageFile, promptInput.value.trim());
-        outputVideo.src = videoUrl;
-        outputVideo.style.display = 'block';
-        message.textContent = 'ဗီဒီယိုဖန်တီးပြီးပါပြီ:';
-      } catch (err) {
-        console.error(err);
-        message.textContent = 'ဗီဒီယိုဖန်တီးမှုအတွက် အမှားတစ်ခု ဖြစ်ပွားခဲ့သည်။ ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ။';
-      } finally {
-        generateBtn.disabled = false;
-      }
-    });
-  </script>
 </body>
 </html>
