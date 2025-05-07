@@ -1,133 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="my">
 <head>
-  <meta charset="UTF-8">
-  <title>Smart Burme</title>
-  <style>
-    body {
-      background-color: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
-    }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smart Burme AI</title>
 
-    .container {
-      max-width: 600px;
-      margin: auto;
-      background-color: #111;
-      padding: 20px;
-      border-radius: 10px;
-    }
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-storage.js"></script>
 
-    input, textarea, button {
-      width: 90%;
-      margin: 10px auto;
-      padding: 12px;
-      border-radius: 8px;
-      border: none;
-      font-size: 16px;
-    }
-
-    button {
-      background-color: #00bfff;
-      color: white;
-      cursor: pointer;
-    }
-
-    #videoArea {
-      margin-top: 20px;
-    }
-
-    footer {
-      margin-top: 40px;
-      color: #ccc;
-    }
-  </style>
-</head>
-<body>
-  <h1>Smart Burme</h1>
-  <div class="container">
-    <input type="file" id="uploadImage" accept="image/*" />
-    <textarea id="promptText" placeholder="Enter your prompt...">Space Station in space</textarea>
-    <button onclick="generateVideo()">Generate</button>
-
-    <div id="videoArea"></div>
-  </div>
-
-  <footer>
-    <p>Deploy by Aung Myo Kyaw</p>
-    <p><a href="https://www.tiktok.com" target="_blank" style="color:#00bfff;">TikTok</a></p>
-  </footer>
-
+  <!-- Firebase Configuration -->
   <script>
-    const apiKey = "sDDYd3VavSHfaW63nsK5kiLiCGvUpBMwBJv6TTOrP6wzl4HbRBtjebc9xCsB";
-
-    function generateVideo() {
-      const prompt = document.getElementById("promptText").value;
-      const upload = document.getElementById("uploadImage").files[0];
-
-      if (!upload) {
-        alert("Please upload an image.");
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onloadend = function () {
-        const imageBase64 = reader.result;
-
-        const myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-
-        const raw = JSON.stringify({
-          key: apiKey,
-          model_id: "svd",
-          init_image: imageBase64,
-          height: 512,
-          width: 512,
-          num_frames: 25,
-          num_inference_steps: 20,
-          min_guidance_scale: 1,
-          max_guidance_scale: 3,
-          motion_bucket_id: 20,
-          noise_aug_strength: 0.02,
-          webhook: null,
-          track_id: null
-        });
-
-        const requestOptions = {
-          method: 'POST',
-          headers: myHeaders,
-          body: raw,
-          redirect: 'follow'
-        };
-
-        fetch("https://modelslab.com/api/v6/video/img2video", requestOptions)
-          .then(response => response.json())
-          .then(result => {
-            if (result.status === "success" && result.output.length > 0) {
-              document.getElementById("videoArea").innerHTML = `
-                <p>✅ Video Generated</p>
-                <img src="${result.output[0]}" width="100%" />
-              `;
-            } else {
-              document.getElementById("videoArea").innerHTML = "❌ Failed to generate video.";
-            }
-          })
-          .catch(error => {
-            console.error(error);
-            document.getElementById("videoArea").innerHTML = "❌ Error occurred.";
-          });
-      };
-
-      reader.readAsDataURL(upload);
-    }
-  </script>
-
-  <!-- Firebase Config -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-
     const firebaseConfig = {
       apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
       authDomain: "smart-burme-app.firebaseapp.com",
@@ -136,8 +21,194 @@
       messagingSenderId: "851502425686",
       appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7"
     };
+    firebase.initializeApp(firebaseConfig);
+  </script>
 
-    const app = initializeApp(firebaseConfig);
+  <!-- Styles -->
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: white;
+      background: linear-gradient(135deg, #6fb1fc, #4364f7);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    h1 {
+      margin-bottom: 0.5em;
+      text-align: center;
+    }
+    label {
+      margin-top: 1em;
+      font-weight: bold;
+    }
+    input[type="file"], input[type="text"] {
+      margin-top: 0.5em;
+      padding: 0.5em;
+      font-size: 1em;
+      width: 90%;
+      max-width: 300px;
+      border-radius: 4px;
+      border: none;
+    }
+    button {
+      margin-top: 1.5em;
+      padding: 0.75em 1.5em;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 4px;
+      background-color: #0044cc;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.3s ease-in-out;
+    }
+    button:disabled {
+      background-color: #8888ff;
+      cursor: not-allowed;
+    }
+    button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    #videoContainer {
+      margin-top: 2em;
+      width: 320px;
+      height: 240px;
+      background-color: #222288;
+      border-radius: 8px;
+      box-shadow: 0 0 15px #0000cc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #outputVideo {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 8px;
+    }
+    #message {
+      margin-top: 1em;
+      font-style: italic;
+      color: #ddddff;
+    }
+    .floating {
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    footer {
+      margin-top: 2em;
+      font-size: 0.9em;
+      color: #cccccc;
+    }
+    @media (max-width: 600px) {
+      input[type="file"], input[type="text"] {
+        width: 100%;
+      }
+      #videoContainer {
+        width: 100%;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Smart Burme AI</h1>
+
+  <label for="imageInput">ပုံရွေးပါ</label>
+  <input type="file" id="imageInput" accept="image/*" />
+
+  <label for="promptInput">စာသားထည့်ပါ</label>
+  <input type="text" id="promptInput" placeholder="သင့်စာသားကို ထည့်ပါ..." />
+
+  <button id="generateBtn" disabled class="floating">ဗီဒီယိုဖန်တီးပါ</button>
+
+  <div id="videoContainer" aria-label="Generated video preview">
+    <video id="outputVideo" controls autoplay loop muted></video>
+  </div>
+
+  <div id="message"></div>
+
+  <footer>
+    Deployment by Aung Myo Kyaw
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    const imageInput = document.getElementById('imageInput');
+    const promptInput = document.getElementById('promptInput');
+    const generateBtn = document.getElementById('generateBtn');
+    const outputVideo = document.getElementById('outputVideo');
+    const message = document.getElementById('message');
+
+    let imageFile = null;
+    const apiKey = "L6uWoaodd3EOLQLkc9iOVOOLgz7jLrkPjChKR4HiaJK3PMdIfQ1FngW8QpNr";
+    const apiUrl = "https://api.modelslab.com/ai/video/generate";  // Replace with your actual API endpoint
+
+    function updateGenerateButton() {
+      generateBtn.disabled = !imageFile || !promptInput.value.trim();
+    }
+
+    imageInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) {
+        imageFile = e.target.files[0];
+      } else {
+        imageFile = null;
+      }
+      updateGenerateButton();
+      outputVideo.src = '';
+      message.textContent = '';
+    });
+
+    promptInput.addEventListener('input', () => {
+      updateGenerateButton();
+    });
+
+    async function generateVideoFromAPI(imageFile, promptText) {
+      const formData = new FormData();
+      formData.append('image', imageFile);
+      formData.append('prompt', promptText);
+
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('API request failed');
+      }
+
+      const data = await response.json();
+      return data.video_url;  // Assuming the response contains the video URL
+    }
+
+    generateBtn.addEventListener('click', async () => {
+      if (!imageFile || !promptInput.value.trim()) return;
+      generateBtn.disabled = true;
+      message.textContent = 'ဗီဒီယိုဖန်တီးနေသည်၊ ခဏစောင့်ပါ...';
+      outputVideo.src = '';
+      outputVideo.style.display = 'none';
+      try {
+        const videoUrl = await generateVideoFromAPI(imageFile, promptInput.value.trim());
+        outputVideo.src = videoUrl;
+        outputVideo.style.display = 'block';
+        message.textContent = 'ဗီဒီယိုဖန်တီးပြီးပါပြီ:';
+      } catch (err) {
+        console.error(err);
+        message.textContent = 'ဗီဒီယိုဖန်တီးမှုအတွက် အမှားတစ်ခု ဖြစ်ပွားခဲ့သည်။ ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ။';
+      } finally {
+        generateBtn.disabled = false;
+      }
+    });
   </script>
 </body>
 </html>
