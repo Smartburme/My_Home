@@ -1,193 +1,164 @@
 <!DOCTYPE html>
 <html lang="my">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Burme</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Burme AI Video Generator</title>
 
-    <!-- Firebase Configuration -->
-    <script src="https://www.gstatic.com/firebasejs/9.7.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.7.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.7.0/firebase-firestore.js"></script>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.7.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.7.0/firebase-auth.js"></script>
 
-    <script>
-        // Firebase အတည်ပြုချက်
-        const firebaseConfig = {
-    apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
-    authDomain: "smart-burme-app.firebaseapp.com",
-    projectId: "smart-burme-app",
-    storageBucket: "smart-burme-app.appspot.com",
-    messagingSenderId: "851502425686",
-    appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7"
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAr7Hv2ApKtNTxF11MhT5cuWeg_Dgsh0TY",
+      authDomain: "smart-burme-app.firebaseapp.com",
+      projectId: "smart-burme-app",
+      storageBucket: "smart-burme-app.appspot.com",
+      messagingSenderId: "851502425686",
+      appId: "1:851502425686:web:f29e0e1dfa84794b4abdf7"
     };
-    
+    firebase.initializeApp(firebaseConfig);
+  </script>
 
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const firestore = firebase.firestore();
-    </script>
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #1e3c72, #2a5298);
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(45deg, #3a7bd5, #00d2ff);
-            color: white;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
+    h1 {
+      margin-bottom: 20px;
+    }
 
-        h1 {
-            margin-bottom: 20px;
-            font-size: 2rem;
-        }
+    #promptInput, #fileInput {
+      padding: 10px;
+      margin: 10px;
+      width: 80%;
+      max-width: 400px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
 
-        #uploadForm {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
+    #generateButton {
+      padding: 12px 25px;
+      font-size: 16px;
+      background-color: #00c853;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
-        #fileInput {
-            margin: 10px;
-        }
+    #generateButton:hover {
+      background-color: #00b44a;
+    }
 
-        #generateButton {
-            background-color: #4CAF50;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
+    #generationResult img {
+      margin-top: 20px;
+      max-width: 90%;
+      border-radius: 10px;
+      display: none;
+    }
 
-        #generateButton:hover {
-            background-color: #45a049;
-        }
+    footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #ddd;
+    }
 
-        #generationResult {
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        #videoOutput {
-            max-width: 100%;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
-
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: #222;
-            text-align: center;
-            padding: 10px;
-            color: white;
-        }
-
-        footer .deployment-info {
-            font-size: 12px;
-            color: lightgray;
-        }
-    </style>
+    footer a {
+      color: #00e5ff;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
 
-    <h1>Smart Burme</h1>
+  <h1>Smart Burme AI Video Generator</h1>
 
-    <!-- Image upload form -->
-    <div id="uploadForm">
-        <input type="file" id="fileInput" accept="image/*" />
-        <button id="generateButton">Generate Video</button>
-    </div>
+  <!-- Prompt Text Input -->
+  <input type="text" id="promptInput" placeholder="Enter your prompt (e.g., Space Station in space)" />
 
-    <!-- Generated video result display -->
-    <div id="generationResult">
-        <p>Your generated video:</p>
-        <img id="videoOutput" src="" alt="Generated Video" style="display:none;">
-    </div>
+  <!-- File Upload -->
+  <input type="file" id="fileInput" accept="image/*" />
 
-    <!-- Footer with deployment info -->
-    <footer>
-        <div>
-            <p>Deployment by Aung Thuyrain - Wayne</p>
-            <p class="deployment-info">AI Model API powered by ModelsLab</p>
-        </div>
-    </footer>
+  <!-- Generate Button -->
+  <br />
+  <button id="generateButton">Generate Video</button>
 
-    <script>
-        // Handle Firebase Authentication (Simple login example)
-        firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                console.log('User logged in:', user);
-            } else {
-                console.log('User not logged in');
-            }
-        });
+  <!-- Video Output -->
+  <div id="generationResult">
+    <img id="videoOutput" alt="Generated Video" />
+  </div>
 
-        // Handle the button click to generate the video
-        document.getElementById('generateButton').addEventListener('click', function() {
-            // Firebase Authentication check
-            const user = firebase.auth().currentUser;
-            if (!user) {
-                alert('You must be logged in to generate videos.');
-                return;
-            }
+  <!-- Footer -->
+  <footer>
+    <div>deploy by Aung Myo Kyaw</div>
+    <div><a href="https://www.tiktok.com/@yourusername" target="_blank">TikTok Profile</a></div>
+  </footer>
 
-            // Image upload
-            const fileInput = document.getElementById('fileInput');
-            const file = fileInput.files[0];
-            if (!file) {
-                alert('Please upload an image first.');
-                return;
-            }
+  <script>
+    document.getElementById('generateButton').addEventListener('click', () => {
+      const promptText = document.getElementById('promptInput').value || "Space Station in space";
+      const file = document.getElementById('fileInput').files[0];
 
-            // Placeholder for AI API request (sending to your AI model)
-            const formData = {
-                key: "sDDYd3VavSHfaW63nsK5kiLiCGvUpBMwBJv6TTOrP6wzl4HbRBtjebc9xCsB", // AI API Key
-                model_id: "svd", // Model ID
-                init_image: "YOUR_UPLOADED_IMAGE_URL", // Image URL ကို upload ထားပြီးမှ အသုံးပြုပါ
-                height: 512,
-                width: 512,
-                num_frames: 25,
-                num_inference_steps: 20,
-                min_guidance_scale: 1,
-                max_guidance_scale: 3,
-                motion_bucket_id: 20,
-                noise_aug_strength: 0.02,
-                webhook: null,
-                track_id: null
-            };
+      if (!file) {
+        alert("Please upload an image.");
+        return;
+      }
 
-            // Fetch the API and display the result
-            fetch("https://modelslab.com/api/v6/video/img2video", {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                const videoLink = data.output[0]; // Assuming the response has this structure
-                const videoOutput = document.getElementById('videoOutput');
-                videoOutput.src = videoLink;
-                videoOutput.style.display = "block";
-            })
-            .catch(error => console.error('Error:', error));
-        });
-    </script>
+      // Image upload simulation (example only)
+      const imageUrl = "https://imagedelivery.net/PP4qZJxMlvGLHJQBm3ErNg/e2f9cb8e-cb87-4143-dd81-a9e77e3bb800/768";
+
+      const headers = new Headers();
+      headers.append("Content-Type", "application/json");
+
+      const body = JSON.stringify({
+        "key": "sDDYd3VavSHfaW63nsK5kiLiCGvUpBMwBJv6TTOrP6wzl4HbRBtjebc9xCsB",
+        "model_id": "svd",
+        "init_image": imageUrl,
+        "height": 512,
+        "width": 512,
+        "num_frames": 25,
+        "num_inference_steps": 20,
+        "min_guidance_scale": 1,
+        "max_guidance_scale": 3,
+        "motion_bucket_id": 20,
+        "noise_aug_strength": 0.02,
+        "webhook": null,
+        "track_id": null
+      });
+
+      fetch("https://modelslab.com/api/v6/video/img2video", {
+        method: 'POST',
+        headers: headers,
+        body: body,
+        redirect: 'follow'
+      })
+      .then(response => response.json())
+      .then(result => {
+        const videoUrl = result.output?.[0];
+        if (videoUrl) {
+          const videoOutput = document.getElementById("videoOutput");
+          videoOutput.src = videoUrl;
+          videoOutput.style.display = "block";
+        } else {
+          alert("Video not generated. Please try again.");
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert("API error.");
+      });
+    });
+  </script>
 
 </body>
 </html>
