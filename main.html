@@ -1,30 +1,25 @@
-<!DOCTYPE html><html lang="my">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Burme AI</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>AI Chat with Gemini</title>
+  <link rel="stylesheet" href="main.css">
+  <!-- External Links here -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
+  <script src="https://unpkg.com/@google/generative-ai"></script>
 </head>
 <body>
-  <div class="sidebar">
-    <h2>Menu</h2>
-    <input type="text" placeholder="Search...">
-    <button>New Chat</button>
-    <button>History</button>
-  </div>  <div class="header">
-    <h1>Smart Burme AI</h1>
-    <img src="profile-icon.png" alt="Profile" width="40" height="40">
-  </div>  <div class="chat-container">
-    <div class="chat-area" id="chatArea">
-      <p>အကူညီလိုလား</p>
-    </div>
-    <div class="chat-box">
-      <input type="text" id="chatInput" placeholder="Ask something...">
-      <input type="file" id="photoInput" accept="image/*">
+
+  <div class="container">
+    <div class="chat-card" data-tilt data-tilt-scale="1.05">
+      <h1>🎓 Smart AI Chat</h1>
+      <div id="chat-box"></div>
+      <input type="text" id="user-input" placeholder="Type your message...">
       <button onclick="sendMessage()">Send</button>
     </div>
-    <div class="error-message" id="error"></div>
-  </div>  <div class="floating-ball"></div>  <div class="footer">
-    Deploy: Mg Aung Myo Kyaw
-  </div>  <script src="script.js"></script></body>
+  </div>
+
+  <script src="main.js"></script>
+</body>
 </html>
