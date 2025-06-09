@@ -1,630 +1,121 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Smart Burme AI</title>
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    /* Google Fonts - Poppins */
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
-    :root {
-      --bg-color: #111827;
-      --text-color: #e2e8f0;
-      --text-color-dark: #ffffff;
-      --primary-color: #6366f1;
-      --primary-color-hover: #818cf8;
-      --border-color: #334155;
-      --border-radius: 0.75rem;
-      --transition-speed: 0.3s ease;
-      --font-family: 'Poppins', sans-serif;
-      --shadow-light: 0 2px 10px rgb(0 0 0 / 0.5);
-    }
-
-    /* Reset */
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: var(--font-family);
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow-x: hidden;
-    }
-
-    /* Sticky top navigation bar */
-    header#title-bar {
-      position: sticky;
-      top: 0;
-      background: var(--bg-color);
-      border-bottom: 1px solid var(--border-color);
-      box-shadow: var(--shadow-light);
-      z-index: 1100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 2rem;
-      height: 64px;
-    }
-
-    /* Title text on left */
-    #title-text {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--text-color-dark);
-      user-select: none;
-    }
-
-    /* Right controls container */
-    #right-controls {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    /* User icon right */
-    #user-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background-color: var(--primary-color);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      cursor: pointer;
-      transition: transform var(--transition-speed);
-      user-select: none;
-      border: none;
-      font-size: 1rem;
-    }
-    #user-icon:hover,
-    #user-icon:focus {
-      outline: none;
-      transform: scale(1.1);
-      background-color: var(--primary-color-hover);
-    }
-
-    /* Menu toggle button */
-    #menu-toggle-btn {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background-color: var(--primary-color);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      cursor: pointer;
-      transition: transform var(--transition-speed);
-      user-select: none;
-      border: none;
-      font-size: 1rem;
-    }
-    #menu-toggle-btn:hover,
-    #menu-toggle-btn:focus {
-      outline: none;
-      transform: scale(1.1);
-      background-color: var(--primary-color-hover);
-    }
-
-    /* Main container */
-    main#main-content {
-      flex-grow: 1;
-      max-width: 1200px;
-      margin: 4rem auto;
-      padding: 0 1.5rem 3rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 2rem;
-      text-align: center;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Main headline */
-    #main-title {
-      font-size: 3rem;
-      font-weight: 700;
-      color: var(--text-color-dark);
-      margin: 0;
-      user-select: none;
-      line-height: 1.15;
-    }
-
-    /* Description text */
-    #description-text {
-      font-size: 1.125rem;
-      color: var(--text-color);
-      max-width: 540px;
-      line-height: 1.5;
-      margin-bottom: 1rem;
-    }
-
-    /* Text area container */
-    #text-box-container {
-      position: relative;
-      width: 100%;
-      max-width: 600px;
-    }
-
-    /* Textarea */
-    textarea#text-input {
-      width: 100%;
-      min-height: 180px;
-      padding: 1rem 3.75rem 1rem 1rem;
-      font-family: var(--font-family);
-      font-size: 1.125rem;
-      color: var(--text-color-dark);
-      border: 1.5px solid var(--border-color);
-      border-radius: var(--border-radius);
-      resize: vertical;
-      background-color: #1e293b;
-      transition: border-color var(--transition-speed);
-    }
-    textarea#text-input::placeholder {
-      color: #64748b;
-    }
-    textarea#text-input:focus {
-      outline: none;
-      border-color: var(--primary-color);
-    }
-
-    /* Bottom right button container */
-    #button-container {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-    }
-
-    /* Individual buttons */
-    #button-container button {
-      background-color: var(--primary-color);
-      border: none;
-      border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      transition: background-color 0.2s ease, transform 0.25s ease;
-      color: white;
-    }
-    #button-container button:hover,
-    #button-container button:focus {
-      background-color: var(--primary-color-hover);
-      outline: none;
-      transform: scale(1.1);
-    }
-
-    /* Slide menu container - left side */
-    #slide-menu {
-      position: fixed;
-      top: 64px;
-      left: 0;
-      width: 320px;
-      max-width: 90vw;
-      height: calc(100vh - 64px);
-      background: #111827;
-      border-right: 1px solid var(--border-color);
-      border-radius: 0 var(--border-radius) var(--border-radius) 0;
-      padding: 1.5rem 1.5rem 2rem;
-      transform: translateX(-100%);
-      transition: transform var(--transition-speed);
-      display: flex;
-      flex-direction: column;
-      z-index: 1200;
-    }
-    #slide-menu.active {
-      transform: translateX(0);
-    }
-
-    /* Slide menu tabs */
-    #slide-menu-tabs {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-      user-select: none;
-      border-bottom: 1px solid var(--border-color);
-    }
-    #slide-menu-tabs button {
-      background: none;
-      border: none;
-      padding: 0.5rem 1rem;
-      font-weight: 600;
-      font-size: 1.125rem;
-      color: var(--text-color);
-      border-bottom: 3px solid transparent;
-      cursor: pointer;
-      transition: border-color var(--transition-speed), color var(--transition-speed);
-    }
-    #slide-menu-tabs button.selected {
-      color: var(--primary-color-hover);
-      border-bottom-color: var(--primary-color-hover);
-    }
-
-    /* Slide menu content */
-    #slide-menu-content {
-      flex-grow: 1;
-      overflow-y: auto;
-      font-size: 1rem;
-      color: var(--text-color);
-      line-height: 1.4;
-    }
-
-    /* Menu sections */
-    .menu-section {
-      display: none;
-    }
-    .menu-section.active {
-      display: block;
-    }
-
-    /* Text to Image chat */
-    #text-to-image-chat {
-      margin-top: 1rem;
-      background: #1e293b;
-      border-radius: var(--border-radius);
-      padding: 1rem;
-      color: var(--text-color);
-      font-size: 0.95rem;
-      min-height: 120px;
-      user-select: none;
-    }
-
-    /* About section */
-    #about-content p, #about-content a {
-      margin: 0.25rem 0;
-      font-size: 1rem;
-      color: var(--text-color);
-      word-break: break-word;
-    }
-    #about-content a {
-      text-decoration: none;
-      color: var(--primary-color-hover);
-      font-weight: 600;
-    }
-    #about-content a:hover {
-      text-decoration: underline;
-    }
-
-    /* Loading spinner */
-    .loading-spinner {
-      display: none;
-      border: 4px solid rgba(255, 255, 255, 0.1);
-      border-top: 4px solid var(--primary-color);
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      animation: spin 1s linear infinite;
-      margin: 20px auto;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    /* Responsive */
-    @media (max-width: 480px) {
-      #slide-menu {
-        width: 100vw;
-        border-radius: 0;
-      }
-      #main-title {
-        font-size: 2.2rem;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="main.css" />
 </head>
 <body>
-
-  <!-- Top Navigation Bar -->
-  <header id="title-bar">
-    <div id="title-text">Smart Burme AI</div>
-    <div id="right-controls">
-      <button id="menu-toggle-btn" aria-label="မီနူးဖွင့်ရန်" title="မီနူး" type="button">
-        <i class="fas fa-bars"></i>
-      </button>
-      <button id="user-icon" aria-label="အသုံးပြုသူအကောင့်" title="အသုံးပြုသူအကောင့်" type="button">
-        <i class="fas fa-user"></i>
-      </button>
-    </div>
+  <header>
+    <button class="menu-toggle" aria-label="Toggle menu" id="menuToggleBtn">☰</button>
+    <img src="icon.png" alt="Logo" class="logo">
+    <h1>Smart Burme AI</h1>
   </header>
 
-  <!-- Main Content -->
-  <main id="main-content">
-    <h1 id="main-title">Smart Burme AI</h1>
-    <p id="description-text">
-      သင့်မြန်မာစာသားကိုရိုက်ထည့်ပြီး AI ပုံများဖန်တီးရန်
-    </p>
+  <nav class="slide-menu" id="slideMenu">
+    <ul>
+      <li><a href="#">ပင်မ</a></li>
+      <li><a href="#">AI ဖြင့် ရုပ်ပုံဖန်တီးရန်</a></li>
+      <li><a href="#">ကျွန်ုပ်အကြောင်း</a></li>
+    </ul>
+  </nav>
 
-    <!-- Text Box and Buttons -->
-    <div id="text-box-container">
-      <textarea id="text-input" placeholder="စာရိုက်ရန်..." aria-label="ပုံဖန်တီးရန်စာသားထည့်ရန်"></textarea>
-
-      <div id="button-container">
-        <!-- Photo upload button -->
-        <button id="photo-upload-btn" aria-label="ဓာတ်ပုံတင်ရန်" title="ဓာတ်ပုံတင်ရန်" type="button">
-          <i class="fas fa-camera"></i>
-        </button>
-
-        <!-- Send button -->
-        <button id="enter-btn" aria-label="စာသားပို့ရန်" title="ပို့ရန်" type="button">
-          <i class="fas fa-paper-plane"></i>
-        </button>
-      </div>
-
-      <input type="file" id="photo-upload-input" accept="image/*" style="display: none;" />
+  <main>
+    <div class="tab-container">
+      <div class="tab selected" id="tabTextImage">စာမှ ရုပ်ပုံဖန်တီးရန်</div>
+      <div class="tab" id="tabAbout">ကျွန်ုပ်အကြောင်း</div>
     </div>
 
-    <!-- Loading Spinner -->
-    <div class="loading-spinner" id="loading-spinner"></div>
+    <div class="panel active" id="panelTextImage">
+      <div class="form-container">
+        <textarea id="promptText" placeholder="မိမိလိုချင်သော ရုပ်ပုံအကြောင်းအရာကို ရေးပါ..."></textarea>
+        <button id="generateBtn">ဖန်တီးမည်</button>
+      </div>
 
-    <!-- Image Results Container -->
-    <div id="image-results" style="display: none; margin-top: 2rem;">
-      <h2>ဖန်တီးထားသောပုံများ</h2>
-      <div id="generated-images" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem;"></div>
+      <div id="loading" class="loading">ဖန်တီးနေသည်...</div>
+      <div id="imageContainer" class="image-container"></div>
+    </div>
+
+    <div class="panel" id="panelAbout">
+      <p>Smart Burme AI သည် Gemini API နှင့် Firebase ကိုအသုံးပြု၍ စာမှရုပ်ပုံဖန်တီးခြင်း၊ အမြန်တုံ့ပြန်မှုများ၊ အသုံးပြုရလွယ်ကူသော မိုဘိုင်းနှင့် web-friendly interface တို့ဖြင့် တီထွင်ထားသော AI ဝက်ဘ်ဆိုဒ်ဖြစ်သည်။</p>
     </div>
   </main>
 
-  <!-- Left Slide Menu -->
-  <aside id="slide-menu" aria-label="မီနူးပါဒါန်" role="dialog" aria-modal="true" aria-hidden="true">
-    <nav id="slide-menu-tabs" role="tablist" aria-label="မီနူးတပ်ဗ်များ">
-      <button role="tab" id="tab-text-image" aria-selected="true" aria-controls="panel-text-image" class="selected">
-        <i class="fas fa-image" style="margin-right: 8px;"></i>စာသားမှပုံဖန်တီးခြင်း
-      </button>
-      <button role="tab" id="tab-about" aria-selected="false" aria-controls="panel-about">
-        <i class="fas fa-info-circle" style="margin-right: 8px;"></i>အကြောင်း
-      </button>
-    </nav>
-    <section id="slide-menu-content">
-      <!-- Text to Image Panel -->
-      <section id="panel-text-image" role="tabpanel" aria-labelledby="tab-text-image" class="menu-section active">
-        <h2 style="font-weight: 700; color: var(--text-color-dark); margin-top: 0;">စာသားမှပုံဖန်တီးခြင်း</h2>
-        <div id="text-to-image-chat">
-          သင့်မြန်မာစာသားများကို AI ဖြင့်အလှပဆုံးပုံများအဖြစ်ပြောင်းလဲနိုင်ပါသည်။
-          စာသားရိုက်ထည့်ပြီး "ပို့ရန်" ခလုတ်ကိုနှိပ်ပါ။
-        </div>
-      </section>
-
-      <!-- About Panel -->
-      <section id="panel-about" role="tabpanel" aria-labelledby="tab-about" class="menu-section">
-        <h2 style="font-weight: 700; color: var(--text-color-dark); margin-top: 0;">အကြောင်း</h2>
-        <div id="about-content">
-          <p>Smart Burme AI သည် မြန်မာဘာသာဖြင့် AI ပုံများဖန်တီးပေးသော ကိရိယာဖြစ်ပါသည်။</p>
-          <p><i class="fas fa-envelope" style="margin-right: 8px;"></i> အီးမေးလ်: <a href="mailto:aung.thuyrain.at449@gmail.com">aung.thuyrain.at449@gmail.com</a></p>
-          <p><i class="fas fa-phone" style="margin-right: 8px;"></i> ဖုန်း: <a href="tel:+09677740154">၀၉၆၇၇၇၄၀၁၅၄</a></p>
-        </div>
-      </section>
-    </section>
-  </aside>
+  <footer>
+    <input type="file" accept="image/*" id="uploadInput" hidden />
+    <button id="uploadBtn">ဓာတ်ပုံတင်မည်</button>
+  </footer>
 
   <script>
-    // Configuration
-    curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyChZ-yBEIX_y-M8evNg1wrq85ByBAACoNU" \
-  -H 'Content-Type: application/json' \
-  -X POST \
-  -d '{
-    "contents": [
-      {
-        "parts": [
-          {
-            "text": "Explain how AI works in a few words"
-          }
-        ]
-      }
-    ]
-  };
-    
-    // DOM Elements
-    const photoUploadBtn = document.getElementById('photo-upload-btn');
-    const photoUploadInput = document.getElementById('photo-upload-input');
-    const textInput = document.getElementById('text-input');
-    const enterBtn = document.getElementById('enter-btn');
-    const loadingSpinner = document.getElementById('loading-spinner');
-    const imageResults = document.getElementById('image-results');
-    const generatedImages = document.getElementById('generated-images');
+    const menuToggleBtn = document.getElementById("menuToggleBtn");
+    const slideMenu = document.getElementById("slideMenu");
+    const tabTextImage = document.getElementById("tabTextImage");
+    const tabAbout = document.getElementById("tabAbout");
+    const panelTextImage = document.getElementById("panelTextImage");
+    const panelAbout = document.getElementById("panelAbout");
+    const generateBtn = document.getElementById("generateBtn");
+    const promptText = document.getElementById("promptText");
+    const imageContainer = document.getElementById("imageContainer");
+    const loading = document.getElementById("loading");
 
-    const menuToggleBtn = document.getElementById('menu-toggle-btn');
-    const slideMenu = document.getElementById('slide-menu');
-
-    const tabTextImage = document.getElementById('tab-text-image');
-    const tabAbout = document.getElementById('tab-about');
-    const panelTextImage = document.getElementById('panel-text-image');
-    const panelAbout = document.getElementById('panel-about');
-
-    // Photo upload handling
-    photoUploadBtn.addEventListener('click', () => photoUploadInput.click());
-    
-    photoUploadInput.addEventListener('change', (e) => {
-      if (e.target.files && e.target.files.length) {
-        const file = e.target.files[0];
-        if (!file.type.match('image.*')) {
-          alert('ဓာတ်ပုံဖိုင်သာရွေးချယ်ပါ (JPEG, PNG)');
-          return;
-        }
-        // Here you would handle the image upload
-        console.log('Selected photo:', file.name);
-        e.target.value = '';
-      }
+    menuToggleBtn.addEventListener("click", () => {
+      slideMenu.classList.toggle("active");
     });
 
-    // Generate image function
-    async function generateImage(prompt) {
-      showLoading();
-      
-      try {
-        // Simulate API call (replace with actual Gemini API integration)
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        // In a real implementation, you would call the Gemini API here:
-        /*
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: prompt }]}]
-          })
-        });
-        const data = await response.json();
-        return data;
-        */
-        
-        // For demo purposes, we'll just return a mock image
-        return {
-          images: [
-            { url: 'https://via.placeholder.com/500x500/4f46e5/ffffff?text=' + encodeURIComponent(prompt.substring(0,20)) }
-          ]
-        };
-      } catch (error) {
-        console.error("Error generating image:", error);
-        throw new Error("ပုံဖန်တီးရာတွင် အမှားတစ်ခုဖြစ်နေပါသည်");
-      } finally {
-        hideLoading();
-      }
-    }
+    tabTextImage.addEventListener("click", () => {
+      tabTextImage.classList.add("selected");
+      tabAbout.classList.remove("selected");
+      panelTextImage.classList.add("active");
+      panelAbout.classList.remove("active");
+    });
 
-    // Display generated images
-    function displayImages(images) {
-      generatedImages.innerHTML = '';
-      images.forEach(img => {
-        const imgElement = document.createElement('img');
-        imgElement.src = img.url;
-        imgElement.style.width = '100%';
-        imgElement.style.borderRadius = '8px';
-        imgElement.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
-        generatedImages.appendChild(imgElement);
-      });
-      imageResults.style.display = 'block';
-    }
+    tabAbout.addEventListener("click", () => {
+      tabAbout.classList.add("selected");
+      tabTextImage.classList.remove("selected");
+      panelAbout.classList.add("active");
+      panelTextImage.classList.remove("active");
+    });
 
-    // Loading state
-    function showLoading() {
-      loadingSpinner.style.display = 'block';
-      enterBtn.disabled = true;
-    }
-
-    function hideLoading() {
-      loadingSpinner.style.display = 'none';
-      enterBtn.disabled = false;
-    }
-
-    // Enter/send text input handler
-    enterBtn.addEventListener('click', async () => {
-      const textVal = textInput.value.trim();
-      if (!textVal) {
-        alert('ကျေးဇူးပြု၍ စာသားရိုက်ထည့်ပါ');
-        textInput.focus();
+    generateBtn.addEventListener("click", async () => {
+      const prompt = promptText.value.trim();
+      if (!prompt) {
+        alert("ကျေးဇူးပြု၍ စာသားထည့်ပါ။");
         return;
       }
-      
+
+      loading.style.display = "block";
+      imageContainer.innerHTML = "";
+
       try {
-        const result = await generateImage(textVal);
-        displayImages(result.images || []);
-      } catch (error) {
-        alert(error.message);
+        // Gemini API ထည့်မည့်နေရာ
+        await new Promise((resolve) => setTimeout(resolve, 2000)); // simulate loading
+
+        const img = document.createElement("img");
+        img.src = "https://placekitten.com/400/300"; // Dummy image
+        img.alt = "AI generated image";
+        imageContainer.appendChild(img);
+      } catch (err) {
+        console.error(err);
+        alert("ပြဿနာတက်နေပါသည်။");
+      } finally {
+        loading.style.display = "none";
       }
     });
 
-    // Enter key in textarea triggers send (without Shift)
-    textInput.addEventListener('keydown', (e) => {
-      if ((e.key === 'Enter' || e.key === 'NumpadEnter') && !e.shiftKey) {
-        e.preventDefault();
-        enterBtn.click();
-      }
+    const uploadBtn = document.getElementById("uploadBtn");
+    const uploadInput = document.getElementById("uploadInput");
+    uploadBtn.addEventListener("click", () => {
+      uploadInput.click();
     });
 
-    // Toggle slide menu visibility
-    function toggleSlideMenu() {
-      const isActive = slideMenu.classList.toggle('active');
-      slideMenu.setAttribute('aria-hidden', !isActive);
-      menuToggleBtn.setAttribute('aria-expanded', isActive);
-      if (isActive) {
-        slideMenu.focus();
-      }
-    }
-
-    menuToggleBtn.addEventListener('click', toggleSlideMenu);
-
-    // Tabs switching
-    function switchTab(selectedTab) {
-      [tabTextImage, tabAbout].forEach(tab => {
-        tab.classList.remove('selected');
-        tab.setAttribute('aria-selected', 'false');
-        tab.setAttribute('tabindex', '-1');
-      });
-      [panelTextImage, panelAbout].forEach(panel => {
-        panel.classList.remove('active');
-      });
-
-      selectedTab.classList.add('selected');
-      selectedTab.setAttribute('aria-selected', 'true');
-      selectedTab.setAttribute('tabindex', '0');
-
-      if (selectedTab === tabTextImage) {
-        panelTextImage.classList.add('active');
-      } else if (selectedTab === tabAbout) {
-        panelAbout.classList.add('active');
-      }
-    }
-
-    tabTextImage.addEventListener('click', () => switchTab(tabTextImage));
-    tabAbout.addEventListener('click', () => switchTab(tabAbout));
-
-    // Keyboard support for tabs
-    [tabTextImage, tabAbout].forEach((tab, idx, arr) => {
-      tab.addEventListener('keydown', (e) => {
-        let newIndex = null;
-        switch (e.key) {
-          case 'ArrowLeft':
-          case 'ArrowUp':
-            newIndex = idx === 0 ? arr.length -1 : idx - 1;
-            e.preventDefault();
-            arr[newIndex].focus();
-            break;
-          case 'ArrowRight':
-          case 'ArrowDown':
-            newIndex = idx === arr.length -1 ? 0 : idx + 1;
-            e.preventDefault();
-            arr[newIndex].focus();
-            break;
-          case 'Enter':
-          case ' ':
-            e.preventDefault();
-            switchTab(tab);
-            break;
-        }
-      });
-    });
-
-    // Close slide menu when clicking outside or pressing ESC
-    document.addEventListener('mousedown', (e) => {
-      if (slideMenu.classList.contains('active') && 
-          !slideMenu.contains(e.target) && 
-          !menuToggleBtn.contains(e.target)) {
-        toggleSlideMenu();
-      }
-    });
-    
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && slideMenu.classList.contains('active')) {
-        toggleSlideMenu();
-        menuToggleBtn.focus();
+    uploadInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        alert(`ဖိုင် ${file.name} ကိုတင်မည်`);
+        // Firebase Storage upload နေရာ
       }
     });
   </script>
 </body>
-  </html>
+</html>
