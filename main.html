@@ -1,68 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Smart Burme AI</title>
-  <link rel="stylesheet" href="main.css" />
+  <title>Gemini Chat App</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 </head>
 <body>
-  <header>
-    <h1>Smart Burme AI</h1>
-  </header>
+  <div class="chat-container">
+    <div id="chat-box"></div>
+    <textarea id="user-input" placeholder="Type your message..."></textarea>
+    <button onclick="sendMessage()">Send</button>
+  </div>
 
-  <main>
-    <div class="tabs">
-      <button id="textMode" class="active">စာရေးပေးရန်</button>
-      <button id="imageMode">ပုံဖန်တီးရန်</button>
-    </div>
-
-    <textarea id="prompt" placeholder="Run the baby in rain"></textarea>
-    <button id="generateBtn">ဖန်တီးမည်</button>
-
-    <div id="result">
-      <img id="resultImage" alt="AI generated image" />
-      <p id="resultText"></p>
-    </div>
-  </main>
-
-  <footer>
-    <button>ဆက်ဖတ်မည်</button>
-  </footer>
-
-  <script>
-    const apiKey = "🔑 မင်း restrict လုပ်ထားတဲ့ Gemini API key ထည့်ပါ";
-
-    const generateBtn = document.getElementById("generateBtn");
-    const promptInput = document.getElementById("prompt");
-    const resultImage = document.getElementById("resultImage");
-    const resultText = document.getElementById("resultText");
-
-    generateBtn.addEventListener("click", async () => {
-      const prompt = promptInput.value.trim();
-      if (!prompt) return;
-
-      resultImage.src = "";
-      resultText.textContent = "Loading...";
-
-      const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key=" + apiKey, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }]
-        })
-      });
-
-      const data = await res.json();
-      const base64 = data.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-
-      if (base64) {
-        resultImage.src = "data:image/png;base64," + base64;
-        resultText.textContent = "";
-      } else {
-        resultText.textContent = "ပုံမရနိုင်ပါ။ ပြန်စမ်းကြည့်ပါ။";
-      }
-    });
-  </script>
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
