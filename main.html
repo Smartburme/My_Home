@@ -2,30 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Smart Burme ai</title>
+  <title>AI Chat with Photo Upload</title>
   <link rel="stylesheet" href="main.css">
-  
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
-  <!-- Float animation -->
-  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
-
-  <!-- Gemini Client Library - MUST load BEFORE main.js -->
   <script src="https://unpkg.com/@google/generative-ai"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js"></script>
 </head>
 <body>
-
   <div class="container">
-    <div class="chat-card" data-tilt data-tilt-scale="1.05">
-      <h1>🎓 Smart Burme ai Chat</h1>
-      <div id="chat-box"></div>
-      <input type="text" id="user-input" placeholder="Type your message...">
-      <button onclick="sendMessage()">Send</button>
+    <h2>🎓 AI Chat + Image Upload</h2>
+
+    <div id="auth">
+      <button id="login-btn">Login with Google</button>
+      <div id="user-info" style="display:none;">
+        <img id="user-pic" width="40">
+        <span id="user-name"></span>
+        <button id="logout-btn">Logout</button>
+      </div>
     </div>
+
+    <div id="chat-box"></div>
+
+    <input type="text" id="user-input" placeholder="Type a message">
+    <input type="file" id="img-upload" accept="image/*">
+    <button onclick="sendMessage()">Send</button>
   </div>
 
-  <!-- Your app logic -->
+  <script src="firebase-config.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
