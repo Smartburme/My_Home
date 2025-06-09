@@ -1,35 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>AI Chat with Photo Upload</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Burme Ai</title>
   <link rel="stylesheet" href="main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
   <script src="https://unpkg.com/@google/generative-ai"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js"></script>
 </head>
 <body>
-  <div class="container">
-    <h2>🎓 AI Chat + Image Upload</h2>
+  <div class="main-container">
+    <header class="header">
+      <h1>🤖 Smart Burme Ai</h1>
+      <div class="user-icon" id="user-icon"></div>
+    </header><div class="chat-body" id="chat-box"></div>
 
-    <div id="auth">
-      <button id="login-btn">Login with Google</button>
-      <div id="user-info" style="display:none;">
-        <img id="user-pic" width="40">
-        <span id="user-name"></span>
-        <button id="logout-btn">Logout</button>
-      </div>
-    </div>
+<div class="input-area">
+  <input type="text" id="user-input" placeholder="Type something...">
+  <input type="file" id="img-upload" accept="image/*">
+  <button onclick="sendMessage()">Send</button>
+</div>
 
-    <div id="chat-box"></div>
+<nav class="bottom-menu">
+  <button onclick="selectMode('text')">Text</button>
+  <button onclick="selectMode('photo')">Photo</button>
+  <button onclick="selectMode('movie')">Movie</button>
+</nav>
 
-    <input type="text" id="user-input" placeholder="Type a message">
-    <input type="file" id="img-upload" accept="image/*">
-    <button onclick="sendMessage()">Send</button>
-  </div>
-
-  <script src="firebase-config.js"></script>
-  <script src="main.js"></script>
-</body>
+  </div>  <script>
+    const genAI = new GoogleGenerativeAI("AIzaSyBCMZC7_QlpDmoBT-m4qN39H1Qsg2PNQMY");
+  </script>  <script src="firebase-config.js"></script>  <script src="main.js"></script></body>
 </html>
