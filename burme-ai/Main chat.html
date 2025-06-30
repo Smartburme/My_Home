@@ -1,0 +1,117 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main Chat - Burme-AI</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f9fafb;
+      color: #111827;
+    }
+    .container {
+      max-width: 768px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+    header, footer {
+      background-color: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 1rem;
+      text-align: center;
+    }
+    .screen {
+      padding: 1rem;
+    }
+    .chat {
+      background: #fff;
+      border: 1px solid #d1d5db;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .message {
+      margin: 0.5rem 0;
+    }
+    .message.user {
+      text-align: right;
+      color: #3b82f6;
+    }
+    .message.model {
+      text-align: left;
+      color: #111827;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      margin-top: 0.5rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      background-color: #3b82f6;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+    button:disabled {
+      background-color: #9ca3af;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="root" class="container"></div>  <script type="text/babel">
+    const { useState, useRef, useEffect } = React;
+
+    const MainChat = () => {
+      const [messages, setMessages] = useState([]);
+      const [input, setInput] = useState('');
+      const messagesEndRef = useRef(null);
+
+      const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      };
+
+      useEffect(scrollToBottom, [messages]);
+
+      const sendMessage = () => {
+        if (!input.trim()) return;
+        setMessages([...messages, { role: 'user', text: input }, { role: 'model', text: `BurmeAI: ${input}` }]);
+        setInput('');
+      };
+
+      return (
+        <>
+          <header><h1>Burme-AI Chat</h1></header>
+          <div className="screen">
+            <div className="chat">
+              {messages.map((msg, i) => (
+                <div key={i} className={`message ${msg.role}`}>{msg.text}</div>
+              ))}
+              <div ref={messagesEndRef} />
+            </div>
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Type your message..."
+            />
+            <button onClick={sendMessage} disabled={!input.trim()}>Send</button>
+          </div>
+          <footer><small>&copy; 2025 Burme-AI Assistant</small></footer>
+        </>
+      );
+    };
+
+    ReactDOM.render(<MainChat />, document.getElementById('root'));
+  </script></body>
+</html>
