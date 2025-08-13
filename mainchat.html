@@ -3,23 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SB Ai - Smart Burme Ai</title>
+    <title>SB Ai Dashboard - Smart Burme Ai</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="chat-container">
-        <div class="chat-header">
-            <h1>SB Ai</h1>
-            <p>Smart Burme Ai</p>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <div class="logo">
+                <h1>SB Ai</h1>
+                <p>Smart Burme Ai</p>
+            </div>
+            <div class="menu-items">
+                <div class="menu-item active">
+                    <i class="fas fa-comments"></i>
+                    <span>Chat</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </div>
+            </div>
         </div>
         
-        <div class="chat-messages" id="chat-messages">
-            <!-- Messages will appear here -->
-        </div>
-        
-        <div class="chat-input">
-            <input type="text" id="user-input" placeholder="Ask me anything...">
-            <button id="send-btn">Send</button>
+        <div class="main-content">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h2>How can we help?</h2>
+                </div>
+                
+                <div class="help-options">
+                    <div class="help-option" onclick="selectOption(1)">
+                        <i class="fas fa-user-tie"></i>
+                        <p>Help me to close a personal branding and web page</p>
+                    </div>
+                    <div class="help-option" onclick="selectOption(2)">
+                        <i class="fas fa-chart-line"></i>
+                        <p>Who is right based on my website data</p>
+                    </div>
+                    <div class="help-option" onclick="selectOption(3)">
+                        <i class="fas fa-bullseye"></i>
+                        <p>Who is stalled, engaging content, with a focus quality</p>
+                    </div>
+                </div>
+                
+                <div class="chat-messages" id="chat-messages">
+                    <!-- Messages will appear here -->
+                </div>
+                
+                <div class="chat-input">
+                    <input type="text" id="user-input" placeholder="Type your message here...">
+                    <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
         </div>
     </div>
 
