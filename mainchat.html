@@ -1,125 +1,28 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Wayne Ai — Chat Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="data:image/svg+xml;utf8,
-  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>
-    <rect width='64' height='64' rx='12' fill='%23121a23'/>
-    <path d='M12 44 L32 12 L52 44' fill='none' stroke='%2300d4ff' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/>
-    <circle cx='32' cy='44' r='6' fill='%234fffd2'/>
-  </svg>">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SB Ai - Smart Burme Ai</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <aside class="sidebar" id="sidebar">
-    <div class="brand">
-      <div class="logo">W</div>
-      <div class="brand-meta">
-        <h1>Wayne Ai</h1>
-        <small>Chat Dashboard</small>
-      </div>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>SB Ai</h1>
+            <p>Smart Burme Ai</p>
+        </div>
+        
+        <div class="chat-messages" id="chat-messages">
+            <!-- Messages will appear here -->
+        </div>
+        
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Ask me anything...">
+            <button id="send-btn">Send</button>
+        </div>
     </div>
 
-    <nav class="nav">
-      <button class="nav-item active" data-view="chat">
-        <span>💬 Chat</span>
-      </button>
-      <button class="nav-item" data-view="history">
-        <span>🗂 History</span>
-      </button>
-      <button class="nav-item" data-view="settings">
-        <span>⚙️ Settings</span>
-      </button>
-      <a class="nav-item" href="#" id="clearAll">
-        🧹 Clear Data
-      </a>
-    </nav>
-
-    <footer class="aside-footer">
-      <span>v1.0</span>
-      <span>© Wayne</span>
-    </footer>
-  </aside>
-
-  <main class="container">
-    <header class="topbar">
-      <button class="icon-btn" id="menuBtn" aria-label="Toggle menu">☰</button>
-      <div class="title">
-        <span class="mono">ミ</span>
-        <h2>Wayne Ai</h2>
-      </div>
-      <div class="actions">
-        <button class="icon-btn" id="themeBtn" title="Theme">🌗</button>
-        <button class="icon-btn" id="exportBtn" title="Export Chat">⬇️</button>
-      </div>
-    </header>
-
-    <!-- Chat View -->
-    <section class="panel" id="view-chat" role="region" aria-label="Chat">
-      <div id="chatList" class="chat-list" aria-live="polite" aria-atomic="false"></div>
-
-      <form id="chatForm" class="composer" autocomplete="off">
-        <div class="composer-top">
-          <select id="mode" class="select">
-            <option value="text">Text</option>
-            <option value="image">Image</option>
-            <option value="code">Code</option>
-          </select>
-          <span id="tokenHint" class="hint">Ready</span>
-        </div>
-
-        <div class="input-row">
-          <button type="button" class="icon-btn" id="attachBtn" title="Attach image">📎</button>
-          <input id="fileInput" type="file" accept="image/*" hidden />
-          <textarea id="message" rows="1" placeholder="Ask me anything..." required></textarea>
-          <button type="button" class="icon-btn" id="micBtn" title="Voice">🎙️</button>
-          <button id="sendBtn" class="send-btn" aria-label="Send">ᐳ</button>
-        </div>
-
-        <div id="preview" class="preview" hidden></div>
-      </form>
-    </section>
-
-    <!-- History View -->
-    <section class="panel hidden" id="view-history" role="region" aria-label="History">
-      <div class="history-head">
-        <h3>Sessions</h3>
-        <button class="btn" id="newSessionBtn">New session</button>
-      </div>
-      <ul id="sessionList" class="session-list"></ul>
-    </section>
-
-    <!-- Settings View -->
-    <section class="panel hidden" id="view-settings" role="region" aria-label="Settings">
-      <h3>Settings</h3>
-      <div class="setting-grid">
-        <label class="field">
-          <span>API Endpoint</span>
-          <input id="apiEndpoint" type="url" placeholder="https://your-worker.example.com/api/chat" />
-        </label>
-        <label class="field">
-          <span>API Key</span>
-          <input id="apiKey" type="password" placeholder="sk-***" />
-        </label>
-        <label class="field">
-          <span>Model</span>
-          <input id="modelName" type="text" value="gpt-5" />
-        </label>
-      </div>
-      <p class="muted">Credentials are saved in localStorage. If you’re about to paste secrets on public devices, maybe don’t.</p>
-      <button class="btn primary" id="saveSettings">Save</button>
-    </section>
-  </main>
-
-  <template id="msg-template">
-    <div class="msg">
-      <div class="avatar"></div>
-      <div class="bubble"></div>
-    </div>
-  </template>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
